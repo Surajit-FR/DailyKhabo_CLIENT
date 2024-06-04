@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderBottom = (): JSX.Element => {
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
+    const [activeLink, setActiveLink] = useState<string>('/home'); // Default active link
     const navigate: any = useNavigate();
 
     useEffect(() => {
@@ -13,7 +14,26 @@ const HeaderBottom = (): JSX.Element => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const menuItems = [
+        { name: 'Home', path: '/home', submenu: [] },
+        { name: 'About Us', path: '/aboutus', submenu: [] },
+        {
+            name: 'Our Products', path: '#', submenu: [
+                { name: 'Gold Premium Ghee', path: '/goldpremiumghee' },
+                { name: 'Gir Cow’s Ghee', path: '/gircowsghee' },
+                { name: 'Deshi Ghee', path: '/deshighee' },
+            ]
+        },
+        { name: 'Blog', path: '/blog', submenu: [] },
+        { name: 'Contact us', path: '/contactus', submenu: [] },
+    ];
+
     const menuClasses = `header-bottom ${isMenuFixed ? 'menu-fixed animated fadeInDown' : 'slideInUp'}`;
+
+    // handleLinkClick func.
+    const handleLinkClick = (path: string) => {
+        setActiveLink(path);
+    };
 
     return (
         <>
@@ -23,22 +43,37 @@ const HeaderBottom = (): JSX.Element => {
                         <nav className="primary-menu">
                             <div className="menu-area">
                                 <div className="row justify-content-between align-items-center">
-                                    <Link to="/home" className="logo">
+                                    <Link to="/home" className="logo" onClick={() => handleLinkClick('/home')}>
                                         <img src="/assets/images/logo/logo.png" alt="logo" />
                                     </Link>
                                     <div className="main-menu-area d-flex align-items-center">
                                         <ul className="main-menu d-flex align-items-center">
-                                            <li><Link to="/home" className="active">Home</Link></li>
-                                            <li><Link to="/aboutus">About Us</Link></li>
-                                            <li><Link to="#">Our Products</Link>
-                                                <ul className="submenu">
-                                                    <li><Link to="/goldpremiumghee">Gold Premium Ghee</Link></li>
-                                                    <li><Link to="/gircowsghee">Gir Cow’s Ghee</Link></li>
-                                                    <li><Link to="/deshighee">Deshi Ghee</Link></li>
-                                                </ul>
-                                            </li>
-                                            <li><Link to="/blog">Blog</Link></li>
-                                            <li><Link to="/contactus">Contact us</Link></li>
+                                            {menuItems.map(item => (
+                                                <li key={item.name}>
+                                                    <Link
+                                                        to={item.path}
+                                                        className={activeLink === item.path ? 'active' : ''}
+                                                        onClick={() => handleLinkClick(item.path)}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                    {item.submenu.length > 0 && (
+                                                        <ul className="submenu">
+                                                            {item.submenu.map(subitem => (
+                                                                <li key={subitem.name}>
+                                                                    <Link
+                                                                        to={subitem.path}
+                                                                        className={activeLink === subitem.path ? 'active' : ''}
+                                                                        onClick={() => handleLinkClick(subitem.path)}
+                                                                    >
+                                                                        {subitem.name}
+                                                                    </Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </li>
+                                            ))}
                                         </ul>
                                         <div className="d-none d-lg-block">
                                             <ul className="search-cart">
