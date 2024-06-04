@@ -1,0 +1,206 @@
+import { Link } from "react-router-dom";
+
+const Products = (): JSX.Element => {
+    return (
+        <>
+            <div className="shop-cart padding-tb">
+                <div className="container">
+                    <div className="section-wrapper">
+                        <div className="cart-top">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="product-item">
+                                            <div className="p-thumb">
+                                                <Link to="#"><img src="assets/images/shop/01.jpg" alt="product" /></Link>
+                                            </div>
+                                            <div className="p-content">
+                                                <Link to="#">Product Text Here</Link>
+                                            </div>
+                                        </td>
+                                        <td>$250</td>
+                                        <td>
+                                            <div className="cart-plus-minus">
+                                                <div className="dec qtybutton">-</div>
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="3" />
+                                                <div className="inc qtybutton">+</div>
+                                            </div>
+                                        </td>
+                                        <td>$750</td>
+                                        <td>
+                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="product-item">
+                                            <div className="p-thumb">
+                                                <Link to="#"><img src="assets/images/shop/02.jpg" alt="product" /></Link>
+                                            </div>
+                                            <div className="p-content">
+                                                <Link to="#">Product Text Here</Link>
+                                            </div>
+                                        </td>
+                                        <td>$250</td>
+                                        <td>
+                                            <div className="cart-plus-minus">
+                                                <div className="dec qtybutton">-</div>
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <div className="inc qtybutton">+</div>
+                                            </div>
+                                        </td>
+                                        <td>$500</td>
+                                        <td>
+                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="product-item">
+                                            <div className="p-thumb">
+                                                <Link to="#"><img src="assets/images/shop/03.jpg" alt="product" /></Link>
+                                            </div>
+                                            <div className="p-content">
+                                                <Link to="#">Product Text Here</Link>
+                                            </div>
+                                        </td>
+                                        <td>$50</td>
+                                        <td>
+                                            <div className="cart-plus-minus">
+                                                <div className="dec qtybutton">-</div>
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <div className="inc qtybutton">+</div>
+                                            </div>
+                                        </td>
+                                        <td>$100</td>
+                                        <td>
+                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="product-item">
+                                            <div className="p-thumb">
+                                                <Link to="#"><img src="assets/images/shop/04.jpg" alt="product" /></Link>
+                                            </div>
+                                            <div className="p-content">
+                                                <Link to="#">Product Text Here</Link>
+                                            </div>
+                                        </td>
+                                        <td>$100</td>
+                                        <td>
+                                            <div className="cart-plus-minus">
+                                                <div className="dec qtybutton">-</div>
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <div className="inc qtybutton">+</div>
+                                            </div>
+                                        </td>
+                                        <td>$200</td>
+                                        <td>
+                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="product-item">
+                                            <div className="p-thumb">
+                                                <Link to="#"><img src="assets/images/shop/05.jpg" alt="product" /></Link>
+                                            </div>
+                                            <div className="p-content">
+                                                <Link to="#">Product Text Here</Link>
+                                            </div>
+                                        </td>
+                                        <td>$200</td>
+                                        <td>
+                                            <div className="cart-plus-minus">
+                                                <div className="dec qtybutton">-</div>
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <div className="inc qtybutton">+</div>
+                                            </div>
+                                        </td>
+                                        <td>$400</td>
+                                        <td>
+                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="cart-bottom">
+                            <div className="cart-checkout-box">
+                                <div className="coupon">
+                                    <input type="text" name="coupon" placeholder="Coupon Code..." className="cart-page-input-text" />
+                                    <input type="submit" value="Apply Coupon" />
+                                </div>
+                                <div className="cart-checkout">
+                                    <input type="submit" value="Update Cart" />
+                                    <input type="submit" value="Proceed to Checkout" />
+                                </div>
+                            </div>
+                            <div className="shiping-box">
+                                <div className="row">
+                                    <div className="col-md-6 col-12">
+                                        <div className="calculate-shiping">
+                                            <h3>Calculate Shipping</h3>
+                                            <div className="outline-select">
+                                                <select>
+                                                    <option value="volvo">United Kingdom (UK)</option>
+                                                    <option value="saab">Bangladesh</option>
+                                                    <option value="saab">Pakisthan</option>
+                                                    <option value="saab">India</option>
+                                                    <option value="saab">Nepal</option>
+                                                </select>
+                                                <span className="select-icon"><i className="fa fa-angle-down"
+                                                    aria-hidden="true"></i></span>
+                                            </div>
+                                            <div className="outline-select shipping-select">
+                                                <select>
+                                                    <option value="volvo">State/Country</option>
+                                                    <option value="saab">Dhaka</option>
+                                                    <option value="saab">Benkok</option>
+                                                    <option value="saab">Kolkata</option>
+                                                    <option value="saab">Kapasia</option>
+                                                </select>
+                                                <span className="select-icon"><i className="fa fa-angle-down"
+                                                    aria-hidden="true"></i></span>
+                                            </div>
+                                            <input type="text" name="coupon" placeholder="Postcode/ZIP"
+                                                className="cart-page-input-text" />
+                                            <button type="submit">Update Total</button>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 col-12">
+                                        <div className="cart-overview">
+                                            <h3>Cart Totals</h3>
+                                            <ul>
+                                                <li>
+                                                    <span className="pull-left">Cart Subtotal</span>
+                                                    <p className="pull-right">$ 0.00</p>
+                                                </li>
+                                                <li>
+                                                    <span className="pull-left">Shipping and Handling</span>
+                                                    <p className="pull-right">Free Shipping</p>
+                                                </li>
+                                                <li>
+                                                    <span className="pull-left">Order Total</span>
+                                                    <p className="pull-right">$ 2940.00</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Products;

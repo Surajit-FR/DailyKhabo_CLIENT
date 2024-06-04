@@ -1,30 +1,44 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderBottom = (): JSX.Element => {
+    const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
+    const navigate: any = useNavigate();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsMenuFixed(window.scrollY > 130);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const menuClasses = `header-bottom ${isMenuFixed ? 'menu-fixed animated fadeInDown' : 'slideInUp'}`;
+
     return (
         <>
-            <div className="header-bottom">
+            <div className={menuClasses}>
                 <div className="container">
                     <div className="row">
                         <nav className="primary-menu">
                             <div className="menu-area">
                                 <div className="row justify-content-between align-items-center">
-                                    <Link to="index.html" className="logo">
+                                    <Link to="/home" className="logo">
                                         <img src="/assets/images/logo/logo.png" alt="logo" />
                                     </Link>
                                     <div className="main-menu-area d-flex align-items-center">
                                         <ul className="main-menu d-flex align-items-center">
-                                            <li><a className="active" href="index.html">Home</a></li>
-                                            <li><Link to="about.html">About Us</Link></li>
+                                            <li><Link to="/home" className="active">Home</Link></li>
+                                            <li><Link to="/aboutus">About Us</Link></li>
                                             <li><Link to="#">Our Products</Link>
                                                 <ul className="submenu">
-                                                    <li><Link to="gold-premium-ghee.html">Gold Premium Ghee</Link></li>
-                                                    <li><Link to="gir-cows-ghee.html">Gir Cow’s Ghee</Link></li>
-                                                    <li><Link to="desi-ghee.html">Desi Ghee</Link></li>
+                                                    <li><Link to="/goldpremiumghee">Gold Premium Ghee</Link></li>
+                                                    <li><Link to="/gircowsghee">Gir Cow’s Ghee</Link></li>
+                                                    <li><Link to="/deshighee">Deshi Ghee</Link></li>
                                                 </ul>
                                             </li>
-                                            <li><Link to="blog.html">Blog</Link></li>
-                                            <li><Link to="contact-us.html">Contact us</Link></li>
+                                            <li><Link to="/blog">Blog</Link></li>
+                                            <li><Link to="/contactus">Contact us</Link></li>
                                         </ul>
                                         <div className="d-none d-lg-block">
                                             <ul className="search-cart">
@@ -64,8 +78,17 @@ const HeaderBottom = (): JSX.Element => {
                                                                 <p>Total: <b className="float-right">240.00</b></p>
                                                             </div>
                                                             <div className="cart-action">
-                                                                <button type="submit" className="button d-btn2">View cart</button>
-                                                                <button type="submit" className="button d-btn2">Checkout</button>
+                                                                <button
+                                                                    type="submit"
+                                                                    className="button d-btn2"
+                                                                    style={{ marginRight: "1.5px" }}
+                                                                    onClick={() => navigate("/cartproducts")}
+                                                                >View cart</button>
+                                                                <button
+                                                                    type="submit"
+                                                                    className="button d-btn2"
+                                                                    style={{ marginLeft: "1.5px" }}
+                                                                >Checkout</button>
                                                             </div>
                                                         </div>
                                                     </div>
