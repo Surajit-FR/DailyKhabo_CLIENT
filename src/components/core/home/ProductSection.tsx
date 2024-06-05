@@ -76,7 +76,7 @@ const ProductSection = (): JSX.Element => {
                                                 </Link>
                                             </div>
                                             <div className="post-content">
-                                                <h4><Link to="#">{item?.product_title}</Link></h4>
+                                                <h4><Link to={`/product/details/${index}`}>{item?.product_title}</Link></h4>
                                                 <ul className="rating">
                                                     <li><i className="fas fa-star"></i></li>
                                                     <li><i className="fas fa-star"></i></li>

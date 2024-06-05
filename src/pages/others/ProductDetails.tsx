@@ -104,15 +104,13 @@ const ProductDetails = (): JSX.Element => {
                                                 <div className="select-product size">
                                                     <select>
                                                         <option>Select Size</option>
-                                                        <option>SM</option>
-                                                        <option>MD</option>
-                                                        <option>LG</option>
-                                                        <option>XL</option>
-                                                        <option>XXL</option>
+                                                        <option>L</option>
+                                                        <option>gm.</option>
+                                                        <option>kg.</option>
                                                     </select>
                                                     <i className="fas fa-angle-down"></i>
                                                 </div>
-                                                <div className="select-product color">
+                                                {/* <div className="select-product color">
                                                     <select>
                                                         <option>Select Color</option>
                                                         <option>Pink</option>
@@ -122,7 +120,7 @@ const ProductDetails = (): JSX.Element => {
                                                         <option>Blue</option>
                                                     </select>
                                                     <i className="fas fa-angle-down"></i>
-                                                </div>
+                                                </div> */}
                                                 <div className="cart-plus-minus">
                                                     <div className="dec qtybutton">-</div>
                                                     <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="1" />
