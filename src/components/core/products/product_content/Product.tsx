@@ -9,9 +9,9 @@ const Product = (): JSX.Element => {
                         <img src="/assets/images/shop/01.jpg" alt="shop" />
                         <div className="product-action-link">
                             <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                            <Link to="#"><i className="far fa-heart"></i></Link>
+                            {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                             <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                            <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                            {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                         </div>
                     </div>
                     <div className="product-content">
@@ -27,9 +27,9 @@ const Product = (): JSX.Element => {
                         <img src="/assets/images/shop/01.jpg" alt="shop" />
                         <div className="product-action-link">
                             <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                            <Link to="#"><i className="far fa-heart"></i></Link>
+                            {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                             <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                            <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                            {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                         </div>
                     </div>
                     <div className="product-content">
@@ -37,9 +37,7 @@ const Product = (): JSX.Element => {
                         <p>
                             <i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i><i className="far fa-star"></i> <span>(3 review)</span>
                         </p>
-                        <h6>
-                            $20
-                        </h6>
+                        <h6>$20</h6>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

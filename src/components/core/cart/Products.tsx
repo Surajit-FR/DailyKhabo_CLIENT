@@ -21,7 +21,7 @@ const Products = (): JSX.Element => {
                                     <tr>
                                         <td className="product-item">
                                             <div className="p-thumb">
-                                                <Link to="#"><img src="assets/images/shop/01.jpg" alt="product" /></Link>
+                                                <Link to="#"><img src="/assets/images/shop/01.jpg" alt="product" /></Link>
                                             </div>
                                             <div className="p-content">
                                                 <Link to="#">Product Text Here</Link>
@@ -31,19 +31,19 @@ const Products = (): JSX.Element => {
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="3" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="3" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
                                         <td>$750</td>
                                         <td>
-                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="product-item">
                                             <div className="p-thumb">
-                                                <Link to="#"><img src="assets/images/shop/02.jpg" alt="product" /></Link>
+                                                <Link to="#"><img src="/assets/images/shop/02.jpg" alt="product" /></Link>
                                             </div>
                                             <div className="p-content">
                                                 <Link to="#">Product Text Here</Link>
@@ -53,19 +53,19 @@ const Products = (): JSX.Element => {
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="2" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
                                         <td>$500</td>
                                         <td>
-                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="product-item">
                                             <div className="p-thumb">
-                                                <Link to="#"><img src="assets/images/shop/03.jpg" alt="product" /></Link>
+                                                <Link to="#"><img src="/assets/images/shop/03.jpg" alt="product" /></Link>
                                             </div>
                                             <div className="p-content">
                                                 <Link to="#">Product Text Here</Link>
@@ -75,19 +75,19 @@ const Products = (): JSX.Element => {
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="2" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
                                         <td>$100</td>
                                         <td>
-                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="product-item">
                                             <div className="p-thumb">
-                                                <Link to="#"><img src="assets/images/shop/04.jpg" alt="product" /></Link>
+                                                <Link to="#"><img src="/assets/images/shop/04.jpg" alt="product" /></Link>
                                             </div>
                                             <div className="p-content">
                                                 <Link to="#">Product Text Here</Link>
@@ -97,19 +97,19 @@ const Products = (): JSX.Element => {
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="2" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
                                         <td>$200</td>
                                         <td>
-                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="product-item">
                                             <div className="p-thumb">
-                                                <Link to="#"><img src="assets/images/shop/05.jpg" alt="product" /></Link>
+                                                <Link to="#"><img src="/assets/images/shop/05.jpg" alt="product" /></Link>
                                             </div>
                                             <div className="p-content">
                                                 <Link to="#">Product Text Here</Link>
@@ -119,13 +119,13 @@ const Products = (): JSX.Element => {
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="2" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
                                         <td>$400</td>
                                         <td>
-                                            <Link to="#"><img src="assets/images/shop/del.png" alt="product" /></Link>
+                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
                                     </tr>
                                 </tbody>

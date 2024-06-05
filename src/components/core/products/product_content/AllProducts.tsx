@@ -28,9 +28,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/02.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -46,9 +46,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/02.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -73,9 +73,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/03.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -91,9 +91,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/03.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -118,9 +118,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/04.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -136,9 +136,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/04.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -163,9 +163,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/05.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -181,9 +181,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/05.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -208,9 +208,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/06.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">
@@ -226,9 +226,9 @@ const AllProducts = (): JSX.Element => {
                                             <img src="/assets/images/shop/06.jpg" alt="shop" />
                                             <div className="product-action-link">
                                                 <Link to="#" className="view-modal" data-toggle="modal" data-target="#product_view"><i className="far fa-eye"></i></Link>
-                                                <Link to="#"><i className="far fa-heart"></i></Link>
+                                                {/* <Link to="#"><i className="far fa-heart"></i></Link> */}
                                                 <Link to="#"><i className="fas fa-cart-plus"></i></Link>
-                                                <Link to="#"><i className="fas fa-sync-alt"></i></Link>
+                                                {/* <Link to="#"><i className="fas fa-sync-alt"></i></Link> */}
                                             </div>
                                         </div>
                                         <div className="product-content">

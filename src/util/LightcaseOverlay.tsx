@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface LightcaseOverlay_props {
@@ -52,10 +51,6 @@ const LightcaseOverlay = ({ src, title, onClose }: LightcaseOverlay_props) => {
         cursor: "pointer"
     };
 
-    const navIconStyle = {
-        display: "none"
-    };
-
     return (
         <>
             <div id="lightcase-overlay" style={overlayStyle} onClick={onClose}></div>
@@ -73,12 +68,6 @@ const LightcaseOverlay = ({ src, title, onClose }: LightcaseOverlay_props) => {
                 </div>
             </div>
             <Link to="#" className="lightcase-icon-close" style={closeStyle} onClick={onClose}><span>Close</span></Link>
-            <div id="lightcase-nav">
-                <Link to="#" className="lightcase-icon-prev" style={navIconStyle}><span>Prev</span></Link>
-                <Link to="#" className="lightcase-icon-next" style={navIconStyle}><span>Next</span></Link>
-                <Link to="#" className="lightcase-icon-play" style={navIconStyle}><span>Play</span></Link>
-                <Link to="#" className="lightcase-icon-pause" style={navIconStyle}><span>Pause</span></Link>
-            </div>
         </>
     );
 };

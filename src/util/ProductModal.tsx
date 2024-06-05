@@ -104,7 +104,7 @@ const ProductModal = (): JSX.Element => {
                                         <div className="cart-button">
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
-                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                                                <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="2" />
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                             <Link to="#" className="defult-btn">Add to Cart <i className="fas fa-cart"></i></Link>
