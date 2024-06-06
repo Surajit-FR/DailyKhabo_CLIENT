@@ -133,7 +133,7 @@ const HeaderBottom = (): JSX.Element => {
                                                     </div>
                                                 </li>
                                                 {
-                                                    _TOKEN ?
+                                                    !_TOKEN ?
                                                         <li className='ml-4'>
                                                             <Link className="regular1" to="#" data-toggle="modal"
                                                                 data-target="#exampleAuthModal">
