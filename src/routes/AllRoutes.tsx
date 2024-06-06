@@ -9,8 +9,18 @@ import GirCowsGhee from '../components/core/products/GirCowsGhee';
 import DeshiGhee from '../components/core/products/DeshiGhee';
 import CartProducts from '../pages/others/CartProducts';
 import ProductDetails from '../pages/others/ProductDetails';
+import { useMemo } from 'react';
+import Checkout from '../pages/others/Checkout';
 
 const AllRoutes = (): JSX.Element => {
+    const token: string | null = window.localStorage.getItem("token");
+    const _TOKEN = JSON.parse(token ?? 'null');
+    const header = useMemo(() => ({
+        headers: {
+            Authorization: `Bearer ${_TOKEN}`
+        }
+    }), [_TOKEN]);
+
     return (
         <>
             <Routes>
@@ -23,7 +33,8 @@ const AllRoutes = (): JSX.Element => {
                 <Route path='/contactus' element={<ContactUs />} />
                 <Route path='/blogsingle/:blog_id' element={<BlogSingle />} />
                 <Route path='/cartproducts' element={<CartProducts />} />
-                <Route path='/product/details/:product_id' element={<ProductDetails />} />
+                <Route path='/checkout' element={<Checkout />} />
+                <Route path='/product/details/:product_id' element={<ProductDetails _TOKEN={_TOKEN} header={header} />} />
             </Routes>
         </>
     );

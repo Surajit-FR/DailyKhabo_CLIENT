@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Products = (): JSX.Element => {
+    const navigate: any = useNavigate();
+    const shopSingleRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (shopSingleRef.current) {
+            shopSingleRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, []);
+
     return (
         <>
-            <div className="shop-cart padding-tb">
+            <div className="shop-cart padding-tb" ref={shopSingleRef}>
                 <div className="container">
                     <div className="section-wrapper">
                         <div className="cart-top">
@@ -27,7 +37,7 @@ const Products = (): JSX.Element => {
                                                 <Link to="#">Product Text Here</Link>
                                             </div>
                                         </td>
-                                        <td>$250</td>
+                                        <td>₹250</td>
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
@@ -35,7 +45,7 @@ const Products = (): JSX.Element => {
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
-                                        <td>$750</td>
+                                        <td>₹750</td>
                                         <td>
                                             <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
@@ -49,7 +59,7 @@ const Products = (): JSX.Element => {
                                                 <Link to="#">Product Text Here</Link>
                                             </div>
                                         </td>
-                                        <td>$250</td>
+                                        <td>₹250</td>
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
@@ -57,7 +67,7 @@ const Products = (): JSX.Element => {
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
-                                        <td>$500</td>
+                                        <td>₹500</td>
                                         <td>
                                             <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
@@ -71,7 +81,7 @@ const Products = (): JSX.Element => {
                                                 <Link to="#">Product Text Here</Link>
                                             </div>
                                         </td>
-                                        <td>$50</td>
+                                        <td>₹50</td>
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
@@ -79,7 +89,7 @@ const Products = (): JSX.Element => {
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
-                                        <td>$100</td>
+                                        <td>₹100</td>
                                         <td>
                                             <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
@@ -93,7 +103,7 @@ const Products = (): JSX.Element => {
                                                 <Link to="#">Product Text Here</Link>
                                             </div>
                                         </td>
-                                        <td>$100</td>
+                                        <td>₹100</td>
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
@@ -101,7 +111,7 @@ const Products = (): JSX.Element => {
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
-                                        <td>$200</td>
+                                        <td>₹200</td>
                                         <td>
                                             <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
@@ -115,7 +125,7 @@ const Products = (): JSX.Element => {
                                                 <Link to="#">Product Text Here</Link>
                                             </div>
                                         </td>
-                                        <td>$200</td>
+                                        <td>₹200</td>
                                         <td>
                                             <div className="cart-plus-minus">
                                                 <div className="dec qtybutton">-</div>
@@ -123,7 +133,7 @@ const Products = (): JSX.Element => {
                                                 <div className="inc qtybutton">+</div>
                                             </div>
                                         </td>
-                                        <td>$400</td>
+                                        <td>₹400</td>
                                         <td>
                                             <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                         </td>
@@ -139,7 +149,7 @@ const Products = (): JSX.Element => {
                                 </div>
                                 <div className="cart-checkout">
                                     <input type="submit" value="Update Cart" />
-                                    <input type="submit" value="Proceed to Checkout" />
+                                    <input type="submit" value="Proceed to Checkout" onClick={() => navigate('/checkout')} />
                                 </div>
                             </div>
                             <div className="shiping-box">
@@ -180,7 +190,7 @@ const Products = (): JSX.Element => {
                                             <ul>
                                                 <li>
                                                     <span className="pull-left">Cart Subtotal</span>
-                                                    <p className="pull-right">$ 0.00</p>
+                                                    <p className="pull-right">₹ 0.00</p>
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Shipping and Handling</span>
@@ -188,7 +198,7 @@ const Products = (): JSX.Element => {
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Order Total</span>
-                                                    <p className="pull-right">$ 2940.00</p>
+                                                    <p className="pull-right">₹ 2940.00</p>
                                                 </li>
                                             </ul>
                                         </div>

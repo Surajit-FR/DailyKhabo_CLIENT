@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
 const MobileSection = (): JSX.Element => {
+    const token: string | null = window.localStorage.getItem("token");
+    const _TOKEN = JSON.parse(token ?? 'null');
+
     return (
         <>
             <div className="mobile-menu">
@@ -29,6 +32,21 @@ const MobileSection = (): JSX.Element => {
                                 </li>
                                 <li><Link to="blog.html">Blog</Link></li>
                                 <li><Link to="contact-us.html">Contact us</Link></li>
+                                {
+                                    _TOKEN ?
+                                        <li>
+                                            <Link className="regular1" to="#" data-toggle="modal"
+                                                data-target="#exampleAuthModal">
+                                                <i className="fa-regular fa-user fa-fade"></i> Login
+                                            </Link>
+                                        </li>
+                                        :
+                                        <li>
+                                            <Link className="regular1" to="#">
+                                                <i className="fa-solid fa-power-off fa-bounce"></i> Logout
+                                            </Link>
+                                        </li>
+                                }
                             </ul>
                             <ul className="social-link-list d-flex flex-wrap">
                                 <li><Link to="#" className="facebook"><i className=" fab fa-facebook-f"></i></Link></li>

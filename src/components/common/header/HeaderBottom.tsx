@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderBottom = (): JSX.Element => {
+    const token: string | null = window.localStorage.getItem("token");
+    const _TOKEN = JSON.parse(token ?? 'null');
+
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
     const [activeLink, setActiveLink] = useState<string>('/home'); // Default active link
     const navigate: any = useNavigate();
@@ -123,11 +126,27 @@ const HeaderBottom = (): JSX.Element => {
                                                                     type="submit"
                                                                     className="button d-btn2"
                                                                     style={{ marginLeft: "1.5px" }}
+                                                                    onClick={() => navigate("/checkout")}
                                                                 >Checkout</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </li>
+                                                {
+                                                    _TOKEN ?
+                                                        <li className='ml-4'>
+                                                            <Link className="regular1" to="#" data-toggle="modal"
+                                                                data-target="#exampleAuthModal">
+                                                                <i className="fa-regular fa-user fa-fade mx-2"></i>Login
+                                                            </Link>
+                                                        </li>
+                                                        :
+                                                        <li className='ml-3'>
+                                                            <Link className="regular1" to="#">
+                                                            <i className="fa-solid fa-power-off fa-bounce mx-2"></i>Logout
+                                                            </Link>
+                                                        </li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>

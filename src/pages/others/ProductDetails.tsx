@@ -1,18 +1,43 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PageTopSection from "../../components/common/PageTopSection";
 import { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
 import ReviewAndDesc from "../../components/core/product_details/ReviewAndDesc";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { getProductDetails } from "../../services/slices/UtilitySlice";
+import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
+import { CustomHeadersType } from "../../config/DataTypes.config";
 
-const ProductDetails = (): JSX.Element => {
+type ProductDetailsProps = {
+    _TOKEN: any,
+    header: CustomHeadersType
+}
+
+const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
+    const { product_id } = useParams();
+    const { products_details_data } = useSelector((state: any) => state.utilitySlice);
+    const dispatch: Dispatch<any> = useDispatch();
+
     const [nav1, setNav1] = useState<any>(null);
     const [nav2, setNav2] = useState<any>(null);
     const sliderRef1 = useRef<any>(null);
     const sliderRef2 = useRef<any>(null);
 
+    const shopSingleRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         setNav1(sliderRef1.current);
         setNav2(sliderRef2.current);
+    }, []);
+
+    useEffect(() => {
+        dispatch(getProductDetails({ product_id: product_id }))
+    }, [dispatch, product_id]);
+
+    useEffect(() => {
+        if (shopSingleRef.current) {
+            shopSingleRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     }, []);
 
     return (
@@ -20,7 +45,7 @@ const ProductDetails = (): JSX.Element => {
             {/* PageHeader Section */}
             <PageTopSection pageName="Product Details" />
 
-            <section className="shop-single padding-tb">
+            <section className="shop-single padding-tb" ref={shopSingleRef}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 col-12 sticky-widget">
@@ -28,60 +53,20 @@ const ProductDetails = (): JSX.Element => {
                                 <div className="row">
                                     <div className="col-md-6 col-12">
                                         <div className="product-thumb">
-                                            <div className="slider-for">
-                                                <Slider
-                                                    asNavFor={nav2}
-                                                    ref={sliderRef1}
-                                                >
-                                                    <div className="thumb">
-                                                        <img id="myimage8" src="/assets/images/shop/02.jpg" alt="shopZoom" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img id="myimage1" src="/assets/images/shop/03.jpg" alt="shopZoom" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img id="myimage2" src="/assets/images/shop/04.jpg" alt="shopZoom" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img id="myimage3" src="/assets/images/shop/05.jpg" alt="shopZoom" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img id="myimage4" src="/assets/images/shop/06.jpg" alt="shopZoom" />
-                                                    </div>
-                                                </Slider>
-                                            </div>
-
-                                            <div className="slider-nav">
-                                                <Slider
-                                                    asNavFor={nav1}
-                                                    ref={sliderRef2}
-                                                    slidesToShow={3}
-                                                    swipeToSlide={true}
-                                                    focusOnSelect={true}
-                                                >
-
-                                                    <div className="thumb">
-                                                        <img src="/assets/images/shop/02.jpg" alt="shop" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img src="/assets/images/shop/03.jpg" alt="shop" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img src="/assets/images/shop/04.jpg" alt="shop" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img src="/assets/images/shop/05.jpg" alt="shop" />
-                                                    </div>
-                                                    <div className="thumb">
-                                                        <img src="/assets/images/shop/06.jpg" alt="shop" />
-                                                    </div>
-                                                </Slider>
-                                            </div>
+                                            <ProductDetailsImageSlider
+                                                products_details_data={products_details_data}
+                                                nav2={nav2}
+                                                sliderRef1={sliderRef1}
+                                                nav1={nav1}
+                                                sliderRef2={sliderRef2}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-12">
                                         <div className="post-content">
-                                            <h4><Link to="#">Product Text here</Link></h4>
+                                            <h4>
+                                                <Link to="#">{products_details_data?.data?.productTitle}</Link>
+                                            </h4>
                                             <p className="rating">
                                                 <i className="far fa-star"></i>
                                                 <i className="far fa-star"></i>
@@ -90,16 +75,9 @@ const ProductDetails = (): JSX.Element => {
                                                 <i className="far fa-star"></i>
                                                 (3 review)
                                             </p>
-                                            <h4>
-                                                $ 200.00
-                                            </h4>
-                                            <h5>
-                                                Product Description
-                                            </h5>
-                                            <p>
-                                                Energistia an deliver atactica metrcs after avsionary Apropria trnsition
-                                                enterpris an sources applications emerging psd template communities.
-                                            </p>
+                                            <h4>₹ {products_details_data?.data?.price}</h4>
+                                            <h5>Product Description</h5>
+                                            <p>{products_details_data?.data?.productDescription}</p>
                                             <form>
                                                 <div className="select-product size">
                                                     <select>
@@ -129,7 +107,7 @@ const ProductDetails = (): JSX.Element => {
                                                 <div className="discount-code">
                                                     <input type="text" placeholder="Enter Discount Code" />
                                                 </div>
-                                                <button type="submit">Add To Cart</button>
+                                                <button type="button" data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}>Add To Cart</button>
                                             </form>
                                         </div>
                                     </div>
@@ -137,7 +115,9 @@ const ProductDetails = (): JSX.Element => {
                             </div>
 
                             {/* Product review & desc. */}
-                            <ReviewAndDesc />
+                            <ReviewAndDesc
+                                products_details_data={products_details_data?.data}
+                            />
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getImagUrl } from '../helpers/getImage';
 
 interface LightcaseOverlay_props {
     src: string;
@@ -59,7 +60,7 @@ const LightcaseOverlay = ({ src, title, onClose }: LightcaseOverlay_props) => {
             <div id="lightcase-case" aria-hidden="false" role="dialog" style={caseStyle} className="">
                 <div id="lightcase-content">
                     <div className="lightcase-contentInner" style={contentInnerStyle}>
-                        <img src={src} style={imageStyle} alt={title} />
+                        <img src={getImagUrl(src)} style={imageStyle} alt={title} />
                     </div>
                 </div>
                 <div id="lightcase-info" style={infoStyle}>

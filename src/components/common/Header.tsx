@@ -1,3 +1,4 @@
+import AuthModal from "../../util/AuthModal";
 import HeaderBottom from "./header/HeaderBottom";
 import HeaderTop from "./header/HeaderTop";
 
@@ -13,6 +14,9 @@ const Header = (): JSX.Element => {
                 <HeaderBottom />
             </header>
             {/* <!-- header section ending here --> */}
+
+            {/* Auth modal */}
+            <AuthModal />
         </>
     );
 };
