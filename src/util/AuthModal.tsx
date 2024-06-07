@@ -11,7 +11,7 @@ const AuthModal = (): JSX.Element => {
                 aria-hidden="true">
                 <div className="modal-dialog center_popup" role="document">
                     <div className="modal-content">
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="closeAuthModalButton">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <div className="modal-body">

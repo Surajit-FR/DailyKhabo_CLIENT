@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/bundle';
 import { Provider } from 'react-redux';
 import { Store } from './services/store/Store';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,6 +20,11 @@ root.render(
         <Route path='/' element={<Index />} />
       </Routes>
     </Router>
+    <Toaster
+      position='bottom-center'
+      reverseOrder={false}
+      gutter={10}
+    />
   </Provider>
 );
 

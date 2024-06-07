@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../services/slices/AuthSlice';
+import { useDispatch } from 'react-redux';
 
 const HeaderBottom = (): JSX.Element => {
     const token: string | null = window.localStorage.getItem("token");
@@ -7,15 +9,9 @@ const HeaderBottom = (): JSX.Element => {
 
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
     const [activeLink, setActiveLink] = useState<string>('/home'); // Default active link
-    const navigate: any = useNavigate();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsMenuFixed(window.scrollY > 130);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const dispatch: Dispatch<any> = useDispatch();
+    const navigate: any = useNavigate();
 
     const menuItems = [
         { name: 'Home', path: '/home', submenu: [] },
@@ -37,6 +33,15 @@ const HeaderBottom = (): JSX.Element => {
     const handleLinkClick = (path: string) => {
         setActiveLink(path);
     };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsMenuFixed(window.scrollY > 130);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    
 
     return (
         <>
@@ -142,8 +147,8 @@ const HeaderBottom = (): JSX.Element => {
                                                         </li>
                                                         :
                                                         <li className='ml-3'>
-                                                            <Link className="regular1" to="#">
-                                                            <i className="fa-solid fa-power-off fa-bounce mx-2"></i>Logout
+                                                            <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
+                                                                <i className="fa-solid fa-power-off fa-bounce mx-2"></i>Logout
                                                             </Link>
                                                         </li>
                                                 }
@@ -154,8 +159,8 @@ const HeaderBottom = (): JSX.Element => {
                             </div>
                         </nav>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 };

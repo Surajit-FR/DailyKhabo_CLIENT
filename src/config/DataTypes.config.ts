@@ -40,9 +40,12 @@ export type FormValues_Props = {
 };
 
 // Signin input type
-export type signinInputValues = {
+export type authInInputValues = {
+    full_name?: string;
+    email?: string;
     credential?: string;
     password?: string;
+    conf_password?: string;
     remember_me?: boolean;
 };
 
@@ -56,8 +59,9 @@ export type SyntheticBaseEvent = {
 
 // User auth props type
 export type UserAuth_Props = {
-    data: signinInputValues;
-    navigate: any
+    data: authInInputValues;
+    navigate?: any;
+    resetForm?: Function;
 };
 
 // Define the type for a single permission
