@@ -1,12 +1,22 @@
+import { useSelector } from "react-redux";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import MobileSection from "./components/common/MobileSection";
 import Search from "./components/common/Search";
 import AllRoutes from "./routes/AllRoutes";
+import PreLoader from "./util/PreLoader";
 
 const App = (): JSX.Element => {
+  const { utility_loading } = useSelector((state: any) => state.utilitySlice);
+  const { auth_loading } = useSelector((state: any) => state.authSlice);
+
   return (
     <>
+      {/* PreLoader */}
+      <PreLoader
+        loading={utility_loading || auth_loading}
+      />
+
       {/* search-area */}
       <Search />
 

@@ -7,7 +7,7 @@ interface LightcaseOverlay_props {
     onClose: () => void;
 }
 
-const LightcaseOverlay = ({ src, title, onClose }: LightcaseOverlay_props) => {
+const LightcaseOverlay = ({ src, title, onClose }: LightcaseOverlay_props): JSX.Element => {
     const overlayStyle = {
         opacity: "0.9",
         display: "block",
