@@ -89,10 +89,10 @@ const HeaderBottom = (): JSX.Element => {
                                         </ul>
                                         <div className="d-none d-lg-block">
                                             <ul className="search-cart">
-                                                <li className="search">
+                                                <li className="search" style={{ marginTop: _TOKEN ? "12px" : "" }}>
                                                     <i className="flaticon-magnifying-glass"></i>
                                                 </li>
-                                                <li className="cart">
+                                                <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "" }}>
                                                     <i className="flaticon-shopping-bag"></i>
                                                     <span>2</span>
                                                     <div className="cart-content">
@@ -141,30 +141,29 @@ const HeaderBottom = (): JSX.Element => {
                                                         </div>
                                                     </div>
                                                 </li>
-                                                {
-                                                    !_TOKEN ?
-                                                        <li className='ml-4'>
-                                                            <Link className="regular1" to="#" data-toggle="modal"
-                                                                data-target="#exampleAuthModal">
-                                                                <i className="fa-regular fa-user fa-fade mx-2"></i>Login
+                                                {!_TOKEN ?
+                                                    <li className='ml-4'>
+                                                        <Link className="regular1" to="#" data-toggle="modal"
+                                                            data-target="#exampleAuthModal">
+                                                            <i className="fa-regular fa-user fa-fade mx-2"></i>Login
+                                                        </Link>
+                                                    </li>
+                                                    :
+                                                    <ul className="main-menu d-flex align-items-center">
+                                                        <li>
+                                                            <Link className="regular1" to="#">
+                                                                <i className="fa-regular fa-user fa-fade mx-2"></i>{_USER?.full_name}
                                                             </Link>
+                                                            <ul className="submenu">
+                                                                <li><Link to="#">Profile</Link></li>
+                                                                <li>
+                                                                    <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
+                                                                        <i className="fa-solid fa-power-off fa-bounce"></i> Logout
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
                                                         </li>
-                                                        :
-                                                        <ul className="main-menu d-flex align-items-center">
-                                                            <li>
-                                                                <Link className="regular1" to="#">
-                                                                    <i className="fa-regular fa-user fa-fade mx-2"></i>{_USER?.full_name}
-                                                                </Link>
-                                                                <ul className="submenu">
-                                                                    <li><Link to="#">Profile</Link></li>
-                                                                    <li>
-                                                                        <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
-                                                                            <i className="fa-solid fa-power-off fa-bounce"></i> Logout
-                                                                        </Link>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
+                                                    </ul>
                                                 }
                                             </ul>
                                         </div>
