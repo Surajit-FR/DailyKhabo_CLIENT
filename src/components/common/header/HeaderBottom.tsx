@@ -2,10 +2,14 @@ import { Dispatch, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../services/slices/AuthSlice';
 import { useDispatch } from 'react-redux';
+import { DecryptData } from '../../../helpers/EncryptDecrypt';
 
 const HeaderBottom = (): JSX.Element => {
     const token: string | null = window.localStorage.getItem("token");
     const _TOKEN = JSON.parse(token ?? 'null');
+
+    const user: any = window.localStorage.getItem("user");
+    const _USER = DecryptData(user ? user : "");
 
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
     const [activeLink, setActiveLink] = useState<string>('/home'); // Default active link
@@ -41,7 +45,7 @@ const HeaderBottom = (): JSX.Element => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-    
+
 
     return (
         <>
@@ -146,11 +150,21 @@ const HeaderBottom = (): JSX.Element => {
                                                             </Link>
                                                         </li>
                                                         :
-                                                        <li className='ml-3'>
-                                                            <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
-                                                                <i className="fa-solid fa-power-off fa-bounce mx-2"></i>Logout
-                                                            </Link>
-                                                        </li>
+                                                        <ul className="main-menu d-flex align-items-center">
+                                                            <li>
+                                                                <Link className="regular1" to="#">
+                                                                    <i className="fa-regular fa-user fa-fade mx-2"></i>{_USER?.full_name}
+                                                                </Link>
+                                                                <ul className="submenu">
+                                                                    <li><Link to="#">Profile</Link></li>
+                                                                    <li>
+                                                                        <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
+                                                                            <i className="fa-solid fa-power-off fa-bounce"></i> Logout
+                                                                        </Link>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
                                                 }
                                             </ul>
                                         </div>
