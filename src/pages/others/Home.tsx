@@ -7,15 +7,16 @@ import ProductSection from "../../components/core/home/ProductSection";
 import TestimonialSection from "../../components/core/home/TestimonialSection";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllProduct } from "../../services/slices/UtilitySlice";
-import { ProductResponse } from "../../config/DataTypes.config";
+import { getAllCategory, getAllProduct } from "../../services/slices/UtilitySlice";
+import { CategoryResponse, ProductResponse } from "../../config/DataTypes.config";
 
 
 const Home = (): JSX.Element => {
-    const { products_data } = useSelector((state: any) => state.utilitySlice);
+    const { products_data, category_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
 
     const [productData, setProductData] = useState<ProductResponse[]>([]);
+    const [categoryData, setCategoryData] = useState<CategoryResponse[]>([]);
 
     useEffect(() => {
         dispatch(getAllProduct({
@@ -24,11 +25,16 @@ const Home = (): JSX.Element => {
             search: "",
             category: ""
         }));
+        dispatch(getAllCategory({
+            page: 0,
+            pageSize: 0,
+        }));
     }, [dispatch]);
 
     useEffect(() => {
         setProductData(products_data?.data);
-    }, [products_data]);
+        setCategoryData(category_data?.data);
+    }, [products_data, category_data]);
 
     return (
         <>
@@ -36,7 +42,7 @@ const Home = (): JSX.Element => {
             <BannerSection />
 
             {/* about section start here */}
-            <AboutSection />
+            <AboutSection categoryData={categoryData} />
 
             {/* product section start here */}
             <ProductSection productData={productData} />

@@ -1,10 +1,10 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Product from './Product';
 import ProductModal from '../../../../util/ProductModal';
 
 const AllProducts = (): JSX.Element => {
-    const [toggleWrap, setToggleWrap] = useState<boolean>(false);
+    // const [toggleWrap, setToggleWrap] = useState<boolean>(false);
 
     return (
         <>
@@ -14,13 +14,17 @@ const AllProducts = (): JSX.Element => {
                         <div className="col-lg-12 col-12 sticky-widget">
                             <div className="shop-title d-flex flex-wrap justify-content-between">
                                 <p>Showing 01 - 12 of 139 Results</p>
+                                {/* <p>Showing 01 - 12 of 139 Results</p> */}
                                 <div className="product-view-mode">
-                                    <Link to="#" onClick={() => setToggleWrap(!toggleWrap)} className={!toggleWrap ? "active" : ""} data-target="grid"><i className="fas fa-th"></i></Link>
-                                    <Link to="#" onClick={() => setToggleWrap(!toggleWrap)} className={toggleWrap ? "active" : ""} data-target="list"><i className="fas fa-list"></i></Link>
+                                    {/* <div className="product-view-mode"> */}
+                                    <Link to="#" className="active" data-target="grid"><i className="fas fa-th"></i></Link>
+                                    {/* <Link to="#" onClick={() => setToggleWrap(!toggleWrap)} className={!toggleWrap ? "active" : ""} data-target="grid"><i className="fas fa-th"></i></Link> */}
+                                    {/* <Link to="#" onClick={() => setToggleWrap(!toggleWrap)} className={toggleWrap ? "active" : ""} data-target="list"><i className="fas fa-list"></i></Link> */}
                                 </div>
                             </div>
 
-                            <div className={!toggleWrap ? "shop-product-wrap grid row" : "shop-product-wrap list row"}>
+                            {/* <div className={!toggleWrap ? "shop-product-wrap grid row" : "shop-product-wrap list row"}> */}
+                            <div className="shop-product-wrap grid row">
                                 <Product />
                                 <div className="col-lg-4 col-md-6 col-12">
                                     <div className="product-item">
