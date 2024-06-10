@@ -7,13 +7,14 @@ import { Dispatch } from "redux";
 import { getProductDetails } from "../../services/slices/UtilitySlice";
 import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
 import { CustomHeadersType } from "../../config/DataTypes.config";
+import IncrementDecrement from "../../util/IncrementDecrement";
 
-type ProductDetailsProps = {
+type ProductDetails_props = {
     _TOKEN: any,
     header: CustomHeadersType
 }
 
-const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
+const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element => {
     const { product_id } = useParams();
     const { products_details_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
@@ -99,11 +100,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                     </select>
                                                     <i className="fas fa-angle-down"></i>
                                                 </div> */}
-                                                <div className="cart-plus-minus">
-                                                    <div className="dec qtybutton">-</div>
-                                                    <input className="cart-plus-minus-box" type="text" name="qtybutton" defaultValue="1" />
-                                                    <div className="inc qtybutton">+</div>
-                                                </div>
+                                                <IncrementDecrement initialValue={1} />
                                                 <div className="discount-code">
                                                     <input type="text" placeholder="Enter Discount Code" />
                                                 </div>

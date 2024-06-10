@@ -32,7 +32,7 @@ const AllRoutes = (): JSX.Element => {
                 <Route path='/blog' element={<Blog />} />
                 <Route path='/contactus' element={<ContactUs />} />
                 <Route path='/blogsingle/:blog_id' element={<BlogSingle />} />
-                <Route path='/cartproducts' element={<CartProducts />} />
+                <Route path='/cartproducts' element={<CartProducts _TOKEN={_TOKEN} header={header} />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/product/details/:product_id' element={<ProductDetails _TOKEN={_TOKEN} header={header} />} />
             </Routes>

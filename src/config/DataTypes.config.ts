@@ -139,6 +139,26 @@ export type CategoryListType = {
     __v: string;
 };
 
+// Cart product type
+interface Product {
+    _id: string;
+    productTitle: string;
+    productImages: Array<string>;
+    price: number;
+    finalPrice: number;
+    quantity: number;
+    totalPrice: number;
+}
+
+// Cart list type
+export interface CartItemType {
+    _id: string;
+    product: Product;
+    cart_quantity: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 // Promise return type FetchAllCategoryResponse
 export type FetchAllCategoryResponse = {
     data: [CategoryListType];

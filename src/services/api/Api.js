@@ -38,3 +38,5 @@ export const GETALLPRODUCTS = (params = {}) => {
 };
 // Get product details
 export const GETPRODUCTDETAILS = (product_id) => API.get(`/user/api/get/product/details/${product_id}`);
+// Get cart data
+export const GETCARTDATA = (header) => API.get('/user/api/get/all/cart/data', header);
