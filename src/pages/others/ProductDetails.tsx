@@ -7,11 +7,11 @@ import { Dispatch } from "redux";
 import { getProductDetails } from "../../services/slices/UtilitySlice";
 import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
 import { CustomHeadersType } from "../../config/DataTypes.config";
-import IncrementDecrement from "../../util/IncrementDecrement";
+import { addCart } from "../../services/slices/CartSlice";
 
 type ProductDetailsProps = {
     _TOKEN: any,
-    header: CustomHeadersType
+    header: CustomHeadersType | undefined
 }
 
 const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
@@ -23,8 +23,27 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
     const [nav2, setNav2] = useState<any>(null);
     const sliderRef1 = useRef<any>(null);
     const sliderRef2 = useRef<any>(null);
+    const [value, setValue] = useState<number>(1);
+
+    const decrement = () => {
+        if (value > 0) {
+            setValue(value - 1);
+        }
+    };
+
+    const increment = () => {
+        setValue(value + 1);
+    };
 
     const shopSingleRef = useRef<HTMLDivElement>(null);
+
+    const AddToCart = () => {
+        const data = {
+            product: products_details_data?.data?._id,
+            cart_quantity: value
+        }
+        dispatch(addCart({ data, header }));
+    };
 
     useEffect(() => {
         setNav1(sliderRef1.current);
@@ -125,12 +144,21 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                     <i className="fas fa-angle-down"></i>
                                                 </div>
 
-                                                <IncrementDecrement initialValue={1} />
+                                                <div className="cart-plus-minus">
+                                                    <div className="dec qtybutton" onClick={decrement}>-</div>
+                                                    <input className="cart-plus-minus-box" type="text" name="qtybutton" value={value} readOnly />
+                                                    <div className="inc qtybutton" onClick={increment}>+</div>
+                                                </div>
 
                                                 <div className="discount-code">
                                                     <input type="text" placeholder="Enter Discount Code" />
                                                 </div>
-                                                <button type="button" data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}>Add To Cart</button>
+                                                <button
+                                                    type="button"
+                                                    data-toggle={_TOKEN ? "" : "modal"}
+                                                    data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                                                    onClick={AddToCart}
+                                                >Add To Cart</button>
                                             </form>
                                         </div>
                                     </div>

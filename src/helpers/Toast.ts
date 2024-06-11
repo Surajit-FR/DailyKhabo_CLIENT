@@ -12,12 +12,12 @@ export const showToast = ({ message, type, durationTime }: ToastOptions) => {
         duration: durationTime,
         style: {
             color: "#000",
-            background: type === 'success' ? "#0f0" : "#fff", // Green for success, white for error
+            background: "#fff", // Green for success, white for error
             border: `1px solid ${type === 'success' ? "#0f0" : "#f00"}`, // Green for success, white for error
         },
         iconTheme: {
-            primary: type === 'success' ? "#0f0" : "#f00", // Green icon for success, red for error
-            secondary: "#fff"
+            primary: "#fff",
+            secondary: type === 'success' ? "#0f0" : "#f00", // Green icon for success, red for error
         }
     };
 

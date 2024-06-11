@@ -57,7 +57,7 @@ const HeaderBottom = (): JSX.Element => {
 
     useEffect(() => {
         if (_TOKEN) {
-            dispatch(getAllCartData(header));
+            dispatch(getAllCartData({ header }));
         };
         dispatch(getAllCategory({
             page: 0,

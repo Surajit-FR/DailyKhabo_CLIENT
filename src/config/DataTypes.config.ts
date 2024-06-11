@@ -23,6 +23,8 @@ export type formValuesType = {
     visibility?: string;
     categories?: string;
     web_theme?: string;
+    product?: string | undefined;
+    cart_quantity?: number | undefined;
 };
 
 // Form value props type
@@ -38,6 +40,8 @@ export type FormValues_Props = {
     navigate?: any;
     category_id?: string | undefined;
     product_id?: string | undefined;
+    product?: string | undefined;
+    cart_quantity?: number | undefined;
 };
 
 // Signin input type
