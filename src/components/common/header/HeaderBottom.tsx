@@ -1,18 +1,33 @@
-import { Dispatch, useEffect, useState } from 'react';
+import { Dispatch, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../services/slices/AuthSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DecryptData } from '../../../helpers/EncryptDecrypt';
+import { getAllCartData } from '../../../services/slices/CartSlice';
+import { CartItemType, CategoryResponse } from '../../../config/DataTypes.config';
+import { getImagUrl } from '../../../helpers/getImage';
+import { getAllCategory } from '../../../services/slices/UtilitySlice';
 
 const HeaderBottom = (): JSX.Element => {
+    const { category_data } = useSelector((state: any) => state.utilitySlice);
+    const { cart_data } = useSelector((state: any) => state.cartSlice);
+
     const token: string | null = window.localStorage.getItem("token");
     const _TOKEN = JSON.parse(token ?? 'null');
+
+    const header = useMemo(() => ({
+        headers: {
+            Authorization: `Bearer ${_TOKEN}`
+        }
+    }), [_TOKEN]);
 
     const user: any = window.localStorage.getItem("user");
     const _USER = DecryptData(user ? user : "");
 
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
-    const [activeLink, setActiveLink] = useState<string>('/home'); // Default active link
+    const [activeLink, setActiveLink] = useState<string>('/home');
+    const [cartData, setCartData] = useState<CartItemType[]>([]);
+    const [categoryData, setCategoryData] = useState<CategoryResponse[]>([]);
 
     const dispatch: Dispatch<any> = useDispatch();
     const navigate: any = useNavigate();
@@ -20,13 +35,7 @@ const HeaderBottom = (): JSX.Element => {
     const menuItems = [
         { name: 'Home', path: '/home', submenu: [] },
         { name: 'About Us', path: '/aboutus', submenu: [] },
-        {
-            name: 'Our Products', path: '#', submenu: [
-                { name: 'Gold Premium Ghee', path: '/goldpremiumghee' },
-                { name: 'Gir Cow’s Ghee', path: '/gircowsghee' },
-                { name: 'Deshi Ghee', path: '/deshighee' },
-            ]
-        },
+        { name: 'Our Products', path: '#', submenu: categoryData },
         { name: 'Blog', path: '/blog', submenu: [] },
         { name: 'Contact us', path: '/contactus', submenu: [] },
     ];
@@ -46,6 +55,22 @@ const HeaderBottom = (): JSX.Element => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        if (_TOKEN) {
+            dispatch(getAllCartData(header));
+        };
+        dispatch(getAllCategory({
+            page: 0,
+            pageSize: 0,
+        }));
+    }, [dispatch, header, _TOKEN]);
+
+
+    useEffect(() => {
+        setCartData(cart_data?.data);
+        setCategoryData(category_data?.data);
+    }, [cart_data, category_data]);
+
 
     return (
         <>
@@ -60,7 +85,7 @@ const HeaderBottom = (): JSX.Element => {
                                     </Link>
                                     <div className="main-menu-area d-flex align-items-center">
                                         <ul className="main-menu d-flex align-items-center">
-                                            {menuItems.map(item => (
+                                            {menuItems?.map(item => (
                                                 <li key={item.name}>
                                                     <Link
                                                         to={item.path}
@@ -69,16 +94,16 @@ const HeaderBottom = (): JSX.Element => {
                                                     >
                                                         {item.name}
                                                     </Link>
-                                                    {item.submenu.length > 0 && (
+                                                    {item?.submenu?.length > 0 && (
                                                         <ul className="submenu">
-                                                            {item.submenu.map(subitem => (
-                                                                <li key={subitem.name}>
+                                                            {item?.submenu?.map(subitem => (
+                                                                <li key={subitem?._id}>
                                                                     <Link
-                                                                        to={subitem.path}
-                                                                        className={activeLink === subitem.path ? 'active' : ''}
-                                                                        onClick={() => handleLinkClick(subitem.path)}
+                                                                        to={`/product/${subitem?.category_name}`}
+                                                                        className={activeLink === subitem?._id ? 'active' : ''}
+                                                                        onClick={() => handleLinkClick(subitem?._id)}
                                                                     >
-                                                                        {subitem.name}
+                                                                        {subitem?.category_name}
                                                                     </Link>
                                                                 </li>
                                                             ))}
@@ -94,47 +119,51 @@ const HeaderBottom = (): JSX.Element => {
                                                 </li>
                                                 <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "" }}>
                                                     <i className="flaticon-shopping-bag"></i>
-                                                    <span>2</span>
-                                                    <div className="cart-content">
-                                                        <div className="cart-item">
-                                                            <div className="cart-img">
-                                                                <Link to="#"><img src="/assets/images/buycart/01.jpg" alt="" /></Link>
-                                                            </div>
-                                                            <div className="cart-des">
-                                                                <Link to="#">Product Title Hore</Link>
-                                                                <p>120.00</p>
-                                                            </div>
-                                                            <div className="cart-btn">
-                                                                <Link to="#"><i className="flaticon-close"></i></Link>
-                                                            </div>
-                                                        </div>
-                                                        <div className="cart-item">
-                                                            <div className="cart-img">
-                                                                <Link to="#"><img src="/assets/images/buycart/02.jpg" alt="" /></Link>
-                                                            </div>
-                                                            <div className="cart-des">
-                                                                <Link to="#">Product Title Hore</Link>
-                                                                <p>120.00</p>
-                                                            </div>
-                                                            <div className="cart-btn">
-                                                                <Link to="#"><i className="flaticon-close"></i></Link>
-                                                            </div>
-                                                        </div>
+                                                    <span style={{ display: _TOKEN ? "block" : "none" }}>{cartData?.length}</span>
+                                                    <div className="cart-content" style={{ display: _TOKEN ? "block" : "none" }}>
+                                                        {
+                                                            _TOKEN && cartData && cartData?.map((item, index) => {
+                                                                return (
+                                                                    <div className="cart-item" key={index}>
+                                                                        <div className="cart-img">
+                                                                            <Link to="#">
+                                                                                <img src={getImagUrl(item?.product?.productImages[0])} alt="" height={50} width={50} />
+                                                                            </Link>
+                                                                        </div>
+                                                                        <div className="cart-des">
+                                                                            <Link to="#" style={{
+                                                                                width: "140px",
+                                                                                whiteSpace: "nowrap",
+                                                                                overflow: "hidden",
+                                                                                textOverflow: "ellipsis"
+                                                                            }}>{item?.product?.productTitle}</Link>
+                                                                            <p>₹{item?.product?.finalPrice}</p>
+                                                                        </div>
+                                                                        <div className="cart-btn">
+                                                                            <Link to="#"><i className="flaticon-close"></i></Link>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+
                                                         <div className="cart-bottom">
                                                             <div className="cart-subtotal">
-                                                                <p>Total: <b className="float-right">240.00</b></p>
+                                                                <p>Total: <b className="float-right">₹{cart_data?.totalAmount}</b></p>
                                                             </div>
                                                             <div className="cart-action">
                                                                 <button
                                                                     type="submit"
                                                                     className="button d-btn2"
                                                                     style={{ marginRight: "1.5px" }}
+                                                                    data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
                                                                     onClick={() => navigate("/cartproducts")}
                                                                 >View cart</button>
                                                                 <button
                                                                     type="submit"
                                                                     className="button d-btn2"
                                                                     style={{ marginLeft: "1.5px" }}
+                                                                    data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
                                                                     onClick={() => navigate("/checkout")}
                                                                 >Checkout</button>
                                                             </div>

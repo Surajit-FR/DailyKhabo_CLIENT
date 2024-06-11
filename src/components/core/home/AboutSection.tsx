@@ -25,7 +25,7 @@ const AboutSection = ({ categoryData }: CategorySection_props): JSX.Element => {
                                                 <div className="title">
                                                     <h4>{item?.category_name}</h4>
                                                 </div>
-                                                <Link to="#" className="btn btn-m-t">Shop Now</Link>
+                                                <Link to={`/product/${item?.category_name}`} className="btn btn-m-t">Shop Now</Link>
                                             </div>
                                         </div>
                                     </div>

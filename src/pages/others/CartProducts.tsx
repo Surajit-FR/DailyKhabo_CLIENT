@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import PageTopSection from "../../components/common/PageTopSection";
 import Products from "../../components/core/cart/Products";
-import { CustomHeadersType } from "../../config/DataTypes.config";
-import { Dispatch } from "redux";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllCartData } from "../../services/slices/CartSlice";
+import { CartItemType, CustomHeadersType } from "../../config/DataTypes.config";
+import { useSelector } from "react-redux";
 
 type CartProducts_props = {
     _TOKEN: any,
@@ -13,20 +11,14 @@ type CartProducts_props = {
 
 const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
     const { cart_data } = useSelector((state: any) => state.cartSlice);
-    const dispatch: Dispatch<any> = useDispatch();
 
-    const [cartData, setCartData] = useState([]);
+    const [cartData, setCartData] = useState<CartItemType[]>([]);
     const TotalAmount = cart_data?.totalAmount;
-
-    useEffect(() => {
-        dispatch(getAllCartData(header));
-    }, [dispatch, header]);
 
     useEffect(() => {
         setCartData(cart_data?.data);
     }, [cart_data]);
 
-    console.log(cartData, TotalAmount);
 
     return (
         <>
@@ -34,7 +26,7 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
             <PageTopSection pageName="Products" />
 
             {/* Cart Products */}
-            <Products />
+            <Products cartData={cartData} TotalAmount={TotalAmount} />
         </>
     );
 };

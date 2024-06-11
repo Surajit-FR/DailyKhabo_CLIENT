@@ -21,6 +21,18 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
         setOverlayVisible(false);
     };
 
+    const styles = {
+        offerBadge: {
+            display: "none",
+        },
+        priceStrikethrough: {
+            textDecoration: 'line-through',
+            marginRight: '15px',
+            color: "#818181",
+            display: "none",
+        }
+    };
+
     return (
         <>
             <section className="product pb-70">
@@ -54,9 +66,11 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
                                                     <li><i className="fas fa-star-half"></i></li>
                                                 </ul>
                                                 <p>(Review 3)</p>
-                                                <span className="price">₹ {item?.price}</span>
+                                                <span className="price"
+                                                    style={{ ...styles.priceStrikethrough, display: (item?.offer !== "true") ? "none" : "" }}>₹ {item?.price}</span>
+                                                <span className="price">₹ {item?.finalPrice}</span>
                                             </div>
-                                            <Link to="#" className="offer">-{item?.offerPercentage}%</Link>
+                                            <Link to="#" className="offer" style={{ ...styles.offerBadge, display: (item?.offer !== "true") ? "none" : "" }}>-{item?.offerPercentage}%</Link>
                                         </div>
                                     </div>
                                 ))}
@@ -65,14 +79,16 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
                         <Link to="#" className="btn btn-m-t">View all Product</Link>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* LightcaseOverlay */}
-            {overlayVisible && <LightcaseOverlay
-                src={overlayContent?.src}
-                title={overlayContent?.title}
-                onClose={hideOverlay}
-            />}
+            {
+                overlayVisible && <LightcaseOverlay
+                    src={overlayContent?.src}
+                    title={overlayContent?.title}
+                    onClose={hideOverlay}
+                />
+            }
         </>
     );
 };

@@ -140,7 +140,7 @@ export type CategoryListType = {
 };
 
 // Cart product type
-interface Product {
+type CartProduct = {
     _id: string;
     productTitle: string;
     productImages: Array<string>;
@@ -151,13 +151,21 @@ interface Product {
 }
 
 // Cart list type
-export interface CartItemType {
+export type CartItemType = {
     _id: string;
-    product: Product;
+    product: CartProduct;
     cart_quantity: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
+
+// Promise return type FetchAllCategoryResponse
+export type FetchCartResponse = {
+    data: Array<CartItemType>;
+    totalAmount: number;
+    message: string;
+    success: boolean;
+};
 
 // Promise return type FetchAllCategoryResponse
 export type FetchAllCategoryResponse = {
@@ -178,6 +186,7 @@ export type ProductListType = {
     productDescription: string;
     productKeyPoints: Array<string>;
     price: string;
+    finalPrice: number;
     availability: string;
     productQuantity: number;
     categories: Array<CategoryListType>;
@@ -190,6 +199,13 @@ export type ProductListType = {
 // Promise return type FetchAllProductResponse
 export type FetchAllProductResponse = {
     data: [ProductListType];
+    totalPages: number;
+    currentPage: number;
+    totalItems: number;
+    showing: {
+        startIndex: number;
+        endIndex: number;
+    };
     message: string;
     success: boolean;
 };
@@ -203,16 +219,18 @@ export type Search_props_type = {
 
 // Common response type
 export interface ApiResponse<T> {
+    _id: string;
+    category: string;
     productImages: Array<string>;
     categoryImage: string;
     productTitle: ReactNode;
     price(price: any): unknown;
     category_name: ReactNode;
-    _id: string;
     token(token: any): string;
     message: string;
     success: boolean;
     data: T;
+    totalAmount: number;
 }
 
 // CustomJwtPayload type
@@ -235,6 +253,9 @@ export type CategoryResponse = ApiResponse<Array<CategoryListType>>;
 
 // Common response type for product operations
 export type ProductResponse = ApiResponse<Array<ProductListType>>;
+
+// Common response type for cart operations
+export type CartResponse = ApiResponse<Array<CartItemType>>;
 
 // Common response type for authentication
 export type AuthResponse = ApiResponse<LoginSuccessResponse['data']>;

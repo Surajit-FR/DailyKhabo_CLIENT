@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 type PageTopSection_props = {
-    pageName: string
+    pageName: string | undefined
 }
 
 const PageTopSection = ({ pageName }: PageTopSection_props): JSX.Element => {

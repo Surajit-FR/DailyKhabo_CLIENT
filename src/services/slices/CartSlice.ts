@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { GETCARTDATA } from "../api/Api";
-import { CustomHeadersType, FetchAllCategoryResponse } from "../../config/DataTypes.config";
+import { CustomHeadersType, FetchCartResponse } from "../../config/DataTypes.config";
 
 
 // getAllCartData thunk
-export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", async (header: CustomHeadersType, { rejectWithValue }): Promise<any> => {
+export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", async (header: CustomHeadersType, { rejectWithValue }): Promise<FetchCartResponse | any> => {
     try {
         const response = await GETCARTDATA(header);
-        const result: FetchAllCategoryResponse = response?.data;
+        const result: FetchCartResponse = response?.data;
         if (result?.success) return result;
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);

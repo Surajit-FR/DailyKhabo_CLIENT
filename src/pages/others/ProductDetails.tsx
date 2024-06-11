@@ -9,12 +9,12 @@ import ProductDetailsImageSlider from "../../components/core/products/product_co
 import { CustomHeadersType } from "../../config/DataTypes.config";
 import IncrementDecrement from "../../util/IncrementDecrement";
 
-type ProductDetails_props = {
+type ProductDetailsProps = {
     _TOKEN: any,
     header: CustomHeadersType
 }
 
-const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element => {
+const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
     const { product_id } = useParams();
     const { products_details_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
@@ -41,11 +41,30 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element =
         }
     }, []);
 
+    const styles = {
+        offerBadge: {
+            marginRight: '15px',
+            fontSize: "20px",
+            background: "#66a21b",
+            width: "auto",
+            color: "#fff",
+            borderRadius: "50px",
+            padding: "4px 10px"
+        },
+        priceStrikethrough: {
+            textDecoration: 'line-through',
+            marginRight: '15px',
+            fontSize: "20px",
+            color: "#818181"
+        },
+        price: {
+            marginRight: '10px'
+        }
+    };
+
     return (
         <>
-            {/* PageHeader Section */}
             <PageTopSection pageName="Product Details" />
-
             <section className="shop-single padding-tb" ref={shopSingleRef}>
                 <div className="container">
                     <div className="row">
@@ -74,9 +93,25 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element =
                                                 <i className="far fa-star"></i>
                                                 <i className="far fa-star"></i>
                                                 <i className="far fa-star"></i>
-                                                (3 review)
+                                                (3 reviews)
                                             </p>
-                                            <h4>₹ {products_details_data?.data?.price}</h4>
+                                            {products_details_data?.data?.offer === "true" && (
+                                                <div>
+                                                    <span style={styles.offerBadge}>
+                                                        {products_details_data?.data?.offerPercentage}% Off
+                                                    </span>
+                                                </div>
+                                            )}
+                                            <h4>
+                                                {products_details_data?.data?.offer === "true" && (
+                                                    <span style={styles.priceStrikethrough}>
+                                                        ₹ {products_details_data?.data?.price}
+                                                    </span>
+                                                )}
+                                                <span style={styles.price}>
+                                                    ₹ {products_details_data?.data?.finalPrice}
+                                                </span>
+                                            </h4>
                                             <h5>Product Description</h5>
                                             <p>{products_details_data?.data?.productDescription}</p>
                                             <form>
@@ -89,18 +124,9 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element =
                                                     </select>
                                                     <i className="fas fa-angle-down"></i>
                                                 </div>
-                                                {/* <div className="select-product color">
-                                                    <select>
-                                                        <option>Select Color</option>
-                                                        <option>Pink</option>
-                                                        <option>Ash</option>
-                                                        <option>Red</option>
-                                                        <option>White</option>
-                                                        <option>Blue</option>
-                                                    </select>
-                                                    <i className="fas fa-angle-down"></i>
-                                                </div> */}
+
                                                 <IncrementDecrement initialValue={1} />
+
                                                 <div className="discount-code">
                                                     <input type="text" placeholder="Enter Discount Code" />
                                                 </div>
@@ -110,15 +136,13 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetails_props): JSX.Element =
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Product review & desc. */}
                             <ReviewAndDesc
                                 products_details_data={products_details_data?.data}
                             />
                         </div>
                     </div>
-                </div>
-            </section>
+                </div >
+            </section >
         </>
     );
 };

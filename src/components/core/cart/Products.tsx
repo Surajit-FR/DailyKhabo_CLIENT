@@ -1,9 +1,15 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import IncrementDecrement from "../../../util/IncrementDecrement";
+import { CartItemType } from "../../../config/DataTypes.config";
+import { getImagUrl } from "../../../helpers/getImage";
 
+type CartProducts_props = {
+    cartData: Array<CartItemType>;
+    TotalAmount: number
+}
 
-const Products = (): JSX.Element => {
+const Products = ({ cartData, TotalAmount }: CartProducts_props): JSX.Element => {
     const navigate = useNavigate();
     const shopSingleRef = useRef<HTMLDivElement>(null);
 
@@ -30,22 +36,28 @@ const Products = (): JSX.Element => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td className="product-item">
-                                            <div className="p-thumb">
-                                                <Link to="#"><img src="/assets/images/shop/01.jpg" alt="product" /></Link>
-                                            </div>
-                                            <div className="p-content">
-                                                <Link to="#">Product Text Here</Link>
-                                            </div>
-                                        </td>
-                                        <td>₹250</td>
-                                        <td><IncrementDecrement initialValue={1} /></td>
-                                        <td>₹750</td>
-                                        <td>
-                                            <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
-                                        </td>
-                                    </tr>
+                                    {
+                                        cartData && cartData?.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="product-item">
+                                                        <div className="p-thumb">
+                                                            <Link to="#"><img src={getImagUrl(item?.product?.productImages[0])} alt="product" height={85} width={121.67} /></Link>
+                                                        </div>
+                                                        <div className="p-content">
+                                                            <Link to="#">{item?.product?.productTitle}</Link>
+                                                        </div>
+                                                    </td>
+                                                    <td>₹{item?.product?.finalPrice}</td>
+                                                    <td><IncrementDecrement initialValue={item?.cart_quantity} /></td>
+                                                    <td>₹{item?.product?.totalPrice}</td>
+                                                    <td>
+                                                        <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -106,7 +118,7 @@ const Products = (): JSX.Element => {
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Order Total</span>
-                                                    <p className="pull-right">₹ 2940.00</p>
+                                                    <p className="pull-right">₹ {TotalAmount}</p>
                                                 </li>
                                             </ul>
                                         </div>
