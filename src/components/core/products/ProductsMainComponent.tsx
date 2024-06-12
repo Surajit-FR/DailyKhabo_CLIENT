@@ -3,12 +3,16 @@ import PageTopSection from "../../common/PageTopSection";
 import AllProducts from "./product_content/AllProducts";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { CategoryResponse, ProductResponse } from "../../../config/DataTypes.config";
+import { CategoryResponse, CustomHeadersType, ProductResponse } from "../../../config/DataTypes.config";
 import { getAllCategory, getAllProduct } from "../../../services/slices/UtilitySlice";
 import { REACT_APP_PRODUCT_PER_PAGE } from "../../../config/App.config";
 import { useParams } from "react-router-dom";
 
-const ProductsMainComponent = (): JSX.Element => {
+type ProductsMainComponent_props = {
+    header: CustomHeadersType | undefined
+}
+
+const ProductsMainComponent = ({ header }: ProductsMainComponent_props): JSX.Element => {
     const { category_name } = useParams();
     const { products_data, category_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
@@ -21,7 +25,7 @@ const ProductsMainComponent = (): JSX.Element => {
     // Pagination
     const dataPerPage = REACT_APP_PRODUCT_PER_PAGE;
     const pageCount = products_data?.totalPages;
-    
+
     // Extract category_id from either params or child component 
     const matchedCategory = categoryData?.find(category => category?.category_name === category_name);
     const category_id = matchedCategory?._id;
@@ -59,12 +63,14 @@ const ProductsMainComponent = (): JSX.Element => {
             {/* AllProducts */}
             <AllProducts
                 pageName={category_name}
+                dispatch={dispatch}
                 productData={productData}
                 categoryData={categoryData}
                 pageCount={pageCount}
                 pageNumber={pageNumber}
                 changePage={changePage}
                 setCategoryID={setCategoryID}
+                header={header}
             />
         </>
     );

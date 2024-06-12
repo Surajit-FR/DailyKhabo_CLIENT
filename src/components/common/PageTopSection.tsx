@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 type PageTopSection_props = {
@@ -5,9 +6,17 @@ type PageTopSection_props = {
 }
 
 const PageTopSection = ({ pageName }: PageTopSection_props): JSX.Element => {
+    const pageTopRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (pageTopRef.current) {
+            pageTopRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, []);
+
     return (
         <>
-            <section className="page-header padding-tb page-header-bg-1">
+            <section className="page-header padding-tb page-header-bg-1" ref={pageTopRef}>
                 <div className="container">
                     <div className="page-header-item d-flex align-items-center justify-content-center">
                         <div className="post-content">

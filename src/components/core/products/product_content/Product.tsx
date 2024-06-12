@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom';
-import { ProductListType } from '../../../../config/DataTypes.config';
+import { CustomHeadersType, ProductListType } from '../../../../config/DataTypes.config';
 import { getImagUrl } from '../../../../helpers/getImage';
+import { addToCart } from '../../../../helpers/CartFunctions';
+import { Dispatch } from 'redux';
 
 type ProductsProps = {
     item?: ProductListType;
+    header: CustomHeadersType | undefined;
+    dispatch: Dispatch<any>
 };
 
-const Product = ({ item }: ProductsProps): JSX.Element => {
+const Product = ({ item, header, dispatch }: ProductsProps): JSX.Element => {
     const styles = {
         offerBadge: {
             display: (item?.offer !== "true") ? "none" : "block",
@@ -35,7 +39,7 @@ const Product = ({ item }: ProductsProps): JSX.Element => {
                         <Link to={`/product/details/${item?._id}`}>
                             <i className="far fa-eye"></i>
                         </Link>
-                        <Link to="#">
+                        <Link to="#" onClick={() => addToCart({ product: item?._id, cart_quantity: 1, dispatch, header })}>
                             <i className="fas fa-cart-plus"></i>
                         </Link>
                     </div>

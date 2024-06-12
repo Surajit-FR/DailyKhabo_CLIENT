@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../services/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,8 @@ import { getAllCartData } from '../../../services/slices/CartSlice';
 import { CartItemType, CategoryResponse } from '../../../config/DataTypes.config';
 import { getImagUrl } from '../../../helpers/getImage';
 import { getAllCategory } from '../../../services/slices/UtilitySlice';
+import { deleteItem } from '../../../helpers/CartFunctions';
+import { Dispatch } from 'redux';
 
 const HeaderBottom = (): JSX.Element => {
     const { category_data } = useSelector((state: any) => state.utilitySlice);
@@ -131,16 +133,19 @@ const HeaderBottom = (): JSX.Element => {
                                                                             </Link>
                                                                         </div>
                                                                         <div className="cart-des">
-                                                                            <Link to="#" style={{
+                                                                            <Link to={`/product/details/${item?.product?._id}`} style={{
                                                                                 width: "140px",
                                                                                 whiteSpace: "nowrap",
                                                                                 overflow: "hidden",
                                                                                 textOverflow: "ellipsis"
                                                                             }}>{item?.product?.productTitle}</Link>
-                                                                            <p>₹{item?.product?.finalPrice}</p>
+                                                                            <p>₹{item?.product?.totalPrice}</p>
                                                                         </div>
                                                                         <div className="cart-btn">
-                                                                            <Link to="#"><i className="flaticon-close"></i></Link>
+                                                                            <Link
+                                                                                to="#"
+                                                                                onClick={() => deleteItem({ product_id: item?.product?._id, dispatch, header })}
+                                                                            ><i className="flaticon-close"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 )

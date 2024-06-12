@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDCART, GETCARTDATA } from "../api/Api";
+import { ADDCART, DELETECARTITEM, GETCARTDATA, UPDATEQUANTITY } from "../api/Api";
 import { FetchCartResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
 
@@ -9,13 +9,29 @@ export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, hea
         const response = await ADDCART(data, header);
         const result: any = response?.data;
         if (result?.success) {
-            showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500 });
+            showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getAllCartData({ header }));
             return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500 });
+        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
+        return err;
+    }
+});
+
+// updateQuantity thunk
+export const updateQuantity = createAsyncThunk("/user/api/update/cart/quantity", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await UPDATEQUANTITY(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Cart quantity updated!', type: 'success', durationTime: 3000, position: "top-center" });
+            dispatch(getAllCartData({ header }));
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3000, position: "top-center" });
         return err;
     }
 });
@@ -28,6 +44,22 @@ export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", as
         if (result?.success) return result;
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
+// deleteCartItem thunk
+export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", async ({ product_id, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await DELETECARTITEM(product_id, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Product removed to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
+            dispatch(getAllCartData({ header }));
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });

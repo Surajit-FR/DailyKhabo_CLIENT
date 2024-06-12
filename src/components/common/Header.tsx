@@ -20,7 +20,7 @@ const Header = (): JSX.Element => {
             const isExpired = decodedJwt?.exp ? decodedJwt.exp < Date.now() / 1000 : false;
             if (isExpired) {
                 dispatch(logoutUser());
-                showToast({ message: "Session Expired. You've been logged out. Please signin again.", type: 'error', durationTime: 4000 });
+                showToast({ message: "Session Expired. You've been logged out. Please signin again.", type: 'error', durationTime: 4000, position: "top-center" });
             }
         }
     }, [dispatch, _TOKEN]);

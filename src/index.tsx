@@ -21,7 +21,6 @@ root.render(
       </Routes>
     </Router>
     <Toaster
-      position='bottom-center'
       reverseOrder={false}
       gutter={10}
     />

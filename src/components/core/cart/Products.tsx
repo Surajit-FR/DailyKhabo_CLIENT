@@ -1,27 +1,24 @@
-import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import IncrementDecrement from "../../../util/IncrementDecrement";
-import { CartItemType } from "../../../config/DataTypes.config";
+import { CartItemType, CustomHeadersType } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { deleteItem } from "../../../helpers/CartFunctions";
 
 type CartProducts_props = {
     cartData: Array<CartItemType>;
-    TotalAmount: number
+    TotalAmount: number;
+    header: CustomHeadersType | undefined
 }
 
-const Products = ({ cartData, TotalAmount }: CartProducts_props): JSX.Element => {
-    const navigate = useNavigate();
-    const shopSingleRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (shopSingleRef.current) {
-            shopSingleRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, []);
+const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.Element => {
+    const dispatch: Dispatch<any> = useDispatch();
+    const navigate: any = useNavigate();
 
     return (
         <>
-            <div className="shop-cart padding-tb" ref={shopSingleRef}>
+            <div className="shop-cart padding-tb">
                 <div className="container">
                     <div className="section-wrapper">
                         <div className="cart-top">
@@ -45,14 +42,22 @@ const Products = ({ cartData, TotalAmount }: CartProducts_props): JSX.Element =>
                                                             <Link to="#"><img src={getImagUrl(item?.product?.productImages[0])} alt="product" height={85} width={121.67} /></Link>
                                                         </div>
                                                         <div className="p-content">
-                                                            <Link to="#">{item?.product?.productTitle}</Link>
+                                                            <Link to={`/product/details/${item?.product?._id}`}>{item?.product?.productTitle}</Link>
                                                         </div>
                                                     </td>
                                                     <td>₹{item?.product?.finalPrice}</td>
-                                                    <td><IncrementDecrement initialValue={item?.cart_quantity} /></td>
+                                                    <td>
+                                                        <IncrementDecrement
+                                                            initialValue={item?.cart_quantity}
+                                                            product_id={item?.product?._id}
+                                                            dispatch={dispatch}
+                                                            header={header}
+                                                            pageName="cart"
+                                                        />
+                                                    </td>
                                                     <td>₹{item?.product?.totalPrice}</td>
                                                     <td>
-                                                        <Link to="#"><img src="/assets/images/shop/del.png" alt="product" /></Link>
+                                                        <Link to="#" onClick={() => deleteItem({ product_id: item?.product?._id, dispatch, header })}><img src="/assets/images/shop/del.png" alt="product" /></Link>
                                                     </td>
                                                 </tr>
                                             )
@@ -128,7 +133,7 @@ const Products = ({ cartData, TotalAmount }: CartProducts_props): JSX.Element =>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };

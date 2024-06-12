@@ -1,10 +1,12 @@
 import Product from './Product';
-import { CategoryResponse, ProductResponse } from '../../../../config/DataTypes.config';
+import { CategoryResponse, CustomHeadersType, ProductResponse } from '../../../../config/DataTypes.config';
 import Pagination from '../../../../util/Pagination';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
 
 type AllProducts_props = {
+    header: CustomHeadersType | undefined;
     pageName: string | undefined;
     productData: ProductResponse[];
     categoryData: CategoryResponse[];
@@ -12,9 +14,10 @@ type AllProducts_props = {
     pageNumber: number;
     changePage: (selected: { selected: number }) => void;
     setCategoryID: Function;
+    dispatch: Dispatch<any>
 }
 
-const AllProducts = ({ pageName, categoryData, productData, pageCount, pageNumber, changePage, setCategoryID }: AllProducts_props): JSX.Element => {
+const AllProducts = ({ header, pageName, categoryData, productData, pageCount, pageNumber, changePage, setCategoryID, dispatch }: AllProducts_props): JSX.Element => {
     const { products_data } = useSelector((state: any) => state.utilitySlice);
     const matchedCategory = categoryData?.find(category => category?.category_name === pageName);
 
@@ -38,7 +41,12 @@ const AllProducts = ({ pageName, categoryData, productData, pageCount, pageNumbe
                                 {
                                     productData && productData?.map((item: any, index: any) => {
                                         return (
-                                            <Product item={item} key={index} />
+                                            <Product
+                                                key={index}
+                                                item={item}
+                                                header={header}
+                                                dispatch={dispatch}
+                                            />
                                         )
                                     })
                                 }

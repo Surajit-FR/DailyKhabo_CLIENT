@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk("/api/login", async ({ data, navigate,
         }
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Login failed.', type: 'error', durationTime: 3500 });
+        showToast({ message: err?.payload?.message || 'Login failed.', type: 'error', durationTime: 3500, position: "bottom-center" });
         return err;
     }
 });
@@ -63,7 +63,7 @@ export const registerUser = createAsyncThunk("/api/register", async ({ data, nav
         }
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Signup failed.', type: 'error', durationTime: 3500 });
+        showToast({ message: err?.payload?.message || 'Signup failed.', type: 'error', durationTime: 3500, position: "bottom-center" });
         return err;
     }
 });

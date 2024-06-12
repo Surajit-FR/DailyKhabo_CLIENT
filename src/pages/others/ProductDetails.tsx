@@ -7,7 +7,7 @@ import { Dispatch } from "redux";
 import { getProductDetails } from "../../services/slices/UtilitySlice";
 import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
 import { CustomHeadersType } from "../../config/DataTypes.config";
-import { addCart } from "../../services/slices/CartSlice";
+import { addToCart } from "../../helpers/CartFunctions";
 
 type ProductDetailsProps = {
     _TOKEN: any,
@@ -26,23 +26,13 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
     const [value, setValue] = useState<number>(1);
 
     const decrement = () => {
-        if (value > 0) {
+        if (value > 1) {
             setValue(value - 1);
         }
     };
 
     const increment = () => {
         setValue(value + 1);
-    };
-
-    const shopSingleRef = useRef<HTMLDivElement>(null);
-
-    const AddToCart = () => {
-        const data = {
-            product: products_details_data?.data?._id,
-            cart_quantity: value
-        }
-        dispatch(addCart({ data, header }));
     };
 
     useEffect(() => {
@@ -54,11 +44,6 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
         dispatch(getProductDetails({ product_id: product_id }))
     }, [dispatch, product_id]);
 
-    useEffect(() => {
-        if (shopSingleRef.current) {
-            shopSingleRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, []);
 
     const styles = {
         offerBadge: {
@@ -84,7 +69,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
     return (
         <>
             <PageTopSection pageName="Product Details" />
-            <section className="shop-single padding-tb" ref={shopSingleRef}>
+            <section className="shop-single padding-tb">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 col-12 sticky-widget">
@@ -157,7 +142,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                     type="button"
                                                     data-toggle={_TOKEN ? "" : "modal"}
                                                     data-target={_TOKEN ? "" : "#exampleAuthModal"}
-                                                    onClick={AddToCart}
+                                                    onClick={() => addToCart({ product: products_details_data?.data?._id, cart_quantity: value, dispatch, header })}
                                                 >Add To Cart</button>
                                             </form>
                                         </div>

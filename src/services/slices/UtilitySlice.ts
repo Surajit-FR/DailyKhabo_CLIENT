@@ -62,6 +62,12 @@ const UtilitySlice = createSlice({
         clearProductsDetailsData(state) {
             state.products_details_data = [];
         },
+        clearProductsData(state) {
+            state.products_data = [];
+        },
+        clearCategoryData(state) {
+            state.category_data = [];
+        },
         clearError(state) {
             state.error = null;
         },
@@ -117,6 +123,8 @@ const UtilitySlice = createSlice({
 
 export const {
     clearProductsDetailsData,
+    clearProductsData,
+    clearCategoryData,
     clearError,
 } = UtilitySlice.actions;
 export default UtilitySlice.reducer;

@@ -5,11 +5,13 @@ type ToastOptions = {
     message: string;
     type: 'success' | 'error';
     durationTime: number;
+    position: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 };
 
-export const showToast = ({ message, type, durationTime }: ToastOptions) => {
+export const showToast = ({ message, type, durationTime, position }: ToastOptions) => {
     const options = {
         duration: durationTime,
+        position,
         style: {
             color: "#000",
             background: "#fff", // Green for success, white for error

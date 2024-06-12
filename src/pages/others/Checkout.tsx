@@ -1,22 +1,14 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import PageTopSection from "../../components/common/PageTopSection";
 
 const Checkout = (): JSX.Element => {
-    const divRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (divRef.current) {
-            divRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }, []);
 
     return (
         <>
             {/* PageHeader Section */}
             <PageTopSection pageName="Checkout" />
 
-            <div className="checkout_box" ref={divRef}>
+            <div className="checkout_box">
                 <div className="container">
                     <form className="checkout_bg">
                         <div className="row">

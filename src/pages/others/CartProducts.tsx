@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 type CartProducts_props = {
     _TOKEN: any,
-    header: CustomHeadersType
+    header: CustomHeadersType | undefined
 }
 
 const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
@@ -26,7 +26,11 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
             <PageTopSection pageName="Products" />
 
             {/* Cart Products */}
-            <Products cartData={cartData} TotalAmount={TotalAmount} />
+            <Products
+                cartData={cartData}
+                TotalAmount={TotalAmount}
+                header={header}
+            />
         </>
     );
 };
