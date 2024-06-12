@@ -30,7 +30,7 @@ const ProductsMainComponent = ({ header }: ProductsMainComponent_props): JSX.Ele
     const matchedCategory = categoryData?.find(category => category?.category_name === category_name);
     const category_id = matchedCategory?._id;
 
-    const _CATEGORYID = category_id ? category_id : categoryID ? categoryID : "";
+    const _CATEGORYID = category_id ? category_id : categoryID;
 
     const changePage = ({ selected }: { selected: number }) => {
         setPageNumber(selected);
@@ -41,7 +41,7 @@ const ProductsMainComponent = ({ header }: ProductsMainComponent_props): JSX.Ele
             page: (pageNumber + 1),
             pageSize: dataPerPage,
             search: "",
-            category: _CATEGORYID
+            category: _CATEGORYID || ""
         }));
         dispatch(getAllCategory({
             page: 0,
