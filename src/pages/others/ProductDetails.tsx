@@ -119,7 +119,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                             <h5>Product Description</h5>
                                             <p>{products_details_data?.data?.productDescription}</p>
                                             <form>
-                                                <div className="select-product size">
+                                                {/* <div className="select-product size">
                                                     <select>
                                                         <option>Select Size</option>
                                                         <option>L</option>
@@ -127,7 +127,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                         <option>kg.</option>
                                                     </select>
                                                     <i className="fas fa-angle-down"></i>
-                                                </div>
+                                                </div> */}
 
                                                 <div className="cart-plus-minus">
                                                     <div className="dec qtybutton" onClick={decrement}>-</div>
@@ -135,9 +135,9 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                     <div className="inc qtybutton" onClick={increment}>+</div>
                                                 </div>
 
-                                                <div className="discount-code">
+                                                {/* <div className="discount-code">
                                                     <input type="text" placeholder="Enter Discount Code" />
-                                                </div>
+                                                </div> */}
                                                 <button
                                                     type="button"
                                                     data-toggle={_TOKEN ? "" : "modal"}
