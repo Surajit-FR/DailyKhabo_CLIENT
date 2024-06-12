@@ -95,7 +95,7 @@ const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.El
                                             </div>
                                             <div className="outline-select shipping-select">
                                                 <select>
-                                                    <option value="volvo">State/Country</option>
+                                                    <option value="volvo">State</option>
                                                     <option value="saab">Dhaka</option>
                                                     <option value="saab">Benkok</option>
                                                     <option value="saab">Kolkata</option>
@@ -115,7 +115,7 @@ const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.El
                                             <ul>
                                                 <li>
                                                     <span className="pull-left">Cart Subtotal</span>
-                                                    <p className="pull-right">₹ 0.00</p>
+                                                    <p className="pull-right">₹ {TotalAmount}</p>
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Shipping and Handling</span>

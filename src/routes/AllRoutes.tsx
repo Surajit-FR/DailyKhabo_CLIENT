@@ -31,7 +31,7 @@ const AllRoutes = (): JSX.Element => {
                 <Route path='/blogsingle/:blog_id' element={<BlogSingle />} />
                 <Route element={<ProtectedOne />}>
                     <Route path='/cartproducts' element={<CartProducts _TOKEN={_TOKEN} header={header} />} />
-                    <Route path='/checkout' element={<Checkout />} />
+                    <Route path='/checkout' element={<Checkout header={header} />} />
                 </Route>
                 <Route path='/product/details/:product_id' element={<ProductDetails _TOKEN={_TOKEN} header={header} />} />
             </Routes>

@@ -7,10 +7,15 @@ import { clearAuthError, loginUser } from "../../services/slices/AuthSlice";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 
+type Login_props = {
+    forgetPassword: boolean,
+    setForgetPassword: Function,
+}
+
 const userCookie = Cookies.get("user");
 const user = DecryptData(userCookie ? userCookie : "");
 
-const Login = (): JSX.Element => {
+const Login = ({ forgetPassword, setForgetPassword }: Login_props): JSX.Element => {
     const dispatch: any = useDispatch();
     const navigate: any = useNavigate();
 
@@ -87,7 +92,7 @@ const Login = (): JSX.Element => {
                 </div>
 
                 <div className="pass-link">
-                    <Link to="#">Forgot password?</Link>
+                    <Link to="#" onClick={() => setForgetPassword(!forgetPassword)}>Forgot password?</Link>
                 </div>
 
                 <div className="field">

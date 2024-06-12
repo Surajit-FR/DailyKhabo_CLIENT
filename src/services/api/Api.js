@@ -29,6 +29,10 @@ export const API = axios.create({ baseURL: REACT_APP_BASE_URL });
 export const LOGIN = (data) => API.post("/api/login", data);
 // Register
 export const REGISTER = (data) => API.post("/api/register", data);
+// Verify Email
+export const VERIFYEMAIL = (data) => API.post("/api/verify/email", data);
+// Reset Password
+export const RESETPASSWORD = (data) => API.post("/api/reset/password", data);
 // Get all categories
 export const GETALLCATEGORIES = (page, pageSize) => API.get(`/user/api/get/all/category?page=${page}&pageSize=${pageSize}`);
 // Get all products

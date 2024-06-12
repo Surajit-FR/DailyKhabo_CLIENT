@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LOGIN, REGISTER } from "../api/Api";
+import { LOGIN, REGISTER, RESETPASSWORD, VERIFYEMAIL } from "../api/Api";
 import { AuthResponse, UserAuth_Props } from "../../config/DataTypes.config";
 import Cookies from 'js-cookie';
 import { EncryptData } from "../../helpers/EncryptDecrypt";
@@ -68,10 +68,44 @@ export const registerUser = createAsyncThunk("/api/register", async ({ data, nav
     }
 });
 
+// verifyEmail thunk
+export const verifyEmail = createAsyncThunk("/api/verify/email", async ({ data }: UserAuth_Props, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await VERIFYEMAIL(data);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Email Verified.', type: 'success', durationTime: 3000, position: "bottom-center" });
+            return result;
+        }
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Verification failed.', type: 'error', durationTime: 3500, position: "bottom-center" });
+        return err;
+    }
+});
+
+// resetPassword thunk
+export const resetPassword = createAsyncThunk("/api/reset/password", async ({ data, resetForm }: UserAuth_Props, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await RESETPASSWORD(data);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Email Verified.', type: 'success', durationTime: 3000, position: "bottom-center" });
+            closeAuthModal();
+            resetForm && resetForm();
+        }
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Verification failed.', type: 'error', durationTime: 3500, position: "bottom-center" });
+        return err;
+    }
+});
+
 const AuthSlice = createSlice({
     name: "authSlice",
     initialState: {
         user_data: [],
+        verification_data: null,
         auth_loading: false,
         error: null
     },
@@ -111,6 +145,21 @@ const AuthSlice = createSlice({
             state.user_data = user_data;
         })
         builder.addCase(registerUser.rejected, (state, { payload }) => {
+            state.auth_loading = false;
+            const err: any | null = payload;
+            state.error = err;
+        })
+
+        // verifyEmail states
+        builder.addCase(verifyEmail.pending, (state) => {
+            state.auth_loading = true;
+        })
+        builder.addCase(verifyEmail.fulfilled, (state, { payload }) => {
+            state.auth_loading = false;
+            const verification_data: any = payload;
+            state.verification_data = verification_data;
+        })
+        builder.addCase(verifyEmail.rejected, (state, { payload }) => {
             state.auth_loading = false;
             const err: any | null = payload;
             state.error = err;
