@@ -24,11 +24,11 @@ const BillingInfo = ({ cartData, TotalAmount, header }: BillingInfo_props): JSX.
                     <div className="border_left mt-3">
                         <h6>Enter the billing address that matches your payment method.</h6>
                         <div className="row">
-                            <div className="col-md-6 col-lg-6">
-                                <input className="email_text" type="text" name="" placeholder="First name" />
+                            <div className="col-md-12 col-lg-12">
+                                <input className="email_text" type="text" name="" placeholder="Full name" />
                             </div>
-                            <div className="col-md-6 col-lg-6">
-                                <input className="email_text" type="text" name="" placeholder="Last name" />
+                            <div className="col-md-12 col-lg-12">
+                                <input className="email_text" type="text" name="" placeholder="Phone" />
                             </div>
                             <div className="col-md-12 col-lg-12">
                                 <input className="email_text" type="text" name="" placeholder="Address" />
@@ -36,7 +36,7 @@ const BillingInfo = ({ cartData, TotalAmount, header }: BillingInfo_props): JSX.
                             <div className="col-md-12 col-lg-12">
                                 <input className="email_text" type="text" name="" placeholder="Apartment, suite, etc. (optional)" />
                             </div>
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 <select className="email_text" name="country">
                                     <option value="India">India</option>
                                     <option value="Afghanistan">Afghanistan</option>
@@ -53,9 +53,6 @@ const BillingInfo = ({ cartData, TotalAmount, header }: BillingInfo_props): JSX.
                             <div className="col-md-6 col-lg-6">
                                 <input className="email_text" type="text" name="" placeholder="Postal code" />
                             </div>
-                            <div className="col-md-6 col-lg-6">
-                                <input className="email_text" type="text" name="" placeholder="Phone (optional)" />
-                            </div>
                         </div>
 
                     </div>
@@ -67,11 +64,6 @@ const BillingInfo = ({ cartData, TotalAmount, header }: BillingInfo_props): JSX.
                             <li>
                                 <label>
                                     <input className="radio_1" type="radio" name="colorRadio" value="delivery" /> Cash on delivery
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input className="radio_1" type="radio" name="colorRadio" value="paypal" /> PayPal
                                 </label>
                             </li>
                             <li>

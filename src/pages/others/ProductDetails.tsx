@@ -66,6 +66,8 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
         }
     };
 
+    console.log(_TOKEN);
+
     return (
         <>
             <PageTopSection pageName="Product Details" />
@@ -142,7 +144,11 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                     type="button"
                                                     data-toggle={_TOKEN ? "" : "modal"}
                                                     data-target={_TOKEN ? "" : "#exampleAuthModal"}
-                                                    onClick={() => addToCart({ product: products_details_data?.data?._id, cart_quantity: value, dispatch, header })}
+                                                    onClick={() => {
+                                                        if (_TOKEN) {
+                                                            addToCart({ product: products_details_data?.data?._id, cart_quantity: value, dispatch, header });
+                                                        }
+                                                    }}
                                                 >Add To Cart</button>
                                             </form>
                                         </div>

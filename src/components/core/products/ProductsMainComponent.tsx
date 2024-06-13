@@ -9,10 +9,11 @@ import { REACT_APP_PRODUCT_PER_PAGE } from "../../../config/App.config";
 import { useParams } from "react-router-dom";
 
 type ProductsMainComponent_props = {
+    _TOKEN: any,
     header: CustomHeadersType | undefined
 }
 
-const ProductsMainComponent = ({ header }: ProductsMainComponent_props): JSX.Element => {
+const ProductsMainComponent = ({ _TOKEN, header }: ProductsMainComponent_props): JSX.Element => {
     const { category_name } = useParams();
     const { products_data, category_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
@@ -70,6 +71,7 @@ const ProductsMainComponent = ({ header }: ProductsMainComponent_props): JSX.Ele
                 pageNumber={pageNumber}
                 changePage={changePage}
                 setCategoryID={setCategoryID}
+                _TOKEN={_TOKEN}
                 header={header}
             />
         </>

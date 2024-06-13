@@ -6,18 +6,19 @@ import { useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 type AllProducts_props = {
-    header: CustomHeadersType | undefined;
-    pageName: string | undefined;
-    productData: ProductResponse[];
-    categoryData: CategoryResponse[];
-    pageCount: number;
-    pageNumber: number;
-    changePage: (selected: { selected: number }) => void;
-    setCategoryID: Function;
-    dispatch: Dispatch<any>
+    _TOKEN: any,
+    header: CustomHeadersType | undefined,
+    pageName: string | undefined,
+    productData: ProductResponse[],
+    categoryData: CategoryResponse[],
+    pageCount: number,
+    pageNumber: number,
+    changePage: (selected: { selected: number }) => void,
+    setCategoryID: Function,
+    dispatch: Dispatch<any>,
 }
 
-const AllProducts = ({ header, pageName, categoryData, productData, pageCount, pageNumber, changePage, setCategoryID, dispatch }: AllProducts_props): JSX.Element => {
+const AllProducts = ({ _TOKEN, header, pageName, categoryData, productData, pageCount, pageNumber, changePage, setCategoryID, dispatch }: AllProducts_props): JSX.Element => {
     const { products_data } = useSelector((state: any) => state.utilitySlice);
     const matchedCategory = categoryData?.find(category => category?.category_name === pageName);
 
@@ -45,6 +46,7 @@ const AllProducts = ({ header, pageName, categoryData, productData, pageCount, p
                                                 key={index}
                                                 item={item}
                                                 header={header}
+                                                _TOKEN={_TOKEN}
                                                 dispatch={dispatch}
                                             />
                                         )

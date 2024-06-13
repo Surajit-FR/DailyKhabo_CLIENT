@@ -5,12 +5,13 @@ import { addToCart } from '../../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
 
 type ProductsProps = {
+    _TOKEN: any,
     item?: ProductListType;
     header: CustomHeadersType | undefined;
     dispatch: Dispatch<any>
 };
 
-const Product = ({ item, header, dispatch }: ProductsProps): JSX.Element => {
+const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element => {
     const styles = {
         offerBadge: {
             display: (item?.offer !== "true") ? "none" : "block",
@@ -39,8 +40,16 @@ const Product = ({ item, header, dispatch }: ProductsProps): JSX.Element => {
                         <Link to={`/product/details/${item?._id}`}>
                             <i className="far fa-eye"></i>
                         </Link>
-                        <Link to="#" onClick={() => addToCart({ product: item?._id, cart_quantity: 1, dispatch, header })}>
-                            <i className="fas fa-cart-plus"></i>
+                        <Link
+                            to="#"
+                            data-toggle={_TOKEN ? "" : "modal"}
+                            data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                            onClick={() => {
+                                if (_TOKEN) {
+                                    addToCart({ product: item?._id, cart_quantity: 1, dispatch, header })
+                                }
+                            }}
+                        ><i className="fas fa-cart-plus"></i>
                         </Link>
                     </div>
                 </div>
