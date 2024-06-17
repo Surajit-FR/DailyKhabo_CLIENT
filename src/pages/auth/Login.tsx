@@ -23,6 +23,7 @@ const Login = ({ forgetPassword, setForgetPassword }: Login_props): JSX.Element 
         initialValues: {
             credential: user?.credential ? user?.credential : "",
             password: user?.password ? user?.password : "",
+            user_type: "User",
             remember_me: user?.remember_me ? user?.remember_me : false
         },
         validationSchema: loginValidationSchema,
