@@ -76,7 +76,7 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
                                 ))}
                             </div>
                         </div>
-                        <Link to="#" className="btn btn-m-t">View all Product</Link>
+                        <Link to={`/product/All Products`} className="btn btn-m-t">View all Product</Link>
                     </div>
                 </div>
             </section >

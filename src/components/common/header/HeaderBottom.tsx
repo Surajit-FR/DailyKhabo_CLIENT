@@ -98,6 +98,13 @@ const HeaderBottom = (): JSX.Element => {
                                                     </Link>
                                                     {item?.submenu?.length > 0 && (
                                                         <ul className="submenu">
+                                                            <li>
+                                                                <Link
+                                                                    to={`/product/All Products`}
+                                                                    className={activeLink === "All Products" ? 'active' : ''}
+                                                                    onClick={() => handleLinkClick("All Products")}
+                                                                >All Products</Link>
+                                                            </li>
                                                             {item?.submenu?.map(subitem => (
                                                                 <li key={subitem?._id}>
                                                                     <Link

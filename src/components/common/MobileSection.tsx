@@ -1,17 +1,38 @@
 import { Link } from "react-router-dom";
 import { DecryptData } from "../../helpers/EncryptDecrypt";
 import { Dispatch } from "redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../services/slices/AuthSlice";
+import { CategoryResponse } from "../../config/DataTypes.config";
+import { useEffect, useMemo, useState } from "react";
+import { getAllCategory } from "../../services/slices/UtilitySlice";
 
 const MobileSection = (): JSX.Element => {
+    const { category_data } = useSelector((state: any) => state.utilitySlice);
+
     const token: string | null = window.localStorage.getItem("token");
     const _TOKEN = JSON.parse(token ?? 'null');
+
+    const header = useMemo(() => ({
+        headers: {
+            Authorization: `Bearer ${_TOKEN}`
+        }
+    }), [_TOKEN]);
 
     const user: any = window.localStorage.getItem("user");
     const _USER = DecryptData(user ? user : "");
 
     const dispatch: Dispatch<any> = useDispatch();
+    const [activeLink, setActiveLink] = useState<string>('/home');
+    const [categoryData, setCategoryData] = useState<CategoryResponse[]>([]);
+
+    const menuItems = [
+        { name: 'Home', path: '/home', submenu: [] },
+        { name: 'About Us', path: '/aboutus', submenu: [] },
+        { name: 'Our Products', path: '#', submenu: categoryData },
+        { name: 'Blog', path: '/blog', submenu: [] },
+        { name: 'Contact us', path: '/contactus', submenu: [] },
+    ];
 
     const handleMenuItemClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         const element = e.currentTarget.parentElement!;
@@ -35,12 +56,34 @@ const MobileSection = (): JSX.Element => {
         }
     };
 
+    // handleLinkClick func.
+    const handleLinkClick = (path: string) => {
+        setActiveLink(path);
+    };
+
+    // handleMenuClick func.
+    const handleMenuClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        handleMenuItemClick(e);
+    };
+
+    useEffect(() => {
+        dispatch(getAllCategory({
+            page: 0,
+            pageSize: 0,
+        }));
+    }, [dispatch, header, _TOKEN]);
+
+
+    useEffect(() => {
+        setCategoryData(category_data?.data);
+    }, [category_data]);
+
     return (
         <>
             <div className="mobile-menu">
                 <nav className="mobile-header primary-menu d-lg-none">
                     <div className="header-logo">
-                        <Link to="index.html" className="logo"><img src="/assets/images/logo/logo.png" alt="logo" /></Link>
+                        <Link to="#" className="logo"><img src="/assets/images/logo/logo.png" alt="logo" /></Link>
                     </div>
                     <div className="header-bar" id="open-button">
                         <span></span>
@@ -52,17 +95,48 @@ const MobileSection = (): JSX.Element => {
                     <div className="mobile-menu-area d-lg-none">
                         <div className="mobile-menu-area-inner" id="scrollbar">
                             <ul className="m-menu">
-                                <li><Link className="active" to="/home">Home</Link></li>
-                                <li><Link to="/aboutus">About Us</Link></li>
-                                <li><Link to="#" className="dd-icon-down" onClick={handleMenuItemClick}>Our Products</Link>
-                                    <ul className="m-submenu">
-                                        <li><Link to="/goldpremiumghee">Gold Premium Ghee</Link></li>
-                                        <li><Link to="/gircowsghee">Gir Cow’s Ghee</Link></li>
-                                        <li><Link to="/deshighee">Desi Ghee</Link></li>
-                                    </ul>
-                                </li>
-                                <li><Link to="/blog">Blog</Link></li>
-                                <li><Link to="/contactus">Contact us</Link></li>
+                                {menuItems?.map(item => (
+                                    <li key={item.name}>
+                                        <Link
+                                            to={item.path}
+                                            className={activeLink === item.path ? 'active' : ''}
+                                            onClick={(e) => {
+                                                handleLinkClick(item.path);
+                                                handleMenuClick(e);
+                                            }}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                        {item?.submenu?.length > 0 && (
+                                            <ul className="submenu">
+                                                <li>
+                                                    <Link
+                                                        to={`/product/All Products`}
+                                                        className={activeLink === "All Products" ? 'active' : ''}
+                                                        onClick={(e) => {
+                                                            handleLinkClick("All Products");
+                                                            handleMenuClick(e);
+                                                        }}
+                                                    >All Products</Link>
+                                                </li>
+                                                {item?.submenu?.map(subitem => (
+                                                    <li key={subitem?._id}>
+                                                        <Link
+                                                            to={`/product/${subitem?.category_name}`}
+                                                            className={activeLink === subitem?._id ? 'active' : ''}
+                                                            onClick={(e) => {
+                                                                handleLinkClick(subitem?._id);
+                                                                handleMenuClick(e);
+                                                            }}
+                                                        >
+                                                            {subitem?.category_name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </li>
+                                ))}
                                 {
                                     !_TOKEN ?
                                         <li>
@@ -73,7 +147,7 @@ const MobileSection = (): JSX.Element => {
                                         </li>
                                         :
                                         <li>
-                                            <Link to="#" className="dd-icon-down" onClick={handleMenuItemClick}>
+                                            <Link to="#" className="dd-icon-down" onClick={handleMenuClick}>
                                                 <i className="fa-regular fa-user fa-fade mr-2"></i>{_USER?.full_name}
                                             </Link>
                                             <ul className="m-submenu">
