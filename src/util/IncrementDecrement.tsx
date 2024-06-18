@@ -16,8 +16,6 @@ const IncrementDecrement = ({ initialValue, product_id, dispatch, header, pageNa
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isInitialRender = useRef(true); // Track initial render
 
-    console.log(pageName);
-
     const debounceDelay = 500; // Adjust debounce delay as needed
 
     const debouncedUpdate = useCallback((newQuantity: number) => {

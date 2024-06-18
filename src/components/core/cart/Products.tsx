@@ -5,16 +5,31 @@ import { getImagUrl } from "../../../helpers/getImage";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { deleteItem } from "../../../helpers/CartFunctions";
+import { useState } from "react";
 
 type CartProducts_props = {
     cartData: Array<CartItemType>;
     TotalAmount: number;
+    ShippingCharge: number;
+    TotalAmountWithShipping: number;
     header: CustomHeadersType | undefined
 }
 
-const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.Element => {
+const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
     const navigate: any = useNavigate();
+    const [couponCode, setCouponCode] = useState<string>('');
+
+    const handleCouponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCouponCode(event.target.value);
+    };
+
+    const applyCoupon = () => {
+        if (couponCode) {
+            console.log("Coupon Code ===>", couponCode);
+            // You can add logic here to apply the coupon code, e.g., fetch data from server, update state, etc.
+        };
+    };
 
     return (
         <>
@@ -69,17 +84,55 @@ const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.El
                         <div className="cart-bottom">
                             <div className="cart-checkout-box">
                                 <div className="coupon">
-                                    <input type="text" name="coupon" placeholder="Coupon Code..." className="cart-page-input-text" />
-                                    <input type="submit" value="Apply Coupon" />
+                                    <div className="coupon">
+                                        <input
+                                            type="text"
+                                            name="coupon"
+                                            placeholder="Coupon Code..."
+                                            maxLength={10}
+                                            className="cart-page-input-text"
+                                            value={couponCode}
+                                            onChange={handleCouponChange}
+                                        />
+                                        <input
+                                            type="submit"
+                                            value="Apply Coupon"
+                                            onClick={applyCoupon}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="cart-checkout">
-                                    <input type="submit" value="Update Cart" />
+                                    {/* <input type="submit" value="Update Cart" /> */}
                                     <input type="submit" value="Proceed to Checkout" onClick={() => navigate('/checkout')} />
                                 </div>
                             </div>
                             <div className="shiping-box">
                                 <div className="row">
+
+                                    {/* Cart Totals */}
                                     <div className="col-md-6 col-12">
+                                        <div className="cart-overview">
+                                            <p className="pull-right">*Free shipping available after purcahse of ₹2500/-</p>
+                                            <h3>Cart Totals</h3>
+                                            <ul>
+                                                <li>
+                                                    <span className="pull-left">Cart Subtotal</span>
+                                                    <p className="pull-right">₹ {TotalAmount}</p>
+                                                </li>
+                                                <li>
+                                                    <span className="pull-left">Shipping and Handling</span>
+                                                    {ShippingCharge !== 0 ? <p className="pull-right">₹ {ShippingCharge}</p> : <p className="pull-right">Free Shipping</p>}
+                                                </li>
+                                                <li>
+                                                    <span className="pull-left">Order Total</span>
+                                                    <p className="pull-right">₹ {TotalAmountWithShipping}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {/* Calculate Shipping */}
+                                    {/* <div className="col-md-6 col-12">
                                         <div className="calculate-shiping">
                                             <h3>Calculate Shipping</h3>
                                             <div className="outline-select">
@@ -108,26 +161,7 @@ const Products = ({ cartData, TotalAmount, header }: CartProducts_props): JSX.El
                                                 className="cart-page-input-text" />
                                             <button type="submit">Update Total</button>
                                         </div>
-                                    </div>
-                                    <div className="col-md-6 col-12">
-                                        <div className="cart-overview">
-                                            <h3>Cart Totals</h3>
-                                            <ul>
-                                                <li>
-                                                    <span className="pull-left">Cart Subtotal</span>
-                                                    <p className="pull-right">₹ {TotalAmount}</p>
-                                                </li>
-                                                <li>
-                                                    <span className="pull-left">Shipping and Handling</span>
-                                                    <p className="pull-right">Free Shipping</p>
-                                                </li>
-                                                <li>
-                                                    <span className="pull-left">Order Total</span>
-                                                    <p className="pull-right">₹ {TotalAmount}</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

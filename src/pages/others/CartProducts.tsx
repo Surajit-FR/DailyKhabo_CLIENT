@@ -14,6 +14,8 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
 
     const [cartData, setCartData] = useState<CartItemType[]>([]);
     const TotalAmount = cart_data?.totalAmount;
+    const ShippingCharge = cart_data?.shippingCharge;
+    const TotalAmountWithShipping = cart_data?.totalAmountWithShipping;
 
     useEffect(() => {
         setCartData(cart_data?.data);
@@ -29,6 +31,8 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
             <Products
                 cartData={cartData}
                 TotalAmount={TotalAmount}
+                ShippingCharge={ShippingCharge}
+                TotalAmountWithShipping={TotalAmountWithShipping}
                 header={header}
             />
         </>
