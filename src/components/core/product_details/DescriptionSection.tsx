@@ -17,6 +17,7 @@ const DescriptionSection = ({ products_details_data }: ReviewAndDesc_props) => {
                     <div className="post-content">
                         <ul>
                             {
+                                products_details_data?.productKeyPoints?.length &&
                                 products_details_data?.productKeyPoints?.map((item, index) => {
                                     return (
                                         <li key={index}>{item}</li>
