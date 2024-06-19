@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDCART, DELETECARTITEM, GETCARTDATA, UPDATEQUANTITY } from "../api/Api";
+import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, UPDATEQUANTITY } from "../api/Api";
 import { FetchCartResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
 
@@ -49,17 +49,33 @@ export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", as
 });
 
 // deleteCartItem thunk
-export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", async ({ product_id, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", async ({ product_id, couponCode, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await DELETECARTITEM(product_id, header);
         const result: any = response?.data;
         if (result?.success) {
             showToast({ message: result?.message || 'Product removed to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
-            dispatch(getAllCartData({ header }));
+            dispatch(getAllCartData({ couponCode, header }));
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
         showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
+        return err;
+    }
+});
+
+// applyCoupon thunk
+export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await APPLYCOUPON(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Coupon applied!', type: 'success', durationTime: 3500, position: "top-center" });
+            return result;
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Failed to apply.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -106,6 +122,21 @@ const CartSlice = createSlice({
             state.cart_data = cart_data;
         })
         builder.addCase(getAllCartData.rejected, (state, { payload }) => {
+            state.cart_loading = false;
+            const err: any | null = payload;
+            state.error = err;
+        })
+
+        // applyCouponCode states
+        builder.addCase(applyCouponCode.pending, (state) => {
+            state.cart_loading = true;
+        })
+        builder.addCase(applyCouponCode.fulfilled, (state, { payload }) => {
+            state.cart_loading = false;
+            const cart_data: any = payload;
+            state.cart_data = cart_data;
+        })
+        builder.addCase(applyCouponCode.rejected, (state, { payload }) => {
             state.cart_loading = false;
             const err: any | null = payload;
             state.error = err;

@@ -44,3 +44,15 @@ export const passwordValidationSchema = Yup.object({
         .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
         .required('Confirm Password is required'),
 });
+
+// order validation
+export const orderValidationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email ID is required'),
+    full_name: Yup.string().required('Full name is required'),
+    phone: Yup.string().required('Phone number is required'),
+    address: Yup.string().required('Address is required'),
+    state: Yup.string().required('State is required'),
+    city: Yup.string().required('City is required'),
+    postalCode: Yup.string().required('Postal code is required'),
+    payment: Yup.string().oneOf(['cod', 'stripe']).required('Payment method is required'),
+});

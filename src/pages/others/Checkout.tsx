@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { CartItemType, CustomHeadersType } from "../../config/DataTypes.config";
 import OrderSummary from "../../components/core/checkout/OrderSummary";
 import BillingInfo from "../../components/core/checkout/BillingInfo";
+import { useLocation } from "react-router-dom";
 
 type Checkout_props = {
     header: CustomHeadersType | undefined
@@ -11,9 +12,14 @@ type Checkout_props = {
 
 const Checkout = ({ header }: Checkout_props): JSX.Element => {
     const { cart_data } = useSelector((state: any) => state.cartSlice);
+    const location = useLocation();
+    const { state } = location;
 
     const [cartData, setCartData] = useState<CartItemType[]>([]);
+    const [coupon_code, setCoupon_Code] = useState<string>(state?.key || '');
     const TotalAmount = cart_data?.totalAmount;
+    const ShippingCharge = cart_data?.shippingCharge;
+    const TotalAmountWithShipping = cart_data?.totalAmountWithShipping;
 
     useEffect(() => {
         setCartData(cart_data?.data);
@@ -31,16 +37,19 @@ const Checkout = ({ header }: Checkout_props): JSX.Element => {
 
                             {/* Billing Info. */}
                             <BillingInfo
-                                cartData={cartData}
-                                TotalAmount={TotalAmount}
                                 header={header}
+                                cartData={cartData}
                             />
 
                             {/* Order summary */}
                             <OrderSummary
                                 cartData={cartData}
                                 TotalAmount={TotalAmount}
+                                couponCode={coupon_code}
+                                setCouponCode={setCoupon_Code}
                                 header={header}
+                                ShippingCharge={ShippingCharge}
+                                TotalAmountWithShipping={TotalAmountWithShipping}
                             />
                         </div>
                     </form>

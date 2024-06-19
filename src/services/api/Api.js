@@ -44,9 +44,11 @@ export const GETALLPRODUCTS = (params = {}) => {
 export const GETPRODUCTDETAILS = (product_id) => API.get(`/user/api/get/product/details/${product_id}`);
 // Add cart
 export const ADDCART = (data, header) => API.post('/user/api/add/cart', data, header);
-// Add cart
+// Update cart
 export const UPDATEQUANTITY = (data, header) => API.post('/user/api/update/cart/quantity', data, header);
 // Get cart data
 export const GETCARTDATA = (header) => API.get('/user/api/get/all/cart/data', header);
 // Delete cart item
 export const DELETECARTITEM = (product_id, header) => API.delete(`/user/api/delete/cart/item/${product_id}`, header);
+// Apply coupon
+export const APPLYCOUPON = (data, header) => API.post('/user/api/apply/coupon', data, header);

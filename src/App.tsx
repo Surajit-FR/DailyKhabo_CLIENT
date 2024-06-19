@@ -9,12 +9,13 @@ import PreLoader from "./util/PreLoader";
 const App = (): JSX.Element => {
   const { utility_loading } = useSelector((state: any) => state.utilitySlice);
   const { auth_loading } = useSelector((state: any) => state.authSlice);
+  const { cart_loading } = useSelector((state: any) => state.cartSlice);
 
   return (
     <>
       {/* PreLoader */}
       <PreLoader
-        loading={utility_loading || auth_loading}
+        loading={utility_loading || auth_loading || cart_loading}
       />
 
       {/* search-area */}

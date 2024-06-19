@@ -1,11 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IncrementDecrement from "../../../util/IncrementDecrement";
 import { CartItemType, CustomHeadersType } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { deleteItem } from "../../../helpers/CartFunctions";
-import { useState } from "react";
 
 type CartProducts_props = {
     cartData: Array<CartItemType>;
@@ -17,19 +16,6 @@ type CartProducts_props = {
 
 const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
-    const navigate: any = useNavigate();
-    const [couponCode, setCouponCode] = useState<string>('');
-
-    const handleCouponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCouponCode(event.target.value);
-    };
-
-    const applyCoupon = () => {
-        if (couponCode) {
-            console.log("Coupon Code ===>", couponCode);
-            // You can add logic here to apply the coupon code, e.g., fetch data from server, update state, etc.
-        };
-    };
 
     return (
         <>
@@ -82,30 +68,6 @@ const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWi
                             </table>
                         </div>
                         <div className="cart-bottom">
-                            <div className="cart-checkout-box">
-                                <div className="coupon">
-                                    <div className="coupon">
-                                        <input
-                                            type="text"
-                                            name="coupon"
-                                            placeholder="Coupon Code..."
-                                            maxLength={10}
-                                            className="cart-page-input-text"
-                                            value={couponCode}
-                                            onChange={handleCouponChange}
-                                        />
-                                        <input
-                                            type="submit"
-                                            value="Apply Coupon"
-                                            onClick={applyCoupon}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="cart-checkout">
-                                    {/* <input type="submit" value="Update Cart" /> */}
-                                    <input type="submit" value="Proceed to Checkout" onClick={() => navigate('/checkout')} />
-                                </div>
-                            </div>
                             <div className="shiping-box">
                                 <div className="row">
 
@@ -162,6 +124,13 @@ const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWi
                                             <button type="submit">Update Total</button>
                                         </div>
                                     </div> */}
+
+                                    {/* Proceed to Checkout */}
+                                    <div className="col-md-6 col-12 cart-checkout-box">
+                                        <div className="cart-checkout">
+                                            <Link className="btn" to="/checkout">Proceed to Checkout<i className="fa-solid fa-arrow-right-long mx-2"></i></Link>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

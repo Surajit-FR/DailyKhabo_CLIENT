@@ -2798,7 +2798,7 @@ p>object:only-child {
 
 .btn {
   padding: 12px 52px;
-  border-radius: 50px;
+  /* border-radius: 50px; */
   text-align: center;
   font-size: 15px;
   color: #fff;

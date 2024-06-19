@@ -25,6 +25,7 @@ export type formValuesType = {
     web_theme?: string;
     product?: string | undefined;
     cart_quantity?: number | undefined;
+    couponCode?: string | undefined;
 };
 
 // Form value props type
@@ -42,6 +43,7 @@ export type FormValues_Props = {
     product_id?: string | undefined;
     product?: string | undefined;
     cart_quantity?: number | undefined;
+    couponCode?: string | undefined;
 };
 
 // Signin input type
