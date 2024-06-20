@@ -83,7 +83,8 @@ const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWi
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Shipping and Handling</span>
-                                                    {ShippingCharge !== 0 ? <p className="pull-right">₹ {ShippingCharge}</p> : <p className="pull-right">Free Shipping</p>}
+                                                    <p className="pull-right">₹ {ShippingCharge}</p>
+                                                    {/* {ShippingCharge !== 0 ? <p className="pull-right">₹ {ShippingCharge}</p> : <p className="pull-right">Free Shipping</p>} */}
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Order Total</span>

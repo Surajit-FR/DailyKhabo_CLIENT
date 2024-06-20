@@ -9,6 +9,8 @@ import { getImagUrl } from '../../../helpers/getImage';
 import { getAllCategory } from '../../../services/slices/UtilitySlice';
 import { deleteItem } from '../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
+import { jwtDecode } from 'jwt-decode';
+import { showToast } from '../../../helpers/Toast';
 
 const HeaderBottom = (): JSX.Element => {
     const { category_data } = useSelector((state: any) => state.utilitySlice);
@@ -74,6 +76,18 @@ const HeaderBottom = (): JSX.Element => {
     }, [cart_data, category_data]);
 
 
+    useEffect(() => {
+        if (_TOKEN) {
+            const decodedJwt = jwtDecode(_TOKEN);
+            const isExpired = decodedJwt?.exp ? decodedJwt.exp < Date.now() / 1000 : false;
+            if (isExpired) {
+                dispatch(logoutUser());
+                showToast({ message: "Session Expired. You've been logged out. Please signin again.", type: 'error', durationTime: 4000, position: "top-center" });
+                navigate('/home');
+            }
+        };
+    }, [dispatch, navigate, _TOKEN]);
+
     return (
         <>
             <div className={menuClasses}>
@@ -128,7 +142,7 @@ const HeaderBottom = (): JSX.Element => {
                                                 </li>
                                                 <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "" }}>
                                                     <i className="flaticon-shopping-bag"></i>
-                                                    <span style={{ display: _TOKEN ? "block" : "none" }}>{cartData?.length}</span>
+                                                    <span style={{ display: _TOKEN && cartData?.length > 0 ? "block" : "none" }}>{cartData?.length}</span>
                                                     <div className="cart-content" style={{ display: _TOKEN ? "block" : "none" }}>
                                                         {
                                                             _TOKEN && cartData && cartData?.map((item, index) => {
@@ -161,7 +175,9 @@ const HeaderBottom = (): JSX.Element => {
 
                                                         <div className="cart-bottom">
                                                             <div className="cart-subtotal">
-                                                                <p>Total: <b className="float-right">₹{cart_data?.totalAmount}</b></p>
+                                                                {
+                                                                    cart_data?.length && <p>Total: <b className="float-right">₹{cart_data?.totalAmount}</b></p>
+                                                                }
                                                             </div>
                                                             <div className="cart-action">
                                                                 <button

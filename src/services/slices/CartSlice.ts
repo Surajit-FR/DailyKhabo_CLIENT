@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, UPDATEQUANTITY } from "../api/Api";
+import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, TAKEORDER, UPDATEQUANTITY } from "../api/Api";
 import { FetchCartResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
+
 
 // addCart thunk
 export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
@@ -65,7 +66,7 @@ export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", as
 });
 
 // applyCoupon thunk
-export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async ({ data, header }: FormValues_Props, { rejectWithValue }): Promise<any> => {
     try {
         const response = await APPLYCOUPON(data, header);
         const result: any = response?.data;
@@ -79,6 +80,24 @@ export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async 
         return err;
     }
 });
+
+// placeOrder thunk
+export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data, resetForm, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await TAKEORDER(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Order placed.', type: 'success', durationTime: 3500, position: "top-center" });
+            resetForm && resetForm();
+            dispatch(getAllCartData({ header }));
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Failed to place order.', type: 'error', durationTime: 3500, position: "top-center" });
+        return err;
+    }
+});
+
 
 const CartSlice = createSlice({
     name: "cartSlice",

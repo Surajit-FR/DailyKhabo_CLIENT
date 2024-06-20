@@ -18,6 +18,7 @@ const Checkout = ({ header }: Checkout_props): JSX.Element => {
     const [cartData, setCartData] = useState<CartItemType[]>([]);
     const [coupon_code, setCoupon_Code] = useState<string>(state?.key || '');
     const TotalAmount = cart_data?.totalAmount;
+    const DiscountAmount = cart_data?.discountAmount;
     const ShippingCharge = cart_data?.shippingCharge;
     const TotalAmountWithShipping = cart_data?.totalAmountWithShipping;
 
@@ -39,15 +40,20 @@ const Checkout = ({ header }: Checkout_props): JSX.Element => {
                             <BillingInfo
                                 header={header}
                                 cartData={cartData}
+                                TotalAmount={TotalAmount}
+                                ShippingCharge={ShippingCharge}
+                                TotalAmountWithShipping={TotalAmountWithShipping}
+                                couponCode={coupon_code}
                             />
 
                             {/* Order summary */}
                             <OrderSummary
                                 cartData={cartData}
-                                TotalAmount={TotalAmount}
                                 couponCode={coupon_code}
                                 setCouponCode={setCoupon_Code}
                                 header={header}
+                                TotalAmount={TotalAmount}
+                                DiscountAmount={DiscountAmount}
                                 ShippingCharge={ShippingCharge}
                                 TotalAmountWithShipping={TotalAmountWithShipping}
                             />

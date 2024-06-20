@@ -26,6 +26,28 @@ export type formValuesType = {
     product?: string | undefined;
     cart_quantity?: number | undefined;
     couponCode?: string | undefined;
+    customer?: {
+        email?: string,
+        full_name?: string,
+        phone?: string,
+        address?: string,
+        apartment?: string,
+        country?: string,
+        state?: string,
+        city?: string,
+        postalCode?: string,
+    };
+    items?: Array<{
+        cart: string,
+        product: string,
+        quantity: number,
+    }>;
+    shipping?: {
+        type: string,
+        cost: number,
+    };
+    payment?: string,
+    total?: number,
 };
 
 // Form value props type
@@ -44,6 +66,7 @@ export type FormValues_Props = {
     product?: string | undefined;
     cart_quantity?: number | undefined;
     couponCode?: string | undefined;
+    resetForm?: Function;
 };
 
 // Signin input type

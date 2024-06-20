@@ -1,19 +1,39 @@
 import { Link } from 'react-router-dom';
-import { CartItemType, CustomHeadersType } from '../../../config/DataTypes.config';
+import { CartItemType, CustomHeadersType, formValuesType } from '../../../config/DataTypes.config';
 import { useFormik } from 'formik';
 import { orderValidationSchema } from '../../../helpers/FormValidation';
+import { DecryptData } from '../../../helpers/EncryptDecrypt';
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+import { placeOrder } from '../../../services/slices/CartSlice';
 
 type BillingInfo_props = {
-    header: CustomHeadersType | undefined;
-    cartData: Array<CartItemType>;
+    header: CustomHeadersType | undefined,
+    cartData: Array<CartItemType>,
+    TotalAmount: number,
+    ShippingCharge: number,
+    TotalAmountWithShipping: number,
+    couponCode: string,
 }
 
-const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
+const BillingInfo = ({ cartData, header, TotalAmount, ShippingCharge, TotalAmountWithShipping, couponCode }: BillingInfo_props): JSX.Element => {
+    const user: any = window.localStorage.getItem("user");
+    const _USER = DecryptData(user ? user : "");
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit, isValid, resetForm, } = useFormik({
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const itemData: Array<{ cart: string; product: string; quantity: number }> = cartData?.map((item) => {
+        return {
+            cart: item?._id,
+            product: item?.product?._id,
+            quantity: item?.cart_quantity,
+        };
+    });
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
         initialValues: {
-            email: '',
-            full_name: '',
+            email: _USER?.email,
+            full_name: _USER?.full_name,
             phone: '',
             address: '',
             apartment: '',
@@ -25,7 +45,29 @@ const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
         },
         validationSchema: orderValidationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            const data: formValuesType = {
+                customer: {
+                    email: values.email.trim(),
+                    full_name: values.full_name.trim(),
+                    phone: values.phone.trim(),
+                    address: values.address.trim(),
+                    apartment: values.apartment.trim(),
+                    country: values.country.trim(),
+                    state: values.state.trim(),
+                    city: values.city.trim(),
+                    postalCode: values.postalCode.trim(),
+                },
+                items: itemData,
+                shipping: {
+                    type: ShippingCharge > 0 ? "paid" : "free",
+                    cost: ShippingCharge,
+                },
+                payment: values.payment,
+                total: TotalAmountWithShipping,
+                couponCode: couponCode,
+            };
+            // console.log(data);
+            dispatch(placeOrder({ data, resetForm, header }));
         },
     });
 
@@ -67,7 +109,7 @@ const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
                                 <input
                                     className="email_text"
                                     type="text"
-                                    placeholder="Enter full name"
+                                    placeholder="Full name"
                                     name='full_name'
                                     value={values?.full_name || ""}
                                     onChange={handleChange}
@@ -81,7 +123,7 @@ const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
                                 <input
                                     className="email_text"
                                     type="text"
-                                    placeholder="Enter phone number"
+                                    placeholder="Phone number"
                                     name='phone'
                                     value={values?.phone || ""}
                                     onChange={handleChange}
@@ -95,7 +137,7 @@ const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
                                 <input
                                     className="email_text"
                                     type="text"
-                                    placeholder="Enter full address"
+                                    placeholder="Address"
                                     name='address'
                                     value={values?.address || ""}
                                     onChange={handleChange}
@@ -241,12 +283,11 @@ const BillingInfo = ({ header }: BillingInfo_props): JSX.Element => {
                             </Link>
                         </div>
                         <div className="col-lg-6">
-                            <button
-                                type="button"
-                                className="btn btn-success"
-                                disabled={!isValid}
+                            <Link
+                                to="#"
+                                className="btn"
                                 onClick={() => handleSubmit()}
-                            >Place Order</button>
+                            >Place Order</Link>
                         </div>
                     </div>
                 </div>

@@ -6,16 +6,17 @@ import { Dispatch } from "redux";
 import { applyCoupon } from "../../../helpers/CartFunctions";
 
 type OrderSummary_props = {
-    cartData: Array<CartItemType>;
-    TotalAmount: number;
-    couponCode: string;
-    setCouponCode: Function;
+    cartData: Array<CartItemType>,
+    couponCode: string,
+    setCouponCode: Function,
     header: CustomHeadersType | undefined,
+    TotalAmount: number,
+    DiscountAmount: number,
     ShippingCharge: number,
     TotalAmountWithShipping: number,
 }
 
-const OrderSummary = ({ cartData, TotalAmount, header, couponCode, setCouponCode, ShippingCharge, TotalAmountWithShipping }: OrderSummary_props): JSX.Element => {
+const OrderSummary = ({ cartData, TotalAmount, header, couponCode, setCouponCode, ShippingCharge, TotalAmountWithShipping, DiscountAmount }: OrderSummary_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
 
     const handleCouponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,9 +70,17 @@ const OrderSummary = ({ cartData, TotalAmount, header, couponCode, setCouponCode
                             <td width="50%">Subtotal</td>
                             <td className="text-right" width="50%"><b>₹{TotalAmount}</b></td>
                         </tr>
+                        {
+                            DiscountAmount > 0 &&
+                            <tr>
+                                <td width="50%">Discount</td>
+                                <td className="text-right" width="50%"><p>&#8722; ₹{DiscountAmount}</p></td>
+                            </tr>
+                        }
                         <tr>
                             <td width="50%">Shipping and Handling</td>
-                            <td className="text-right" width="50%">{ShippingCharge !== 0 ? <p>₹ {ShippingCharge}</p> : <p>Free Shipping</p>}</td>
+                            <td className="text-right" width="50%"><p>₹{ShippingCharge}</p></td>
+                            {/* <td className="text-right" width="50%">{ShippingCharge !== 0 ? <p>₹ {ShippingCharge}</p> : <p>Free Shipping</p>}</td> */}
                         </tr>
                     </tbody>
                 </table>
