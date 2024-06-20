@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import ReviewAndDesc from "../../components/core/product_details/ReviewAndDesc";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { getProductDetails } from "../../services/slices/UtilitySlice";
+import { getAllReviews, getProductDetails } from "../../services/slices/UtilitySlice";
 import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
-import { CustomHeadersType } from "../../config/DataTypes.config";
+import { CustomHeadersType, ReviewListType } from "../../config/DataTypes.config";
 import { addToCart } from "../../helpers/CartFunctions";
+import StarRating from "../../util/StarRating";
+import { getAverageRating } from "../../helpers/Formatter";
 
 type ProductDetailsProps = {
     _TOKEN: any,
@@ -16,11 +18,12 @@ type ProductDetailsProps = {
 
 const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
     const { product_id } = useParams();
-    const { products_details_data } = useSelector((state: any) => state.utilitySlice);
+    const { products_details_data, review_data } = useSelector((state: any) => state.utilitySlice);
     const dispatch: Dispatch<any> = useDispatch();
 
     const [nav1, setNav1] = useState<any>(null);
     const [nav2, setNav2] = useState<any>(null);
+    const [reviewsData, setReviewsData] = useState<Array<ReviewListType>>([]);
     const sliderRef1 = useRef<any>(null);
     const sliderRef2 = useRef<any>(null);
     const [value, setValue] = useState<number>(1);
@@ -42,7 +45,14 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
 
     useEffect(() => {
         dispatch(getProductDetails({ product_id: product_id }))
+        dispatch(getAllReviews({ product_id }));
     }, [dispatch, product_id]);
+    useEffect(() => {
+    }, [dispatch, product_id]);
+
+    useEffect(() => {
+        setReviewsData(review_data?.data);
+    }, [review_data]);
 
 
     const styles = {
@@ -65,8 +75,6 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
             marginRight: '10px'
         }
     };
-
-    console.log(_TOKEN);
 
     return (
         <>
@@ -94,12 +102,13 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                 <Link to="#">{products_details_data?.data?.productTitle}</Link>
                                             </h4>
                                             <p className="rating">
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                (3 reviews)
+                                                <StarRating
+                                                    rating={getAverageRating(reviewsData)}
+                                                    readOnly
+                                                    showText={false}
+                                                    starSize={14}
+                                                />
+                                                ({reviewsData?.length} reviews)
                                             </p>
                                             {products_details_data?.data?.offer === "true" && (
                                                 <div>
@@ -157,6 +166,9 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                             </div>
                             <ReviewAndDesc
                                 products_details_data={products_details_data?.data}
+                                product_id={product_id}
+                                _TOKEN={_TOKEN}
+                                header={header}
                             />
                         </div>
                     </div>

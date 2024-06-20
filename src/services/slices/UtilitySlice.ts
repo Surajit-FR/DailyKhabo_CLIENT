@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GETALLCATEGORIES, GETALLPRODUCTS, GETPRODUCTDETAILS } from "../api/Api";
+import { CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS } from "../api/Api";
 import { FetchAllCategoryResponse, FetchAllProductResponse, FormValues_Props } from "../../config/DataTypes.config";
+import { showToast } from "../../helpers/Toast";
 
 
 // getAllCategory thunk
@@ -44,6 +45,39 @@ export const getProductDetails = createAsyncThunk("/user/api/get/product/details
     }
 });
 
+// getAllReviews thunk
+export const getAllReviews = createAsyncThunk("/user/api/get/all/reviews/", async (params: FormValues_Props, { rejectWithValue }): Promise<any> => {
+    try {
+        const { product_id } = params;
+        const response = await GETALLREVIEWS({ product_id });
+        const result: any = response?.data;
+        if (result?.success) {
+            return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
+// createReview thunk
+export const createReview = createAsyncThunk("/user/api/create/review", async ({ data, product_id, resetForm, setRating, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await CREATEREVIEW(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            resetForm && resetForm();
+            setRating && setRating(0);
+            showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
+            dispatch(getAllReviews({ product_id }));
+            return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
 const UtilitySlice = createSlice({
     name: "utilitySlice",
     initialState: {
@@ -53,6 +87,9 @@ const UtilitySlice = createSlice({
         // Product States
         products_data: [],
         products_details_data: [],
+
+        // Review States
+        review_data: [],
 
         // Common States
         utility_loading: false,
@@ -113,6 +150,21 @@ const UtilitySlice = createSlice({
             state.products_details_data = products_details_data;
         })
         builder.addCase(getProductDetails.rejected, (state, { payload }) => {
+            state.utility_loading = false;
+            const err: any | null = payload;
+            state.error = err;
+        })
+
+        // getAllReviews states
+        builder.addCase(getAllReviews.pending, (state) => {
+            state.utility_loading = true;
+        })
+        builder.addCase(getAllReviews.fulfilled, (state, { payload }) => {
+            state.utility_loading = false;
+            const review_data: any = payload;
+            state.review_data = review_data;
+        })
+        builder.addCase(getAllReviews.rejected, (state, { payload }) => {
             state.utility_loading = false;
             const err: any | null = payload;
             state.error = err;

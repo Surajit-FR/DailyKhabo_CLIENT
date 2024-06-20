@@ -48,6 +48,11 @@ export type formValuesType = {
     };
     payment?: string,
     total?: number,
+    email?: string,
+    product_id?: string,
+    full_name?: string,
+    rating?: number | null | undefined,
+    message?: string,
 };
 
 // Form value props type
@@ -67,6 +72,7 @@ export type FormValues_Props = {
     cart_quantity?: number | undefined;
     couponCode?: string | undefined;
     resetForm?: Function;
+    setRating?: Function;
 };
 
 // Signin input type
@@ -184,6 +190,19 @@ export type CartItemType = {
     _id: string;
     product: CartProduct;
     cart_quantity: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+// Review list type
+export type ReviewListType = {
+    _id: string;
+    product: string;
+    full_name: string;
+    email: string;
+    rating: number;
+    message: string;
+    is_delete: boolean;
     createdAt: string;
     updatedAt: string;
 }

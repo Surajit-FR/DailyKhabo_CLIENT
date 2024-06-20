@@ -9,7 +9,7 @@ const Pagination = ({ pageCount, pageNumber, changePage }: Pagination_Type): JSX
                     breakLabel='....'
                     previousLabel={<i className="fas fa-angle-double-left"></i>}
                     nextLabel={<i className="fas fa-angle-double-right"></i>}
-                    pageCount={pageCount}
+                    pageCount={Math.ceil(pageCount)}
                     onPageChange={changePage}
                     containerClassName={"pagination"}
                     pageClassName={"d-none d-md-block"}
@@ -19,7 +19,7 @@ const Pagination = ({ pageCount, pageNumber, changePage }: Pagination_Type): JSX
                     nextClassName={"next"}
                     nextLinkClassName={"next"}
                     activeClassName={"active"}
-                    forcePage={pageNumber}
+                    forcePage={Math.ceil(pageNumber)}
                     renderOnZeroPageCount={null}
                 />
             </ul>

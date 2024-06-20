@@ -54,3 +54,10 @@ export const DELETECARTITEM = (product_id, header) => API.delete(`/user/api/dele
 export const APPLYCOUPON = (data, header) => API.post('/user/api/apply/coupon', data, header);
 // Take order
 export const TAKEORDER = (data, header) => API.post('/user/api/take/order', data, header);
+// Create review
+export const CREATEREVIEW = (data, header) => API.post('/user/api/create/review', data, header);
+// Get all reviews
+export const GETALLREVIEWS = (params = {}) => {
+    const queryParams = new URLSearchParams(params).toString();
+    return API.get(`/user/api/get/all/reviews?${queryParams}`);
+};

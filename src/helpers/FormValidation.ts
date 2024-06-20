@@ -56,3 +56,11 @@ export const orderValidationSchema = Yup.object({
     postalCode: Yup.string().required('Postal code is required'),
     payment: Yup.string().oneOf(['cod', 'stripe']).required('Payment method is required'),
 });
+
+// rating validation
+export const ratingValidationSchema = Yup.object({
+    full_name: Yup.string().required('Full name is required'),
+    email: Yup.string().email('Invalid email address').required('Email ID is required'),
+    // rating: Yup.string().required('Rating is required'),
+    message: Yup.string().required('Message & Rating is required'),
+});
