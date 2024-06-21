@@ -22,7 +22,7 @@ const Home = (): JSX.Element => {
         dispatch(getAllProduct({
             page: 0,
             pageSize: 0,
-            search: "",
+            searchQuery: "",
             category: ""
         }));
         dispatch(getAllCategory({

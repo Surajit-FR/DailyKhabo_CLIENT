@@ -103,7 +103,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                             </h4>
                                             <p className="rating">
                                                 <StarRating
-                                                    rating={getAverageRating(reviewsData)}
+                                                    rating={getAverageRating(products_details_data?.data?.review)}
                                                     readOnly
                                                     showText={false}
                                                     starSize={14}

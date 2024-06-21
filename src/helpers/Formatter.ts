@@ -32,12 +32,11 @@ export const formatDate = (isoDateString: string | number | Date, type: string) 
 };
 
 // getAverageRating func.
-export const getAverageRating = (reviewsData: Array<ReviewListType>) => {
-    let sumOfRatings = 0;
-    reviewsData?.forEach(review => {
-        sumOfRatings += review.rating;
-    });
+export const getAverageRating = (reviewsData: Array<ReviewListType> | undefined): number => {
+    if (!reviewsData || reviewsData?.length === 0) return 0;
 
-    const averageRating = Math.ceil(sumOfRatings / reviewsData?.length);
-    return averageRating;
-}
+    const sumOfRatings = reviewsData?.reduce((sum, review) => sum + review?.rating, 0);
+    const averageRating = sumOfRatings / reviewsData?.length;
+
+    return Math.ceil(averageRating);
+};

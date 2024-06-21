@@ -61,7 +61,7 @@ export type FormValues_Props = {
     header?: CustomHeadersType | undefined;
     page?: number | undefined;
     pageSize?: number | undefined;
-    search?: string;
+    searchQuery?: string;
     category?: string;
     minPrice?: number;
     maxPrice?: number;
@@ -238,6 +238,7 @@ export type ProductListType = {
     availability: string;
     productQuantity: number;
     categories: Array<CategoryListType>;
+    review: Array<ReviewListType>;
     is_delete: boolean,
     createdAt: string;
     updatedAt: string;

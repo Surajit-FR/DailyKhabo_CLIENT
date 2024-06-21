@@ -29,7 +29,7 @@ const OfferSection = (): JSX.Element => {
                                         <img src="/assets/images/offer/03.png" alt="offer" />
                                     </span>
                                 </div>
-                                <Link to="#" className="btn">Shop Now</Link>
+                                <Link to={`/product/All%20Products`} className="btn">Shop Now</Link>
                             </div>
                         </div>
                     </div>

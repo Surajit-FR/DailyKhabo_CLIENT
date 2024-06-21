@@ -111,7 +111,7 @@ const MobileSection = (): JSX.Element => {
                                             <ul className="submenu">
                                                 <li>
                                                     <Link
-                                                        to={`/product/All Products`}
+                                                        to={`/product/All%20Products`}
                                                         className={activeLink === "All Products" ? 'active' : ''}
                                                         onClick={(e) => {
                                                             handleLinkClick("All Products");

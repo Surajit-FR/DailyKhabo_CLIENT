@@ -19,8 +19,8 @@ export const getAllCategory = createAsyncThunk("/user/api/get/all/category", asy
 // getAllProduct thunk
 export const getAllProduct = createAsyncThunk("/user/api/get/all/product", async (params: FormValues_Props, { rejectWithValue }): Promise<FetchAllProductResponse | any> => {
     try {
-        const { page, pageSize, search, category } = params;
-        const response = await GETALLPRODUCTS({ page, pageSize, search, category });
+        const { page, pageSize, searchQuery, category } = params;
+        const response = await GETALLPRODUCTS({ page, pageSize, searchQuery, category });
         const result: FetchAllProductResponse = response?.data;
         if (result?.success) {
             return result

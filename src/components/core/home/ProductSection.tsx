@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import LightcaseOverlay from '../../../util/LightcaseOverlay';
 import { ProductResponse } from '../../../config/DataTypes.config';
 import { getImagUrl } from '../../../helpers/getImage';
+import { getAverageRating } from '../../../helpers/Formatter';
+import StarRating from '../../../util/StarRating';
 
 type ProductSection_props = {
     productData: ProductResponse[];
@@ -59,13 +61,14 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
                                                     <Link to={`/product/details/${item?._id}`}>{item?.productTitle}</Link>
                                                 </h4>
                                                 <ul className="rating">
-                                                    <li><i className="fas fa-star"></i></li>
-                                                    <li><i className="fas fa-star"></i></li>
-                                                    <li><i className="fas fa-star"></i></li>
-                                                    <li><i className="fas fa-star"></i></li>
-                                                    <li><i className="fas fa-star-half"></i></li>
+                                                    <StarRating
+                                                        rating={getAverageRating(item?.review)}
+                                                        readOnly
+                                                        showText={false}
+                                                        starSize={14}
+                                                    />
                                                 </ul>
-                                                <p>(Review 3)</p>
+                                                <p className='mb-1'>{`(Review ${item?.review?.length})`}</p>
                                                 <span className="price"
                                                     style={{ ...styles.priceStrikethrough, display: (item?.offer !== "true") ? "none" : "" }}>₹ {item?.price}</span>
                                                 <span className="price">₹ {item?.finalPrice}</span>
@@ -76,7 +79,7 @@ const ProductSection = ({ productData }: ProductSection_props): JSX.Element => {
                                 ))}
                             </div>
                         </div>
-                        <Link to={`/product/All Products`} className="btn btn-m-t">View all Product</Link>
+                        <Link to={`/product/All%20Products`} className="btn btn-m-t">View all Product</Link>
                     </div>
                 </div>
             </section >

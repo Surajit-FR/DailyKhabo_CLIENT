@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
-import { CustomHeadersType, ProductListType, ReviewListType } from '../../../../config/DataTypes.config';
+import { CustomHeadersType, ProductListType } from '../../../../config/DataTypes.config';
 import { getImagUrl } from '../../../../helpers/getImage';
 import { addToCart } from '../../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
-import { useEffect, useState } from 'react';
-import { getAllReviews } from '../../../../services/slices/UtilitySlice';
-import { useSelector } from 'react-redux';
-import StarRating from '../../../../util/StarRating';
 import { getAverageRating } from '../../../../helpers/Formatter';
+import StarRating from '../../../../util/StarRating';
 
 type ProductsProps = {
     _TOKEN: any,
@@ -17,9 +14,6 @@ type ProductsProps = {
 };
 
 const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element => {
-    const { review_data } = useSelector((state: any) => state.utilitySlice);
-    const [reviewsData, setReviewsData] = useState<Array<ReviewListType>>([]);
-
     const styles = {
         offerBadge: {
             display: (item?.offer !== "true") ? "none" : "block",
@@ -37,14 +31,6 @@ const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element
             display: (item?.offer !== "true") ? "none" : "inline"
         }
     };
-
-    useEffect(() => {
-        dispatch(getAllReviews({ product_id: item?._id }));
-    }, [dispatch, item?._id]);
-
-    useEffect(() => {
-        setReviewsData(review_data?.data);
-    }, [review_data]);
 
     return (
         <div className="col-lg-4 col-md-6 col-12">
@@ -75,15 +61,16 @@ const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element
                             {item?.productTitle}
                         </Link>
                     </h5>
-                    {/* <p>
+
+                    <p>
                         <StarRating
-                            rating={getAverageRating(reviewsData)}
+                            rating={getAverageRating(item?.review)}
                             readOnly
                             showText={true}
                             starSize={14}
-                            text={`(${reviewsData?.length} reviews)`}
+                            text={`(${item?.review?.length} reviews)`}
                         />
-                    </p> */}
+                    </p>
                     <h6>
                         <span style={styles.priceStrikethrough}>
                             ₹ {item?.price}

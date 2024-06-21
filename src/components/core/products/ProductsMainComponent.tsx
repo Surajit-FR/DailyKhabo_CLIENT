@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { CategoryResponse, CustomHeadersType, ProductResponse } from "../../../config/DataTypes.config";
 import { getAllCategory, getAllProduct } from "../../../services/slices/UtilitySlice";
 import { REACT_APP_PRODUCT_PER_PAGE } from "../../../config/App.config";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 type ProductsMainComponent_props = {
     _TOKEN: any,
@@ -14,8 +14,9 @@ type ProductsMainComponent_props = {
 }
 
 const ProductsMainComponent = ({ _TOKEN, header }: ProductsMainComponent_props): JSX.Element => {
-    const { category_name } = useParams();
+    const { category_name } = useParams<{ category_name: string }>();
     const { products_data, category_data } = useSelector((state: any) => state.utilitySlice);
+    const location = useLocation();
     const dispatch: Dispatch<any> = useDispatch();
 
     const [productData, setProductData] = useState<ProductResponse[]>([]);
@@ -26,6 +27,10 @@ const ProductsMainComponent = ({ _TOKEN, header }: ProductsMainComponent_props):
     // Pagination
     const dataPerPage = REACT_APP_PRODUCT_PER_PAGE;
     const pageCount = products_data?.totalPages;
+
+    // Extracting searchQuery from location
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get('searchQuery') || '';
 
     // Extract category_id from either params or child component 
     const matchedCategory = categoryData?.find(category => category?.category_name === category_name);
@@ -41,20 +46,19 @@ const ProductsMainComponent = ({ _TOKEN, header }: ProductsMainComponent_props):
         dispatch(getAllProduct({
             page: (pageNumber + 1),
             pageSize: dataPerPage,
-            search: "",
+            searchQuery: searchQuery || "",
             category: _CATEGORYID || ""
         }));
         dispatch(getAllCategory({
             page: 0,
             pageSize: 0,
         }));
-    }, [dispatch, dataPerPage, pageNumber, _CATEGORYID]);
+    }, [dispatch, dataPerPage, pageNumber, searchQuery, _CATEGORYID]);
 
     useEffect(() => {
         setProductData(products_data?.data);
         setCategoryData(category_data?.data);
     }, [products_data, category_data]);
-
 
     return (
         <>
