@@ -176,7 +176,7 @@ const HeaderBottom = (): JSX.Element => {
                                                         <div className="cart-bottom">
                                                             <div className="cart-subtotal">
                                                                 {
-                                                                    cart_data?.length && <p>Total: <b className="float-right">₹{cart_data?.totalAmount}</b></p>
+                                                                    cart_data?.data?.length > 0 && <p>Total: <b className="float-right">₹{cart_data?.totalAmountWithShipping}</b></p>
                                                                 }
                                                             </div>
                                                             <div className="cart-action">

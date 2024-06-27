@@ -8,13 +8,14 @@ import { deleteItem } from "../../../helpers/CartFunctions";
 
 type CartProducts_props = {
     cartData: Array<CartItemType>;
-    TotalAmount: number;
+    SubTotalAmount: number;
+    DiscountAmount: number,
     ShippingCharge: number;
     TotalAmountWithShipping: number;
     header: CustomHeadersType | undefined
 }
 
-const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {
+const Products = ({ cartData, SubTotalAmount, DiscountAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
 
     return (
@@ -79,13 +80,20 @@ const Products = ({ cartData, TotalAmount, header, ShippingCharge, TotalAmountWi
                                             <ul>
                                                 <li>
                                                     <span className="pull-left">Cart Subtotal</span>
-                                                    <p className="pull-right">₹ {TotalAmount}</p>
+                                                    <p className="pull-right">₹ {SubTotalAmount}</p>
                                                 </li>
                                                 <li>
                                                     <span className="pull-left">Shipping and Handling</span>
                                                     <p className="pull-right">₹ {ShippingCharge}</p>
                                                     {/* {ShippingCharge !== 0 ? <p className="pull-right">₹ {ShippingCharge}</p> : <p className="pull-right">Free Shipping</p>} */}
                                                 </li>
+                                                {
+                                                    DiscountAmount > 0 &&
+                                                    <li>
+                                                        <span className="pull-left">Discount</span>
+                                                        <p className="pull-right">&#8722; ₹ {DiscountAmount}</p>
+                                                    </li>
+                                                }
                                                 <li>
                                                     <span className="pull-left">Order Total</span>
                                                     <p className="pull-right">₹ {TotalAmountWithShipping}</p>

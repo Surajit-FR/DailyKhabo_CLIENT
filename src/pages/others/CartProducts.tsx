@@ -13,7 +13,8 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
     const { cart_data } = useSelector((state: any) => state.cartSlice);
 
     const [cartData, setCartData] = useState<CartItemType[]>([]);
-    const TotalAmount = cart_data?.totalAmount;
+    const SubTotalAmount = cart_data?.subTotalAmount;
+    const DiscountAmount = cart_data?.discountAmount;
     const ShippingCharge = cart_data?.shippingCharge;
     const TotalAmountWithShipping = cart_data?.totalAmountWithShipping;
 
@@ -30,7 +31,8 @@ const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
             {/* Cart Products */}
             <Products
                 cartData={cartData}
-                TotalAmount={TotalAmount}
+                SubTotalAmount={SubTotalAmount}
+                DiscountAmount={DiscountAmount}
                 ShippingCharge={ShippingCharge}
                 TotalAmountWithShipping={TotalAmountWithShipping}
                 header={header}

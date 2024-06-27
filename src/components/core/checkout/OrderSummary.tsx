@@ -10,13 +10,13 @@ type OrderSummary_props = {
     couponCode: string,
     setCouponCode: Function,
     header: CustomHeadersType | undefined,
-    TotalAmount: number,
+    SubTotalAmount: number,
     DiscountAmount: number,
     ShippingCharge: number,
     TotalAmountWithShipping: number,
 }
 
-const OrderSummary = ({ cartData, TotalAmount, header, couponCode, setCouponCode, ShippingCharge, TotalAmountWithShipping, DiscountAmount }: OrderSummary_props): JSX.Element => {
+const OrderSummary = ({ cartData, SubTotalAmount, header, couponCode, setCouponCode, ShippingCharge, TotalAmountWithShipping, DiscountAmount }: OrderSummary_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
 
     const handleCouponChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,7 @@ const OrderSummary = ({ cartData, TotalAmount, header, couponCode, setCouponCode
                     <tbody>
                         <tr>
                             <td width="50%">Subtotal</td>
-                            <td className="text-right" width="50%"><b>₹{TotalAmount}</b></td>
+                            <td className="text-right" width="50%"><b>₹{SubTotalAmount}</b></td>
                         </tr>
                         {
                             DiscountAmount > 0 &&

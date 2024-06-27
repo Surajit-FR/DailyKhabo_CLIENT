@@ -47,6 +47,8 @@ export type formValuesType = {
         cost: number,
     };
     payment?: string,
+    subtotal?: number,
+    discount?: number,
     total?: number,
     email?: string,
     product_id?: string,
@@ -210,7 +212,10 @@ export type ReviewListType = {
 // Promise return type FetchAllCategoryResponse
 export type FetchCartResponse = {
     data: Array<CartItemType>;
-    totalAmount: number;
+    subTalAmount: number;
+    shippingCharge: number;
+    discountAmount: number;
+    totalAmountWithShipping: number;
     message: string;
     success: boolean;
 };

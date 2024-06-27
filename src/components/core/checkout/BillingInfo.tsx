@@ -10,13 +10,14 @@ import { placeOrder } from '../../../services/slices/CartSlice';
 type BillingInfo_props = {
     header: CustomHeadersType | undefined,
     cartData: Array<CartItemType>,
-    TotalAmount: number,
+    SubTotalAmount: number,
+    DiscountAmount: number,
     ShippingCharge: number,
     TotalAmountWithShipping: number,
     couponCode: string,
 }
 
-const BillingInfo = ({ cartData, header, TotalAmount, ShippingCharge, TotalAmountWithShipping, couponCode }: BillingInfo_props): JSX.Element => {
+const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, ShippingCharge, TotalAmountWithShipping, couponCode }: BillingInfo_props): JSX.Element => {
     const user: any = window.localStorage.getItem("user");
     const _USER = DecryptData(user ? user : "");
 
@@ -63,6 +64,8 @@ const BillingInfo = ({ cartData, header, TotalAmount, ShippingCharge, TotalAmoun
                     cost: ShippingCharge,
                 },
                 payment: values.payment,
+                subtotal: SubTotalAmount,
+                discount: DiscountAmount,
                 total: TotalAmountWithShipping,
                 couponCode: couponCode,
             };
