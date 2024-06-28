@@ -90,6 +90,7 @@ export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data
             showToast({ message: result?.message || 'Order placed.', type: 'success', durationTime: 3500, position: "top-center" });
             resetForm && resetForm();
             dispatch(getAllCartData({ header }));
+            return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
@@ -105,6 +106,9 @@ const CartSlice = createSlice({
         // cart States
         add_cart_data: [],
         cart_data: [],
+
+        // order States
+        placeOrder_resp: null,
 
         // Common States
         cart_loading: false,
@@ -156,6 +160,21 @@ const CartSlice = createSlice({
             state.cart_data = cart_data;
         })
         builder.addCase(applyCouponCode.rejected, (state, { payload }) => {
+            state.cart_loading = false;
+            const err: any | null = payload;
+            state.error = err;
+        })
+
+        // placeOrder states
+        builder.addCase(placeOrder.pending, (state) => {
+            state.cart_loading = true;
+        })
+        builder.addCase(placeOrder.fulfilled, (state, { payload }) => {
+            state.cart_loading = false;
+            const placeOrder_resp: any = payload;
+            state.placeOrder_resp = placeOrder_resp;
+        })
+        builder.addCase(placeOrder.rejected, (state, { payload }) => {
             state.cart_loading = false;
             const err: any | null = payload;
             state.error = err;
