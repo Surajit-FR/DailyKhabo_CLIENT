@@ -57,7 +57,7 @@ const BlogLeftColumn = (): JSX.Element => {
                                                 Marke Postonn Supple Chan Though Marke Poston Bestng Practces Chain
                                                 Throuh Marke Postonn is Bestn Practces eractve Fashion Fashion
                                                 Economically And Sound Qources For</p>
-                                            <Link to="#" className="btn"><span>Read More</span><i
+                                            <Link to="/blogsingle/123" className="btn"><span>Read More</span><i
                                                 className="icofont-double-right"></i></Link>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@ const BlogLeftColumn = (): JSX.Element => {
                                                 Marke Postonn Supple Chan Though Marke Poston Bestng Practces Chain
                                                 Throuh Marke Postonn is Bestn Practces eractve Fashion Fashion
                                                 Economically And Sound Qources For</p>
-                                            <Link to="#" className="btn"><span>Read More</span><i
+                                            <Link to="/blogsingle/123" className="btn"><span>Read More</span><i
                                                 className="icofont-double-right"></i></Link>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@ const BlogLeftColumn = (): JSX.Element => {
                                                 Marke Postonn Supple Chan Though Marke Poston Bestng Practces Chain
                                                 Throuh Marke Postonn is Bestn Practces eractve Fashion Fashion
                                                 Economically And Sound Qources For</p>
-                                            <Link to="#" className="btn"><span>Read More</span><i
+                                            <Link to="/blogsingle/123" className="btn"><span>Read More</span><i
                                                 className="icofont-double-right"></i></Link>
                                         </div>
                                     </div>
@@ -231,7 +231,7 @@ const BlogLeftColumn = (): JSX.Element => {
                                                 Marke Postonn Supple Chan Though Marke Poston Bestng Practces Chain
                                                 Throuh Marke Postonn is Bestn Practces eractve Fashion Fashion
                                                 Economically And Sound Qources For</p>
-                                            <Link to="#" className="btn"><span>Read More</span><i
+                                            <Link to="/blogsingle/123" className="btn"><span>Read More</span><i
                                                 className="icofont-double-right"></i></Link>
                                         </div>
                                     </div>

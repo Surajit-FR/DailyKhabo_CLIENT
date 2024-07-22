@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS } from "../api/Api";
+import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS } from "../api/Api";
 import { FetchAllCategoryResponse, FetchAllProductResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
 
@@ -71,6 +71,22 @@ export const createReview = createAsyncThunk("/user/api/create/review", async ({
             showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getAllReviews({ product_id }));
             return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
+// contactUs thunk
+export const contactUs = createAsyncThunk("/user/api/create/review", async ({ data, resetForm }: FormValues_Props, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await CONTACTUS(data);
+        const result: any = response?.data;
+        if (result?.success) {
+            resetForm && resetForm();
+            showToast({ message: result?.message || 'Feedback submitted!', type: 'success', durationTime: 3500, position: "top-center" });
+            return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
@@ -168,6 +184,17 @@ const UtilitySlice = createSlice({
             state.utility_loading = false;
             const err: any | null = payload;
             state.error = err;
+        })
+
+        // contactUs states
+        builder.addCase(contactUs.pending, (state) => {
+            state.utility_loading = true;
+        })
+        builder.addCase(contactUs.fulfilled, (state, { payload }) => {
+            state.utility_loading = false;
+        })
+        builder.addCase(contactUs.rejected, (state, { payload }) => {
+            state.utility_loading = false;
         })
     }
 })

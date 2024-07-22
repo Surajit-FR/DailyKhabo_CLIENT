@@ -61,3 +61,5 @@ export const GETALLREVIEWS = (params = {}) => {
     const queryParams = new URLSearchParams(params).toString();
     return API.get(`/user/api/get/all/reviews?${queryParams}`);
 };
+// Contact us
+export const CONTACTUS = (data) => API.post('/user/api/contact/us', data);

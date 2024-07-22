@@ -64,3 +64,12 @@ export const ratingValidationSchema = Yup.object({
     // rating: Yup.string().required('Rating is required'),
     message: Yup.string().required('Message & Rating is required'),
 });
+
+// order validation
+export const contactUsValidationSchema = Yup.object({
+    full_name: Yup.string().required('Full name is required'),
+    email: Yup.string().email('Invalid email address').required('Email ID is required'),
+    phone: Yup.string().required('Phone number is required'),
+    subject: Yup.string().required('Subject is required'),
+    message: Yup.string().required('One message is required'),
+});
