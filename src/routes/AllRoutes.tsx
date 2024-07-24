@@ -10,6 +10,7 @@ import { useMemo } from 'react';
 import Checkout from '../pages/others/Checkout';
 import ProductsMainComponent from '../components/core/products/ProductsMainComponent';
 import ProtectedOne from './private/ProtectedOne';
+import Profile from '../pages/others/Profile';
 
 const AllRoutes = (): JSX.Element => {
     const token: string | null = window.localStorage.getItem("token");
@@ -32,6 +33,7 @@ const AllRoutes = (): JSX.Element => {
                 <Route element={<ProtectedOne />}>
                     <Route path='/cartproducts' element={<CartProducts _TOKEN={_TOKEN} header={header} />} />
                     <Route path='/checkout' element={<Checkout header={header} />} />
+                    <Route path='/profile' element={<Profile header={header} />} />
                 </Route>
                 <Route path='/product/details/:product_id' element={<ProductDetails _TOKEN={_TOKEN} header={header} />} />
             </Routes>

@@ -1,4 +1,4 @@
-import { ReviewListType } from "../config/DataTypes.config";
+import { Address, ReviewListType } from "../config/DataTypes.config";
 
 // formatDate func.
 export const formatDate = (isoDateString: string | number | Date, type: string) => {
@@ -39,4 +39,15 @@ export const getAverageRating = (reviewsData: Array<ReviewListType> | undefined)
     const averageRating = sumOfRatings / reviewsData?.length;
 
     return Math.ceil(averageRating);
+};
+
+// formatPrimaryAddress func.
+export const formatPrimaryAddress = (addresses: Address[]): string => {
+    const primaryAddress = addresses.find(address => address.primary);
+    if (!primaryAddress) {
+        return '';
+    }
+
+    const { address, apartment, country, state, city, postalCode } = primaryAddress;
+    return `${address}, ${apartment ? `${apartment}, ` : ''}${state}, ${country}, ${city} - ${postalCode}`;
 };

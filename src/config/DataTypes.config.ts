@@ -271,6 +271,18 @@ export type Search_props_type = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+export type Address = {
+    _id: string;
+    user: string;
+    address: string;
+    apartment: string;
+    country: string;
+    state: string;
+    city: string;
+    postalCode: string;
+    primary: boolean;
+};
+
 // Common response type
 export interface ApiResponse<T> {
     _id: string;

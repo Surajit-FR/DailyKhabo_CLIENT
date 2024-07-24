@@ -63,3 +63,5 @@ export const GETALLREVIEWS = (params = {}) => {
 };
 // Contact us
 export const CONTACTUS = (data) => API.post('/user/api/contact/us', data);
+// Get user details
+export const GETUSERDETAILS = (header) => API.get('/user/api/get/user/details', header);

@@ -1,0 +1,45 @@
+import PageTopSection from "../../components/common/PageTopSection";
+import { CustomHeadersType } from "../../config/DataTypes.config";
+import AddAddressModal from "../../util/AddAddressModal";
+import AddressSection from "../../components/core/profile/AddressSection";
+import UserInfo from "../../components/core/profile/UserInfo";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { useEffect } from "react";
+import { getUserDetails } from "../../services/slices/AuthSlice";
+
+
+type Profile_props = {
+    header: CustomHeadersType | undefined
+}
+
+const Profile = ({ header }: Profile_props): JSX.Element => {
+    const dispatch: Dispatch<any> = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserDetails({ header }));
+    }, [dispatch, header]);
+
+    return (
+        <>
+            {/* PageHeader Section */}
+            <PageTopSection pageName="Profile" />
+
+            {/* AddAddress modal */}
+            <AddAddressModal />
+
+            <div className="proflies_section">
+                <div className="container">
+                    <div className="row">
+                        {/* UserInfo */}
+                        <UserInfo header={header} />
+                        {/* AddressSection */}
+                        <AddressSection header={header} />
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Profile;

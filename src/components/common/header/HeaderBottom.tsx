@@ -212,7 +212,7 @@ const HeaderBottom = (): JSX.Element => {
                                                                 <i className="fa-regular fa-user fa-fade mx-2"></i>{_USER?.full_name}
                                                             </Link>
                                                             <ul className="submenu">
-                                                                <li><Link to="#">Profile</Link></li>
+                                                                <li><Link to="/profile">Profile</Link></li>
                                                                 <li>
                                                                     <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
                                                                         <i className="fa-solid fa-power-off fa-bounce"></i> Logout
