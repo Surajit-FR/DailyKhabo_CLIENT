@@ -31,7 +31,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <>
             <div className='username'>
                 <h5>{label}</h5>
-                {touched && error && <div className="error">{error}</div>}
+                {touched && error && <div className="error" style={{ color: "red", fontSize: "12px" }}>{error}*</div>}
                 <input
                     className="n_input"
                     type={type}

@@ -1,4 +1,3 @@
-// src/components/AddAddressModal.tsx
 import { useFormik } from 'formik';
 import { addAddressValidationSchema } from '../helpers/FormValidation';
 import { CustomHeadersType, FormValues, IAddress } from '../config/DataTypes.config';
@@ -6,7 +5,7 @@ import { addAddress } from '../services/slices/UserSlice';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { addEditAddressInputConfigs } from '../components/input/InputConfig';
-import FormGroup from '../components/form/FormGroup';
+import CustomInput from '../components/input/CustomInput';
 
 type AddAddressModalProps = {
     header: CustomHeadersType | undefined;
@@ -57,20 +56,21 @@ const AddAddressModal = ({ header }: AddAddressModalProps): JSX.Element => {
                         <div className="modal-body">
                             <form onSubmit={handleSubmit}>
                                 <div className="row">
-                                    {addEditAddressInputConfigs?.map((config) => (
-                                        <FormGroup
-                                            key={config.name}
-                                            name={config.name}
-                                            label={config.label}
-                                            placeholder={config.placeholder}
-                                            type={config.type}
-                                            value={values[config.name as keyof FormValues]}
+                                    {addEditAddressInputConfigs?.map((config, index) => (
+                                        <CustomInput
+                                            key={index}
+                                            name={config?.name}
+                                            label={config?.label}
+                                            placeholder={config?.placeholder}
+                                            type={config?.type}
+                                            value={values[config?.name as keyof FormValues]}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={errors[config.name as keyof FormValues]}
-                                            touched={touched[config.name as keyof FormValues]}
-                                            readOnly={config.readOnly}
-                                            maxLength={config.maxLength}
+                                            error={errors[config?.name as keyof FormValues]}
+                                            touched={touched[config?.name as keyof FormValues]}
+                                            readOnly={config?.readOnly}
+                                            maxLength={config?.maxLength}
+                                            colSize={config?.colSize}
                                         />
                                     ))}
                                 </div>

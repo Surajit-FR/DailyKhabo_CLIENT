@@ -1,21 +1,22 @@
 import React from 'react';
-import InputField from '../input/InputField';
+import InputField from './InputField';
 
 type FormGroupProps = {
     name: string;
     type?: string;
     placeholder?: string;
     label: string;
-    value: string | boolean;
+    value: string | boolean; // Handle both string and boolean values
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     error?: string;
     touched?: boolean;
     readOnly?: boolean;
     maxLength?: number;
+    colSize?: string;
 };
 
-const FormGroup = ({
+const CustomInput = ({
     name,
     type = 'text',
     placeholder,
@@ -26,17 +27,18 @@ const FormGroup = ({
     error,
     touched,
     readOnly,
-    maxLength
+    maxLength,
+    colSize
 }: FormGroupProps) => {
     return (
         <>
-            <div className="col-md-6">
+            <div className={colSize}>
                 <InputField
                     label={label}
                     name={name}
                     type={type}
                     placeholder={placeholder}
-                    value={typeof value === 'boolean' ? (value ? 'true' : 'false') : value}
+                    value={typeof value === 'boolean' ? (value ? 'true' : 'false') : value} // Handle boolean values
                     onChange={onChange}
                     onBlur={onBlur}
                     error={error}
@@ -49,4 +51,4 @@ const FormGroup = ({
     );
 };
 
-export default FormGroup;
+export default CustomInput;
