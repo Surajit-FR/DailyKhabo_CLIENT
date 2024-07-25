@@ -325,7 +325,18 @@ export interface CustomJwtPayload extends JwtPayload {
     remember_me?: boolean;
     createdAt?: string;
     updatedAt?: string;
-}
+};
+
+export type FormValues = {
+    phone: string;
+    address: string;
+    apartment: string;
+    country: string;
+    state: string;
+    city: string;
+    postalCode: string;
+    primary: boolean;
+};
 
 // Common response type for category operations
 export type CategoryResponse = ApiResponse<Array<CategoryListType>>;
