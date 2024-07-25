@@ -10,12 +10,13 @@ const App = (): JSX.Element => {
   const { utility_loading } = useSelector((state: any) => state.utilitySlice);
   const { auth_loading } = useSelector((state: any) => state.authSlice);
   const { cart_loading } = useSelector((state: any) => state.cartSlice);
+  const { user_loading } = useSelector((state: any) => state.userSlice);
 
   return (
     <>
       {/* PreLoader */}
       <PreLoader
-        loading={utility_loading || auth_loading || cart_loading}
+        loading={utility_loading || auth_loading || cart_loading || user_loading}
       />
 
       {/* search-area */}

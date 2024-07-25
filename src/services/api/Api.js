@@ -65,3 +65,11 @@ export const GETALLREVIEWS = (params = {}) => {
 export const CONTACTUS = (data) => API.post('/user/api/contact/us', data);
 // Get user details
 export const GETUSERDETAILS = (header) => API.get('/user/api/get/user/details', header);
+// Add address
+export const ADDADDRESS = (data, header) => API.post("/user/api/add/user/address", data, header);
+// Get address
+export const GETADDRESS = (address_id, header) => API.get(`/user/api/get/address/${address_id}`, header);
+// Update address
+export const UPDATEADDRESS = (address_id, data, header) => API.post(`/user/api/update/user/address/${address_id}`, data, header);
+// Delete address
+export const DELETEADDRESS = (address_id, header) => API.delete(`/user/api/delete/address/${address_id}`, header);

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GETUSERDETAILS, LOGIN, REGISTER, RESETPASSWORD, VERIFYEMAIL } from "../api/Api";
-import { AuthResponse, FormValues_Props, UserAuth_Props } from "../../config/DataTypes.config";
+import { LOGIN, REGISTER, RESETPASSWORD, VERIFYEMAIL } from "../api/Api";
+import { AuthResponse, UserAuth_Props } from "../../config/DataTypes.config";
 import Cookies from 'js-cookie';
 import { EncryptData } from "../../helpers/EncryptDecrypt";
 import { showToast } from "../../helpers/Toast";
@@ -101,19 +101,6 @@ export const resetPassword = createAsyncThunk("/api/reset/password", async ({ da
     }
 });
 
-// getUserDetails thunk
-export const getUserDetails = createAsyncThunk("/user/api/get/user/details", async ({ header }: FormValues_Props, { rejectWithValue }): Promise<any> => {
-    try {
-        const response = await GETUSERDETAILS(header);
-        const result: any = response?.data;
-        if (result?.success) return result;
-    } catch (exc: any) {
-        const err: any = rejectWithValue(exc.response.data);
-        return err;
-    }
-});
-
-
 const AuthSlice = createSlice({
     name: "authSlice",
     initialState: {
@@ -173,21 +160,6 @@ const AuthSlice = createSlice({
             state.verification_data = verification_data;
         })
         builder.addCase(verifyEmail.rejected, (state, { payload }) => {
-            state.auth_loading = false;
-            const err: any | null = payload;
-            state.error = err;
-        })
-
-        // getUserDetails states
-        builder.addCase(getUserDetails.pending, (state) => {
-            state.auth_loading = true;
-        })
-        builder.addCase(getUserDetails.fulfilled, (state, { payload }) => {
-            state.auth_loading = false;
-            const user_data: any = payload?.data;
-            state.user_data = user_data;
-        })
-        builder.addCase(getUserDetails.rejected, (state, { payload }) => {
             state.auth_loading = false;
             const err: any | null = payload;
             state.error = err;

@@ -73,3 +73,20 @@ export const contactUsValidationSchema = Yup.object({
     subject: Yup.string().required('Subject is required'),
     message: Yup.string().required('One message is required'),
 });
+
+// add address validation
+export const addAddressValidationSchema = Yup.object({
+    address: Yup.string().required('Address is required'),
+    apartment: Yup.string(),
+    phone: Yup.string()
+        .matches(/^[0-9]+$/, 'Phone must be a number')
+        .max(10, 'Phone number cannot be more than 10 digits')
+        .required('Phone is required'),
+    country: Yup.string().required('Country is required'),
+    state: Yup.string().required('State is required'),
+    city: Yup.string().required('City is required'),
+    postalCode: Yup.string()
+        .matches(/^[0-9]+$/, 'Postal code must be a number')
+        .max(6, 'Postal code cannot be more than 6 digits')
+        .required('Postal Code is required'),
+});

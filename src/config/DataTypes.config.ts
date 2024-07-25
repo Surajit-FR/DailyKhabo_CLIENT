@@ -59,7 +59,7 @@ export type formValuesType = {
 
 // Form value props type
 export type FormValues_Props = {
-    data?: formValuesType | FormData | undefined;
+    data?: formValuesType | FormData | undefined | IAddress;
     header?: CustomHeadersType | undefined;
     page?: number | undefined;
     pageSize?: number | undefined;
@@ -70,6 +70,7 @@ export type FormValues_Props = {
     navigate?: any;
     category_id?: string | undefined;
     product_id?: string | undefined;
+    address_id?: string | undefined;
     product?: string | undefined;
     cart_quantity?: number | undefined;
     couponCode?: string | undefined;
@@ -275,6 +276,7 @@ export type Address = {
     _id: string;
     user: string;
     address: string;
+    phone: string;
     apartment: string;
     country: string;
     state: string;
@@ -282,6 +284,17 @@ export type Address = {
     postalCode: string;
     primary: boolean;
 };
+
+export interface IAddress {
+    address: string;
+    apartment: string;
+    phone: string;
+    country: string;
+    state: string;
+    city: string;
+    postalCode: string;
+    primary: boolean;
+}
 
 // Common response type
 export interface ApiResponse<T> {

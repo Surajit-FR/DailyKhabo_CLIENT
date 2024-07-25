@@ -8,14 +8,13 @@ type UserInfo_props = {
 }
 
 const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
-    const { user_data } = useSelector((state: any) => state.authSlice);
+    const { user_data } = useSelector((state: any) => state.userSlice);
     const formattedAddress = user_data?.address ? formatPrimaryAddress(user_data.address) : '';
 
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         full_name: '',
-        email: '',
-        phone: ''
+        email: ''
     });
 
     const handleEditClick = () => {
@@ -40,7 +39,6 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
             setFormData({
                 full_name: user_data.full_name || '',
                 email: user_data.email || '',
-                phone: user_data.phone || ''
             });
         }
     }, [user_data]);
@@ -49,6 +47,9 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
         <>
             <div className="col-md-5 col-lg-5">
                 <div className="proflies_box">
+                    <div className="img_boxt">
+                        <img src="/assets/images/portfolio/man.png" alt="" />
+                    </div>
                     <div className="proflies_text1">
                         <h3>{user_data?.full_name}</h3>
                         <h5>{user_data?.email}</h5>
@@ -85,25 +86,13 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="username">
-                                        <h5>Phone</h5>
-                                        <input
-                                            className="n_input"
-                                            type="text"
-                                            name="phone"
-                                            value={formData?.phone}
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                </div>
                             </div>
                             <button
                                 type="button"
                                 className="save_changes mb-2"
                                 onClick={handleSaveChanges}
                             >
-                                Save Changes
+                                Save
                             </button>
                         </>
                     )}

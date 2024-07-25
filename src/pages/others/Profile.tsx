@@ -6,7 +6,8 @@ import UserInfo from "../../components/core/profile/UserInfo";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect } from "react";
-import { getUserDetails } from "../../services/slices/AuthSlice";
+import { getUserDetails } from "../../services/slices/UserSlice";
+import EditAddressModal from "../../util/EditAddressModal";
 
 
 type Profile_props = {
@@ -26,7 +27,10 @@ const Profile = ({ header }: Profile_props): JSX.Element => {
             <PageTopSection pageName="Profile" />
 
             {/* AddAddress modal */}
-            <AddAddressModal />
+            <AddAddressModal header={header}/>
+
+            {/* AddAddress modal */}
+            <EditAddressModal header={header} />
 
             <div className="proflies_section">
                 <div className="container">

@@ -1,15 +1,32 @@
 import { Link } from "react-router-dom";
 import { Address, CustomHeadersType } from "../../../config/DataTypes.config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Dispatch } from "redux";
+import { deleteAddress, getAddress, updateAddress } from "../../../services/slices/UserSlice";
 
 type AddressSection_props = {
     header: CustomHeadersType | undefined
 }
 
 const AddressSection = ({ header }: AddressSection_props): JSX.Element => {
-    const { user_data } = useSelector((state: any) => state.authSlice);
+    const { user_data } = useSelector((state: any) => state.userSlice);
     const [address, setAddress] = useState<Array<Address>>([]);
+    const dispatch: Dispatch<any> = useDispatch();
+
+    // handleDeleteAddress func.
+    const handleDeleteAddress = (address_id: string) => {
+        dispatch(deleteAddress({ address_id, header }))
+    };
+
+    // handleDefaultAddress func.
+    const handleDefaultAddress = (address_id: string, address: Address) => {
+        const updatedAddressData: Address = {
+            ...address,
+            primary: true,
+        };
+        dispatch(updateAddress({ address_id, data: updatedAddressData, header }));
+    };
 
     useEffect(() => {
         setAddress(user_data?.address)
@@ -23,44 +40,52 @@ const AddressSection = ({ header }: AddressSection_props): JSX.Element => {
                     <div className="row mb-4">
                         <div className="col-md-6">
                             <button type="button" className="add_addres" data-toggle="modal"
-                                data-target="#exampleModal">
+                                data-target="#addAddressModal">
                                 <span>+</span>
                                 Add Address
                             </button>
                         </div>
                         {
                             address?.length &&
-                            address?.map((item) => {
+                            address?.map((item: Address) => {
                                 return (
                                     <div className="col-md-6" key={item?._id}>
                                         <div
                                             className="addres_edit"
                                             style={item?.primary ? {
                                                 backgroundColor: "#ddd",
-                                                border: "2px solid #898989"
-                                            } : {}}
+                                                border: "2px solid #898989",
+                                                height: "253px"
+                                            } : { height: "253px" }}
                                         >
                                             {
                                                 item?.primary && <h4>Primary address</h4>
                                             }
-                                            <p>{item?.address}</p>
-                                            <p>{item?.apartment}</p>
-                                            <p>{item?.city},</p>
-                                            <p>{item?.state},</p>
-                                            <p>{item?.postalCode},</p>
+                                            <p>{item?.address},</p>
+                                            <p>{item?.apartment},</p>
+                                            <p>{item?.state}, {item?.city}, {item?.postalCode},</p>
                                             <p>{item?.country}</p>
+                                            <p>Phone number: {item?.phone ? item?.phone : "N/A"}</p>
                                             <ul className="pr_edits">
                                                 <li>
-                                                    <Link to="#">Edit</Link>
+                                                    <Link
+                                                        to="#"
+                                                        data-toggle="modal"
+                                                        data-target="#editAddressModal"
+                                                        onClick={() => dispatch(getAddress({ address_id: item?._id, header }))}
+                                                    >Edit</Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="#">Remove</Link>
+                                                    <Link to="#" onClick={() => handleDeleteAddress(item?._id)}>Remove</Link>
                                                 </li>
                                                 {
                                                     !item?.primary &&
-                                                    (<li>
-                                                        <Link to="#">Set as Default</Link>
-                                                    </li>)
+                                                    <li>
+                                                        <Link
+                                                            to="#"
+                                                            onClick={() => handleDefaultAddress(item?._id, item)}
+                                                        >Set as Default</Link>
+                                                    </li>
                                                 }
                                             </ul>
                                         </div>
@@ -68,7 +93,6 @@ const AddressSection = ({ header }: AddressSection_props): JSX.Element => {
                                 )
                             })
                         }
-
                     </div>
                 </div>
             </div >

@@ -1,18 +1,20 @@
 import { useFormik } from "formik";
 import { addAddressValidationSchema } from "../helpers/FormValidation";
 import { CustomHeadersType, IAddress } from "../config/DataTypes.config";
-import { addAddress } from "../services/slices/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { updateAddress } from "../services/slices/UserSlice";
 import { Dispatch } from "redux";
-import { useDispatch } from "react-redux";
 
-type AddAddressModal_props = {
+type EditAddressModal_props = {
     header: CustomHeadersType | undefined
 }
 
-const AddAddressModal = ({ header }: AddAddressModal_props): JSX.Element => {
+const EditAddressModal = ({ header }: EditAddressModal_props): JSX.Element => {
+    const { address_data } = useSelector((state: any) => state.userSlice);
     const dispatch: Dispatch<any> = useDispatch();
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setValues, resetForm } = useFormik({
         initialValues: {
             phone: '',
             address: '',
@@ -35,13 +37,27 @@ const AddAddressModal = ({ header }: AddAddressModal_props): JSX.Element => {
                 postalCode: values.postalCode.trim(),
                 primary: values.primary,
             };
-            dispatch(addAddress({ data, resetForm, header }));
+            dispatch(updateAddress({ address_id: address_data?._id, data, resetForm, header }));
         },
     });
 
+    useEffect(() => {
+        setValues({
+            phone: address_data?.phone || "",
+            address: address_data?.address || "",
+            apartment: address_data?.apartment || "",
+            country: address_data?.country || "",
+            state: address_data?.state || "",
+            city: address_data?.city || "",
+            postalCode: address_data?.postalCode || "",
+            primary: address_data?.primary || false,
+        })
+    }, [address_data, setValues]);
+
+
     return (
         <>
-            <div className="modal fade" id="addAddressModal" tabIndex={-1} role="dialog"
+            <div className="modal fade" id="editAddressModal" tabIndex={-1} role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog det_center" role="document">
                     <div className="modal-content">
@@ -162,7 +178,7 @@ const AddAddressModal = ({ header }: AddAddressModal_props): JSX.Element => {
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" className="save_changes">Save Address</button>
+                                <button type="submit" className="save_changes">Update Address</button>
                             </form>
                         </div>
                     </div>
@@ -172,4 +188,4 @@ const AddAddressModal = ({ header }: AddAddressModal_props): JSX.Element => {
     );
 };
 
-export default AddAddressModal;
+export default EditAddressModal;
