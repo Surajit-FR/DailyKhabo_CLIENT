@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
-import { CartItemType, CustomHeadersType, formValuesType } from '../../../config/DataTypes.config';
+import { Link, useNavigate } from 'react-router-dom';
+import { Address, CartItemType, CustomHeadersType, formValuesType } from '../../../config/DataTypes.config';
 import { useFormik } from 'formik';
 import { orderValidationSchema } from '../../../helpers/FormValidation';
 import { DecryptData } from '../../../helpers/EncryptDecrypt';
 import { Dispatch } from 'redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { placeOrder } from '../../../services/slices/CartSlice';
+import { useEffect, useState } from 'react';
+import { getUserDetails } from '../../../services/slices/UserSlice';
+import { formatPrimaryAddress } from '../../../helpers/Formatter';
 
 type BillingInfo_props = {
     header: CustomHeadersType | undefined,
@@ -18,10 +21,16 @@ type BillingInfo_props = {
 }
 
 const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, ShippingCharge, TotalAmountWithShipping, couponCode }: BillingInfo_props): JSX.Element => {
+    const { user_data } = useSelector((state: any) => state.userSlice);
+    const dispatch: Dispatch<any> = useDispatch();
+    const navigate: any = useNavigate();
+
+    const [address, setAddress] = useState<Array<Address>>([]);
+    const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+    const formattedAddress = user_data?.address ? formatPrimaryAddress(user_data.address) : '';
+
     const user: any = window.localStorage.getItem("user");
     const _USER = DecryptData(user ? user : "");
-
-    const dispatch: Dispatch<any> = useDispatch();
 
     const itemData: Array<{ cart: string; product: string; quantity: number }> = cartData?.map((item) => {
         return {
@@ -31,7 +40,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
         };
     });
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm, setValues } = useFormik({
         initialValues: {
             email: _USER?.email,
             full_name: _USER?.full_name,
@@ -69,8 +78,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                 total: TotalAmountWithShipping,
                 couponCode: couponCode,
             };
-            // console.log(data);
-            dispatch(placeOrder({ data, resetForm, header }));
+            dispatch(placeOrder({ data, resetForm, navigate, header }));
         },
     });
 
@@ -80,6 +88,32 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
         }
         return null;
     };
+
+    const handleAddressClick = (addressId: string) => {
+        const selected = address.find((addr) => addr._id === addressId);
+        setSelectedAddressId(addressId);
+        if (selected) {
+            setValues({
+                ...values,
+                address: selected.address,
+                apartment: selected.apartment,
+                phone: selected.phone,
+                country: selected.country,
+                state: selected.state,
+                city: selected.city,
+                postalCode: selected.postalCode,
+            });
+        }
+    };
+
+    useEffect(() => {
+        dispatch(getUserDetails({ header }));
+    }, [dispatch, header]);
+
+    useEffect(() => {
+        setAddress(user_data?.address)
+    }, [user_data?.address]);
+
 
     return (
         <>
@@ -104,10 +138,30 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
 
                 <div className="checkout_text mt-4">
                     <h4>Billing Address</h4>
+                    <div className="row">
+                        {
+                            address?.length > 0 &&
+                            address?.map((item: Address) => {
+                                return (
+                                    <div className="col-md-4" key={item?._id}>
+                                        <div className='address-card' onClick={() => handleAddressClick(item?._id)}
+                                            style={{
+                                                backgroundColor: selectedAddressId === item._id ? "#ddd" : "transparent",
+                                                border: selectedAddressId === item._id ? "2px solid #898989" : "2px solid #ccc",
+                                            }}
+                                        >
+                                            <p>{formattedAddress}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
                     <div className="border_left mt-3">
                         <h6>Enter the billing address that matches your payment method.</h6>
                         <div className="row">
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.full_name && renderError(errors?.full_name)}
                                 <input
                                     className="email_text"
@@ -121,7 +175,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                 />
                             </div>
 
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.phone && renderError(errors?.phone)}
                                 <input
                                     className="email_text"
@@ -161,7 +215,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                 />
                             </div>
 
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.country && renderError(errors?.country)}
                                 {/* <select
                                     className="email_text"
@@ -185,7 +239,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                 />
                             </div>
 
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.state && renderError(errors?.state)}
                                 <input
                                     className="email_text"
@@ -199,7 +253,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                 />
                             </div>
 
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.city && renderError(errors?.city)}
                                 <input
                                     className="email_text"
@@ -213,7 +267,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                 />
                             </div>
 
-                            <div className="col-md-12 col-lg-12">
+                            <div className="col-md-6 col-lg-6">
                                 {touched?.postalCode && renderError(errors?.postalCode)}
                                 <input
                                     className="email_text"
@@ -229,7 +283,9 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                         </div>
 
                     </div>
+
                 </div>
+
                 <div className="checkout_text mt-4">
                     <h4>Payment Options</h4>
                     <div className="border_left mt-3">

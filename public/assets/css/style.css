@@ -9945,6 +9945,23 @@ blockquote:before,
   }
 }
 
+.address-card {
+  border: 2px solid #ddd;
+  background: none;
+  color: #000;
+  font-size: 20px;
+  box-shadow: none;
+  height: auto;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  transition: all 500ms ease-in-out;
+  outline: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
 /*--------24-07-24------*/
 .proflies_section {
   padding: 90px 0;

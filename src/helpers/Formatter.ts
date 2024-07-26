@@ -43,7 +43,7 @@ export const getAverageRating = (reviewsData: Array<ReviewListType> | undefined)
 
 // formatPrimaryAddress func.
 export const formatPrimaryAddress = (addresses: Address[]): string => {
-    const primaryAddress = addresses.find(address => address.primary);
+    const primaryAddress = addresses?.find(address => address.primary);
     if (!primaryAddress) {
         return '';
     }

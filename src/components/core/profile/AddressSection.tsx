@@ -46,7 +46,7 @@ const AddressSection = ({ header }: AddressSection_props): JSX.Element => {
                             </button>
                         </div>
                         {
-                            address?.length &&
+                            address?.length > 0 &&
                             address?.map((item: Address) => {
                                 return (
                                     <div className="col-md-6" key={item?._id}>

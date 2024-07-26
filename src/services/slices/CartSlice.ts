@@ -82,7 +82,7 @@ export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async 
 });
 
 // placeOrder thunk
-export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data, resetForm, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data, resetForm, navigate, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await TAKEORDER(data, header);
         const result: any = response?.data;
@@ -90,6 +90,7 @@ export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data
             showToast({ message: result?.message || 'Order placed.', type: 'success', durationTime: 3500, position: "top-center" });
             resetForm && resetForm();
             dispatch(getAllCartData({ header }));
+            navigate('/thank-you')
             return result;
         };
     } catch (exc: any) {

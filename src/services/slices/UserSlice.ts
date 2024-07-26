@@ -1,7 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDADDRESS, DELETEADDRESS, GETADDRESS, GETUSERDETAILS, UPDATEADDRESS } from "../api/Api";
+import { ADDADDRESS, DELETEADDRESS, GETADDRESS, GETUSERDETAILS, UPDATEADDRESS, UPDATEUSERDATA } from "../api/Api";
 import { FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
+
+// updateUser thunk
+export const updateUser = createAsyncThunk("/user/api/update/user/data", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await UPDATEUSERDATA(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            showToast({ message: result?.message || 'Your data updated!', type: 'success', durationTime: 3500, position: "top-center" });
+            dispatch(getUserDetails({ header }));
+            return result;
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
+        return err;
+    }
+});
 
 // addAddress thunk
 export const addAddress = createAsyncThunk("/user/api/add/user/address", async ({ data, resetForm, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
@@ -11,7 +28,8 @@ export const addAddress = createAsyncThunk("/user/api/add/user/address", async (
         if (result?.success) {
             showToast({ message: result?.message || 'Address updated!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getUserDetails({ header }));
-            resetForm && resetForm()
+            resetForm && resetForm();
+            return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
@@ -55,7 +73,8 @@ export const updateAddress = createAsyncThunk("/user/api/update/user/address/", 
         if (result?.success) {
             showToast({ message: result?.message || 'Address updated!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getUserDetails({ header }));
-            resetForm && resetForm()
+            resetForm && resetForm();
+            return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
@@ -72,6 +91,7 @@ export const deleteAddress = createAsyncThunk("/user/api/delete/address/", async
         if (result?.success) {
             showToast({ message: result?.message || 'Address removed!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getUserDetails({ header }));
+            return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
@@ -91,6 +111,28 @@ const UserSlice = createSlice({
     },
     reducers: {},
     extraReducers: builder => {
+        // updateUser states
+        builder.addCase(updateUser.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+        })
+        builder.addCase(updateUser.rejected, (state, { payload }) => {
+            state.user_loading = false;
+        })
+
+        // addAddress states
+        builder.addCase(addAddress.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(addAddress.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+        })
+        builder.addCase(addAddress.rejected, (state, { payload }) => {
+            state.user_loading = false;
+        })
+
         // getUserDetails states
         builder.addCase(getUserDetails.pending, (state) => {
             state.user_loading = true;
@@ -119,6 +161,28 @@ const UserSlice = createSlice({
             state.user_loading = false;
             const err: any | null = payload;
             state.error = err;
+        })
+
+        // updateAddress states
+        builder.addCase(updateAddress.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(updateAddress.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+        })
+        builder.addCase(updateAddress.rejected, (state, { payload }) => {
+            state.user_loading = false;
+        })
+
+        // deleteAddress states
+        builder.addCase(deleteAddress.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(deleteAddress.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+        })
+        builder.addCase(deleteAddress.rejected, (state, { payload }) => {
+            state.user_loading = false;
         })
     }
 })

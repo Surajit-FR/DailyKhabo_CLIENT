@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { CustomHeadersType } from "../../../config/DataTypes.config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatPrimaryAddress } from "../../../helpers/Formatter";
+import { updateUser } from "../../../services/slices/UserSlice";
+import { Dispatch } from "redux";
 
 type UserInfo_props = {
     header: CustomHeadersType | undefined
@@ -10,6 +12,7 @@ type UserInfo_props = {
 const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
     const { user_data } = useSelector((state: any) => state.userSlice);
     const formattedAddress = user_data?.address ? formatPrimaryAddress(user_data.address) : '';
+    const dispatch: Dispatch<any> = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -29,8 +32,8 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
     };
 
     const handleSaveChanges = () => {
-        // Dispatch an action to save the changes
-        // For example: dispatch(updateUserDetails(formData))
+        const data = { ...user_data, ...formData };
+        dispatch(updateUser({ data, header }));
         setIsEditing(false);
     };
 
@@ -91,9 +94,7 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
                                 type="button"
                                 className="save_changes mb-2"
                                 onClick={handleSaveChanges}
-                            >
-                                Save
-                            </button>
+                            >Save Changes</button>
                         </>
                     )}
                 </div>

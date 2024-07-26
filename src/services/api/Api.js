@@ -69,6 +69,8 @@ export const GETUSERDETAILS = (header) => API.get('/user/api/get/user/details', 
 export const ADDADDRESS = (data, header) => API.post("/user/api/add/user/address", data, header);
 // Get address
 export const GETADDRESS = (address_id, header) => API.get(`/user/api/get/address/${address_id}`, header);
+// Update user data
+export const UPDATEUSERDATA = (data, header) => API.post("/user/api/update/user/data", data, header);
 // Update address
 export const UPDATEADDRESS = (address_id, data, header) => API.post(`/user/api/update/user/address/${address_id}`, data, header);
 // Delete address
