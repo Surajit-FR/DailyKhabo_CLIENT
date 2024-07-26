@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { placeOrder } from '../../../services/slices/CartSlice';
 import { useEffect, useState } from 'react';
 import { getUserDetails } from '../../../services/slices/UserSlice';
-import { formatPrimaryAddress } from '../../../helpers/Formatter';
 
 type BillingInfo_props = {
     header: CustomHeadersType | undefined,
@@ -27,7 +26,6 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
 
     const [address, setAddress] = useState<Array<Address>>([]);
     const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
-    const formattedAddress = user_data?.address ? formatPrimaryAddress(user_data.address) : '';
 
     const user: any = window.localStorage.getItem("user");
     const _USER = DecryptData(user ? user : "");
@@ -137,11 +135,13 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                 </div>
 
                 <div className="checkout_text mt-4">
-                    <h4>Billing Address</h4>
+                    <h4>Select Billing Address</h4>
                     <div className="row">
                         {
                             address?.length > 0 &&
                             address?.map((item: Address) => {
+                                const { address, apartment, country, state, city, postalCode } = item;
+                                const formatAddress = `${address}, ${apartment ? `${apartment}, ` : ''}${state}, ${country}, ${city} - ${postalCode}`;
                                 return (
                                     <div className="col-md-4" key={item?._id}>
                                         <div className='address-card' onClick={() => handleAddressClick(item?._id)}
@@ -150,7 +150,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                                                 border: selectedAddressId === item._id ? "2px solid #898989" : "2px solid #ccc",
                                             }}
                                         >
-                                            <p>{formattedAddress}</p>
+                                            <p>{formatAddress}</p>
                                         </div>
                                     </div>
                                 )
@@ -159,7 +159,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
                     </div>
 
                     <div className="border_left mt-3">
-                        <h6>Enter the billing address that matches your payment method.</h6>
+                        <h6>Or Enter the billing address manually.</h6>
                         <div className="row">
                             <div className="col-md-6 col-lg-6">
                                 {touched?.full_name && renderError(errors?.full_name)}
