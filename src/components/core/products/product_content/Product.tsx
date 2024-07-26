@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
-import { CustomHeadersType, ProductListType } from '../../../../config/DataTypes.config';
 import { getImagUrl } from '../../../../helpers/getImage';
 import { addToCart } from '../../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
 import { getAverageRating } from '../../../../helpers/Formatter';
 import StarRating from '../../../../util/StarRating';
+import { CustomHeaders } from '../../../../types/common.';
+import { IProduct } from '../../../../types/product';
 
 type ProductsProps = {
     _TOKEN: any,
-    item?: ProductListType;
-    header: CustomHeadersType | undefined;
+    item?: IProduct;
+    header: CustomHeaders | undefined;
     dispatch: Dispatch<any>
 };
 

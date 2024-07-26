@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-import { Address, CustomHeadersType } from "../../../config/DataTypes.config";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Dispatch } from "redux";
 import { deleteAddress, getAddress, updateAddress } from "../../../services/slices/UserSlice";
+import { CustomHeaders } from "../../../types/common.";
+import { Address } from "../../../types/address";
 
 type AddressSection_props = {
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const AddressSection = ({ header }: AddressSection_props): JSX.Element => {

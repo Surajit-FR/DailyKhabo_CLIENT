@@ -1,13 +1,14 @@
 import PageTopSection from "../../components/common/PageTopSection";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CartItemType, CustomHeadersType } from "../../config/DataTypes.config";
 import OrderSummary from "../../components/core/checkout/OrderSummary";
 import BillingInfo from "../../components/core/checkout/BillingInfo";
 import { useLocation } from "react-router-dom";
+import { CustomHeaders } from "../../types/common.";
+import { CartItem } from "../../types/cart";
 
 type Checkout_props = {
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const Checkout = ({ header }: Checkout_props): JSX.Element => {
@@ -15,7 +16,7 @@ const Checkout = ({ header }: Checkout_props): JSX.Element => {
     const location = useLocation();
     const { state } = location;
 
-    const [cartData, setCartData] = useState<CartItemType[]>([]);
+    const [cartData, setCartData] = useState<CartItem[]>([]);
     const [coupon_code, setCoupon_Code] = useState<string>(state?.key || '');
     const SubTotalAmount = cart_data?.subTotalAmount;
     const DiscountAmount = cart_data?.discountAmount;

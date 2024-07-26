@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 import StarRating from "../../../util/StarRating";
 import { useFormik } from "formik";
 import { DecryptData } from "../../../helpers/EncryptDecrypt";
-import { CustomHeadersType, ProductListType, ReviewListType, formValuesType } from "../../../config/DataTypes.config";
 import { ratingValidationSchema } from "../../../helpers/FormValidation";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { createReview, getAllReviews } from "../../../services/slices/UtilitySlice";
 import { formatDate } from "../../../helpers/Formatter";
+import { IProduct } from "../../../types/product";
+import { CustomHeaders } from "../../../types/common.";
+import { Review } from "../../../types/review";
+import { FormValues } from "../../../types/formValues";
 
 type ReviewSection_props = {
-    products_details_data: ProductListType,
-    header: CustomHeadersType | undefined,
+    products_details_data: IProduct,
+    header: CustomHeaders | undefined,
     product_id: string | undefined,
     _TOKEN: any,
 };
@@ -24,7 +27,7 @@ const ReviewSection = ({ header, products_details_data, product_id, _TOKEN }: Re
 
     const [rating, setRating] = useState<number | null>(null);
     const [hover, setHover] = useState<number | null>(null);
-    const [reviewsData, setReviewsData] = useState<Array<ReviewListType>>([]);
+    const [reviewsData, setReviewsData] = useState<Array<Review>>([]);
     const dispatch: Dispatch<any> = useDispatch();
 
     const handleRatingChange = (value: number) => {
@@ -42,7 +45,7 @@ const ReviewSection = ({ header, products_details_data, product_id, _TOKEN }: Re
         validationSchema: _TOKEN ? ratingValidationSchema : null,
         onSubmit: (values) => {
             if (_TOKEN) {
-                const data: formValuesType = {
+                const data: FormValues = {
                     product: values.product,
                     full_name: values.full_name?.trim(),
                     email: values.email?.trim(),

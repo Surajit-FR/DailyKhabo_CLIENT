@@ -3,9 +3,9 @@ import { DecryptData } from "../../helpers/EncryptDecrypt";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../services/slices/AuthSlice";
-import { CategoryResponse } from "../../config/DataTypes.config";
 import { useEffect, useMemo, useState } from "react";
 import { getAllCategory } from "../../services/slices/UtilitySlice";
+import { CategoryResponse } from "../../types/category";
 
 const MobileSection = (): JSX.Element => {
     const { category_data } = useSelector((state: any) => state.utilitySlice);

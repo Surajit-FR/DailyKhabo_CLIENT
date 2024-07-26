@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { getAllReviews, getProductDetails } from "../../services/slices/UtilitySlice";
 import ProductDetailsImageSlider from "../../components/core/products/product_content/ProductDetailsImageSlider";
-import { CustomHeadersType, ReviewListType } from "../../config/DataTypes.config";
 import { addToCart } from "../../helpers/CartFunctions";
 import StarRating from "../../util/StarRating";
 import { getAverageRating } from "../../helpers/Formatter";
+import { CustomHeaders } from "../../types/common.";
+import { Review } from "../../types/review";
 
 type ProductDetailsProps = {
     _TOKEN: any,
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element => {
@@ -23,7 +24,7 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
 
     const [nav1, setNav1] = useState<any>(null);
     const [nav2, setNav2] = useState<any>(null);
-    const [reviewsData, setReviewsData] = useState<Array<ReviewListType>>([]);
+    const [reviewsData, setReviewsData] = useState<Array<Review>>([]);
     const sliderRef1 = useRef<any>(null);
     const sliderRef2 = useRef<any>(null);
     const [value, setValue] = useState<number>(1);

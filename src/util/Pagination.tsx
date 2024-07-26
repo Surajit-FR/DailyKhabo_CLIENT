@@ -1,7 +1,7 @@
 import ReactPaginate from "react-paginate";
-import { Pagination_Type } from "../config/DataTypes.config";
+import { IPagination } from "../types/common.";
 
-const Pagination = ({ pageCount, pageNumber, changePage }: Pagination_Type): JSX.Element => {
+const Pagination = ({ pageCount, pageNumber, changePage }: IPagination): JSX.Element => {
     return (
         <>
             <ul className="pagination d-flex flex-wrap m-0">

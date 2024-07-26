@@ -1,8 +1,8 @@
-import { ProductListType } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
+import { IProduct } from "../../../types/product";
 
 type ReviewAndDesc_props = {
-    products_details_data: ProductListType
+    products_details_data: IProduct
 };
 
 const DescriptionSection = ({ products_details_data }: ReviewAndDesc_props) => {

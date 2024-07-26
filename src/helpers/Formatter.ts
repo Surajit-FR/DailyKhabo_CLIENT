@@ -1,4 +1,6 @@
-import { Address, ReviewListType } from "../config/DataTypes.config";
+import { Address } from "../types/address";
+import { Review } from "../types/review";
+
 
 // formatDate func.
 export const formatDate = (isoDateString: string | number | Date, type: string) => {
@@ -32,7 +34,7 @@ export const formatDate = (isoDateString: string | number | Date, type: string) 
 };
 
 // getAverageRating func.
-export const getAverageRating = (reviewsData: Array<ReviewListType> | undefined): number => {
+export const getAverageRating = (reviewsData: Array<Review> | undefined): number => {
     if (!reviewsData || reviewsData?.length === 0) return 0;
 
     const sumOfRatings = reviewsData?.reduce((sum, review) => sum + review?.rating, 0);

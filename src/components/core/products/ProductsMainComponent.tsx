@@ -3,14 +3,16 @@ import PageTopSection from "../../common/PageTopSection";
 import AllProducts from "./product_content/AllProducts";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { CategoryResponse, CustomHeadersType, ProductResponse } from "../../../config/DataTypes.config";
 import { getAllCategory, getAllProduct } from "../../../services/slices/UtilitySlice";
 import { REACT_APP_PRODUCT_PER_PAGE } from "../../../config/App.config";
 import { useLocation, useParams } from "react-router-dom";
+import { CustomHeaders } from "../../../types/common.";
+import { ProductResponse } from "../../../types/product";
+import { CategoryResponse } from "../../../types/category";
 
 type ProductsMainComponent_props = {
     _TOKEN: any,
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const ProductsMainComponent = ({ _TOKEN, header }: ProductsMainComponent_props): JSX.Element => {

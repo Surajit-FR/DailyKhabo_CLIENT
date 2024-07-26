@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
 import IncrementDecrement from "../../../util/IncrementDecrement";
-import { CartItemType, CustomHeadersType } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { deleteItem } from "../../../helpers/CartFunctions";
+import { CartItem } from "../../../types/cart";
+import { CustomHeaders } from "../../../types/common.";
 
 type CartProducts_props = {
-    cartData: Array<CartItemType>;
+    cartData: Array<CartItem>;
     SubTotalAmount: number;
     DiscountAmount: number,
     ShippingCharge: number;
     TotalAmountWithShipping: number;
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const Products = ({ cartData, SubTotalAmount, DiscountAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {

@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { CartItemType, CustomHeadersType } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { applyCoupon } from "../../../helpers/CartFunctions";
+import { CartItem } from "../../../types/cart";
+import { CustomHeaders } from "../../../types/common.";
 
 type OrderSummary_props = {
-    cartData: Array<CartItemType>,
+    cartData: Array<CartItem>,
     couponCode: string,
     setCouponCode: Function,
-    header: CustomHeadersType | undefined,
+    header: CustomHeaders | undefined,
     SubTotalAmount: number,
     DiscountAmount: number,
     ShippingCharge: number,

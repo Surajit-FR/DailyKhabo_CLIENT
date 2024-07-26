@@ -4,13 +4,14 @@ import { logoutUser } from '../../../services/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { DecryptData } from '../../../helpers/EncryptDecrypt';
 import { getAllCartData } from '../../../services/slices/CartSlice';
-import { CartItemType, CategoryResponse } from '../../../config/DataTypes.config';
 import { getImagUrl } from '../../../helpers/getImage';
 import { getAllCategory } from '../../../services/slices/UtilitySlice';
 import { deleteItem } from '../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
 import { jwtDecode } from 'jwt-decode';
 import { showToast } from '../../../helpers/Toast';
+import { CartItem } from '../../../types/cart';
+import { CategoryResponse } from '../../../types/category';
 
 const HeaderBottom = (): JSX.Element => {
     const { category_data } = useSelector((state: any) => state.utilitySlice);
@@ -30,7 +31,7 @@ const HeaderBottom = (): JSX.Element => {
 
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
     const [activeLink, setActiveLink] = useState<string>('/home');
-    const [cartData, setCartData] = useState<CartItemType[]>([]);
+    const [cartData, setCartData] = useState<CartItem[]>([]);
     const [categoryData, setCategoryData] = useState<CategoryResponse[]>([]);
 
     const dispatch: Dispatch<any> = useDispatch();

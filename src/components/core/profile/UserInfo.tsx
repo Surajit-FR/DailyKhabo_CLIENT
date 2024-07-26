@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { CustomHeadersType } from "../../../config/DataTypes.config";
 import { useDispatch, useSelector } from "react-redux";
 import { formatPrimaryAddress } from "../../../helpers/Formatter";
 import { updateUser } from "../../../services/slices/UserSlice";
 import { Dispatch } from "redux";
+import { CustomHeaders } from "../../../types/common.";
 
 type UserInfo_props = {
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const UserInfo = ({ header }: UserInfo_props): JSX.Element => {

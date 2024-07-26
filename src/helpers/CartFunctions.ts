@@ -1,23 +1,23 @@
 import { addCart, applyCouponCode, deleteCartItem, updateQuantity } from "../services/slices/CartSlice";
-import { CustomHeadersType } from "../config/DataTypes.config";
 import { Dispatch } from "redux";
+import { CustomHeaders } from "../types/common.";
 
 interface AddToCartParams {
     product: string | undefined;
     cart_quantity: number | undefined;
-    header: CustomHeadersType | undefined;
+    header: CustomHeaders | undefined;
     dispatch: Dispatch<any>
 };
 
 interface DleteCartItemParams {
     product_id: string | undefined;
-    header: CustomHeadersType | undefined;
+    header: CustomHeaders | undefined;
     dispatch: Dispatch<any>
 };
 
 interface ApplyCouponParams {
     couponCode: string | undefined;
-    header: CustomHeadersType | undefined;
+    header: CustomHeaders | undefined;
     dispatch: Dispatch<any>
 };
 

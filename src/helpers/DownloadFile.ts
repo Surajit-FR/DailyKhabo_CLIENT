@@ -1,11 +1,11 @@
 import axios from "axios";
-import { formValuesType } from "../config/DataTypes.config";
 import { showToast } from "./Toast";
 import { REACT_APP_BASE_URL } from "../config/App.config";
+import { FormValues } from "../types/formValues";
 
 interface DownloadPdfParams {
     setLoading: (loading: boolean) => void;
-    orderData: formValuesType;
+    orderData: FormValues;
     _TOKEN: string;
 };
 

@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { CustomHeadersType, ProductListType } from '../../../config/DataTypes.config';
 import DescriptionSection from './DescriptionSection';
 import ReviewSection from './ReviewSection';
+import { IProduct } from '../../../types/product';
+import { CustomHeaders } from '../../../types/common.';
 
 type ReviewAndDesc_props = {
-    products_details_data: ProductListType,
+    products_details_data: IProduct,
     product_id: string | undefined,
-    header: CustomHeadersType | undefined,
+    header: CustomHeaders | undefined,
     _TOKEN: any,
 };
 

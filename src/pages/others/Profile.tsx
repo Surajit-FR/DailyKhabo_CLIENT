@@ -1,5 +1,4 @@
 import PageTopSection from "../../components/common/PageTopSection";
-import { CustomHeadersType } from "../../config/DataTypes.config";
 import AddAddressModal from "../../util/AddAddressModal";
 import AddressSection from "../../components/core/profile/AddressSection";
 import UserInfo from "../../components/core/profile/UserInfo";
@@ -8,10 +7,11 @@ import { Dispatch } from "redux";
 import { useEffect } from "react";
 import { getUserDetails } from "../../services/slices/UserSlice";
 import EditAddressModal from "../../util/EditAddressModal";
+import { CustomHeaders } from "../../types/common.";
 
 
 type Profile_props = {
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const Profile = ({ header }: Profile_props): JSX.Element => {
@@ -27,7 +27,7 @@ const Profile = ({ header }: Profile_props): JSX.Element => {
             <PageTopSection pageName="Profile" />
 
             {/* AddAddress modal */}
-            <AddAddressModal header={header}/>
+            <AddAddressModal header={header} />
 
             {/* AddAddress modal */}
             <EditAddressModal header={header} />

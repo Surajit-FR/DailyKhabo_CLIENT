@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import PageTopSection from "../../components/common/PageTopSection";
 import Products from "../../components/core/cart/Products";
-import { CartItemType, CustomHeadersType } from "../../config/DataTypes.config";
 import { useSelector } from "react-redux";
+import { CustomHeaders } from "../../types/common.";
+import { CartItem } from "../../types/cart";
 
 type CartProducts_props = {
     _TOKEN: any,
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const CartProducts = ({ _TOKEN, header }: CartProducts_props): JSX.Element => {
     const { cart_data } = useSelector((state: any) => state.cartSlice);
 
-    const [cartData, setCartData] = useState<CartItemType[]>([]);
+    const [cartData, setCartData] = useState<CartItem[]>([]);
     const SubTotalAmount = cart_data?.subTotalAmount;
     const DiscountAmount = cart_data?.discountAmount;
     const ShippingCharge = cart_data?.shippingCharge;

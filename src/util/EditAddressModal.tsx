@@ -1,22 +1,24 @@
 import { useFormik } from "formik";
 import { addAddressValidationSchema } from "../helpers/FormValidation";
-import { CustomHeadersType, FormValues, IAddress } from "../config/DataTypes.config";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { updateAddress } from "../services/slices/UserSlice";
 import { Dispatch } from "redux";
 import { addEditAddressInputConfigs } from "../components/input/InputConfig";
 import CustomInput from "../components/input/CustomInput";
+import { CustomHeaders } from "../types/common.";
+import { IAddress } from "../types/address";
+import { IFormValues } from "../types/formValues";
 
 type EditAddressModal_props = {
-    header: CustomHeadersType | undefined
+    header: CustomHeaders | undefined
 }
 
 const EditAddressModal = ({ header }: EditAddressModal_props): JSX.Element => {
     const { address_data } = useSelector((state: any) => state.userSlice);
     const dispatch: Dispatch<any> = useDispatch();
 
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setValues, resetForm } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setValues, resetForm } = useFormik<IFormValues>({
         initialValues: {
             phone: '',
             address: '',
@@ -79,11 +81,11 @@ const EditAddressModal = ({ header }: EditAddressModal_props): JSX.Element => {
                                             label={config?.label}
                                             placeholder={config?.placeholder}
                                             type={config?.type}
-                                            value={values[config?.name as keyof FormValues]}
+                                            value={values[config?.name as keyof IFormValues]}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            error={errors[config?.name as keyof FormValues]}
-                                            touched={touched[config?.name as keyof FormValues]}
+                                            error={errors[config?.name as keyof IFormValues]}
+                                            touched={touched[config?.name as keyof IFormValues]}
                                             readOnly={config?.readOnly}
                                             maxLength={config?.maxLength}
                                             colSize={config?.colSize}

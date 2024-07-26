@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { CategoryResponse } from "../../../config/DataTypes.config";
 import { getImagUrl } from "../../../helpers/getImage";
+import { CategoryResponse } from "../../../types/category";
 
 type CategorySection_props = {
     categoryData: CategoryResponse[];

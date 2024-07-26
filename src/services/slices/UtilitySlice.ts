@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS } from "../api/Api";
-import { FetchAllCategoryResponse, FetchAllProductResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
+import { FetchAllCategoryResponse } from "../../types/category";
+import { FetchAllProductResponse } from "../../types/product";
+import { FormValuesProps } from "../../types/formValues";
 
 
 // getAllCategory thunk
-export const getAllCategory = createAsyncThunk("/user/api/get/all/category", async ({ page, pageSize }: FormValues_Props, { rejectWithValue }): Promise<FetchAllCategoryResponse | any> => {
+export const getAllCategory = createAsyncThunk("/user/api/get/all/category", async ({ page, pageSize }: FormValuesProps, { rejectWithValue }): Promise<FetchAllCategoryResponse | any> => {
     try {
         const response = await GETALLCATEGORIES(page, pageSize);
         const result: FetchAllCategoryResponse = response?.data;
@@ -17,7 +19,7 @@ export const getAllCategory = createAsyncThunk("/user/api/get/all/category", asy
 });
 
 // getAllProduct thunk
-export const getAllProduct = createAsyncThunk("/user/api/get/all/product", async (params: FormValues_Props, { rejectWithValue }): Promise<FetchAllProductResponse | any> => {
+export const getAllProduct = createAsyncThunk("/user/api/get/all/product", async (params: FormValuesProps, { rejectWithValue }): Promise<FetchAllProductResponse | any> => {
     try {
         const { page, pageSize, searchQuery, category } = params;
         const response = await GETALLPRODUCTS({ page, pageSize, searchQuery, category });
@@ -32,7 +34,7 @@ export const getAllProduct = createAsyncThunk("/user/api/get/all/product", async
 });
 
 // getProductDetails thunk
-export const getProductDetails = createAsyncThunk("/user/api/get/product/details", async ({ product_id }: FormValues_Props, { rejectWithValue }): Promise<FetchAllProductResponse | any> => {
+export const getProductDetails = createAsyncThunk("/user/api/get/product/details", async ({ product_id }: FormValuesProps, { rejectWithValue }): Promise<FetchAllProductResponse | any> => {
     try {
         const response = await GETPRODUCTDETAILS(product_id);
         const result: FetchAllProductResponse = response?.data;
@@ -46,7 +48,7 @@ export const getProductDetails = createAsyncThunk("/user/api/get/product/details
 });
 
 // getAllReviews thunk
-export const getAllReviews = createAsyncThunk("/user/api/get/all/reviews/", async (params: FormValues_Props, { rejectWithValue }): Promise<any> => {
+export const getAllReviews = createAsyncThunk("/user/api/get/all/reviews/", async (params: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const { product_id } = params;
         const response = await GETALLREVIEWS({ product_id });
@@ -61,7 +63,7 @@ export const getAllReviews = createAsyncThunk("/user/api/get/all/reviews/", asyn
 });
 
 // createReview thunk
-export const createReview = createAsyncThunk("/user/api/create/review", async ({ data, product_id, resetForm, setRating, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const createReview = createAsyncThunk("/user/api/create/review", async ({ data, product_id, resetForm, setRating, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await CREATEREVIEW(data, header);
         const result: any = response?.data;
@@ -79,7 +81,7 @@ export const createReview = createAsyncThunk("/user/api/create/review", async ({
 });
 
 // contactUs thunk
-export const contactUs = createAsyncThunk("/user/api/create/review", async ({ data, resetForm }: FormValues_Props, { rejectWithValue }): Promise<any> => {
+export const contactUs = createAsyncThunk("/user/api/create/review", async ({ data, resetForm }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await CONTACTUS(data);
         const result: any = response?.data;

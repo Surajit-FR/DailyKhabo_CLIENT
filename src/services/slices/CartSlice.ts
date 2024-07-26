@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, TAKEORDER, UPDATEQUANTITY } from "../api/Api";
-import { FetchCartResponse, FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
+import { FetchCartResponse } from "../../types/cart";
+import { FormValuesProps } from "../../types/formValues";
 
 
 // addCart thunk
-export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await ADDCART(data, header);
         const result: any = response?.data;
@@ -22,7 +23,7 @@ export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, hea
 });
 
 // updateQuantity thunk
-export const updateQuantity = createAsyncThunk("/user/api/update/cart/quantity", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const updateQuantity = createAsyncThunk("/user/api/update/cart/quantity", async ({ data, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await UPDATEQUANTITY(data, header);
         const result: any = response?.data;
@@ -38,7 +39,7 @@ export const updateQuantity = createAsyncThunk("/user/api/update/cart/quantity",
 });
 
 // getAllCartData thunk
-export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", async ({ header }: FormValues_Props, { rejectWithValue }): Promise<FetchCartResponse | any> => {
+export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", async ({ header }: FormValuesProps, { rejectWithValue }): Promise<FetchCartResponse | any> => {
     try {
         const response = await GETCARTDATA(header);
         const result: FetchCartResponse = response?.data;
@@ -50,7 +51,7 @@ export const getAllCartData = createAsyncThunk("/user/api/get/all/cart/data", as
 });
 
 // deleteCartItem thunk
-export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", async ({ product_id, couponCode, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", async ({ product_id, couponCode, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await DELETECARTITEM(product_id, header);
         const result: any = response?.data;
@@ -66,7 +67,7 @@ export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", as
 });
 
 // applyCoupon thunk
-export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async ({ data, header }: FormValues_Props, { rejectWithValue }): Promise<any> => {
+export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async ({ data, header }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await APPLYCOUPON(data, header);
         const result: any = response?.data;
@@ -82,7 +83,7 @@ export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async 
 });
 
 // placeOrder thunk
-export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data, resetForm, navigate, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data, resetForm, navigate, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await TAKEORDER(data, header);
         const result: any = response?.data;

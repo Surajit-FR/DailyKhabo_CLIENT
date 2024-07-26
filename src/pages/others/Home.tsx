@@ -8,7 +8,8 @@ import TestimonialSection from "../../components/core/home/TestimonialSection";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllCategory, getAllProduct } from "../../services/slices/UtilitySlice";
-import { CategoryResponse, ProductResponse } from "../../config/DataTypes.config";
+import { ProductResponse } from "../../types/product";
+import { CategoryResponse } from "../../types/category";
 
 
 const Home = (): JSX.Element => {

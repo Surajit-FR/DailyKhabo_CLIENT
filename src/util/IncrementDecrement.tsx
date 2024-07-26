@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { updateItemQuantity } from "../helpers/CartFunctions";
 import { Dispatch } from "redux";
-import { CustomHeadersType } from "../config/DataTypes.config";
+import { CustomHeaders } from "../types/common.";
 
 interface IncrementDecrementProps {
     initialValue: number;
     product_id: string | undefined;
     dispatch: Dispatch<any>;
-    header: CustomHeadersType | undefined;
+    header: CustomHeaders | undefined;
     pageName: string;
 }
 

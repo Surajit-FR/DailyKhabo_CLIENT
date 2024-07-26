@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LightcaseOverlay from '../../../util/LightcaseOverlay';
-import { ProductResponse } from '../../../config/DataTypes.config';
 import { getImagUrl } from '../../../helpers/getImage';
 import { getAverageRating } from '../../../helpers/Formatter';
 import StarRating from '../../../util/StarRating';
+import { ProductResponse } from '../../../types/product';
 
 type ProductSection_props = {
     productData: ProductResponse[];

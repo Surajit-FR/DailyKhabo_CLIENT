@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LOGIN, REGISTER, RESETPASSWORD, VERIFYEMAIL } from "../api/Api";
-import { AuthResponse, UserAuth_Props } from "../../config/DataTypes.config";
 import Cookies from 'js-cookie';
 import { EncryptData } from "../../helpers/EncryptDecrypt";
 import { showToast } from "../../helpers/Toast";
 import { closeAuthModal } from "../../helpers/AuthSuccess";
+import { AuthResponse, UserAuthProps } from "../../types/auth";
 
 // loginUser thunk
-export const loginUser = createAsyncThunk("/api/login", async ({ data, navigate, resetForm }: UserAuth_Props, { rejectWithValue }): Promise<AuthResponse | any> => {
+export const loginUser = createAsyncThunk("/api/login", async ({ data, navigate, resetForm }: UserAuthProps, { rejectWithValue }): Promise<AuthResponse | any> => {
     try {
         const response = await LOGIN(data);
         const result: AuthResponse = response?.data;
@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk("/api/login", async ({ data, navigate,
 });
 
 // registerUser thunk
-export const registerUser = createAsyncThunk("/api/register", async ({ data, navigate, resetForm }: UserAuth_Props, { rejectWithValue }): Promise<AuthResponse | any> => {
+export const registerUser = createAsyncThunk("/api/register", async ({ data, navigate, resetForm }: UserAuthProps, { rejectWithValue }): Promise<AuthResponse | any> => {
     try {
         const response = await REGISTER(data);
         const result: AuthResponse = response?.data;
@@ -69,7 +69,7 @@ export const registerUser = createAsyncThunk("/api/register", async ({ data, nav
 });
 
 // verifyEmail thunk
-export const verifyEmail = createAsyncThunk("/api/verify/email", async ({ data }: UserAuth_Props, { rejectWithValue }): Promise<any> => {
+export const verifyEmail = createAsyncThunk("/api/verify/email", async ({ data }: UserAuthProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await VERIFYEMAIL(data);
         const result: any = response?.data;
@@ -85,7 +85,7 @@ export const verifyEmail = createAsyncThunk("/api/verify/email", async ({ data }
 });
 
 // resetPassword thunk
-export const resetPassword = createAsyncThunk("/api/reset/password", async ({ data, resetForm }: UserAuth_Props, { rejectWithValue }): Promise<any> => {
+export const resetPassword = createAsyncThunk("/api/reset/password", async ({ data, resetForm }: UserAuthProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await RESETPASSWORD(data);
         const result: any = response?.data;

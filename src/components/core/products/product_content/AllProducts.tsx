@@ -1,13 +1,15 @@
 import Product from './Product';
-import { CategoryResponse, CustomHeadersType, ProductResponse } from '../../../../config/DataTypes.config';
 import Pagination from '../../../../util/Pagination';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
+import { CustomHeaders } from '../../../../types/common.';
+import { ProductResponse } from '../../../../types/product';
+import { CategoryResponse } from '../../../../types/category';
 
 type AllProducts_props = {
     _TOKEN: any,
-    header: CustomHeadersType | undefined,
+    header: CustomHeaders | undefined,
     pageName: string | undefined,
     productData: ProductResponse[],
     categoryData: CategoryResponse[],

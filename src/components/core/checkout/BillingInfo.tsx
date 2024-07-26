@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Address, CartItemType, CustomHeadersType, formValuesType } from '../../../config/DataTypes.config';
 import { useFormik } from 'formik';
 import { orderValidationSchema } from '../../../helpers/FormValidation';
 import { DecryptData } from '../../../helpers/EncryptDecrypt';
@@ -8,10 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { placeOrder } from '../../../services/slices/CartSlice';
 import { useEffect, useState } from 'react';
 import { getUserDetails } from '../../../services/slices/UserSlice';
+import { CustomHeaders } from '../../../types/common.';
+import { CartItem } from '../../../types/cart';
+import { Address } from '../../../types/address';
+import { FormValues } from '../../../types/formValues';
 
 type BillingInfo_props = {
-    header: CustomHeadersType | undefined,
-    cartData: Array<CartItemType>,
+    header: CustomHeaders | undefined,
+    cartData: Array<CartItem>,
     SubTotalAmount: number,
     DiscountAmount: number,
     ShippingCharge: number,
@@ -53,7 +56,7 @@ const BillingInfo = ({ cartData, header, SubTotalAmount, DiscountAmount, Shippin
         },
         validationSchema: orderValidationSchema,
         onSubmit: (values) => {
-            const data: formValuesType = {
+            const data: FormValues = {
                 customer: {
                     email: values.email.trim(),
                     full_name: values.full_name.trim(),

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ADDADDRESS, DELETEADDRESS, GETADDRESS, GETUSERDETAILS, UPDATEADDRESS, UPDATEUSERDATA } from "../api/Api";
-import { FormValues_Props } from "../../config/DataTypes.config";
 import { showToast } from "../../helpers/Toast";
+import { FormValuesProps } from "../../types/formValues";
 
 // updateUser thunk
-export const updateUser = createAsyncThunk("/user/api/update/user/data", async ({ data, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const updateUser = createAsyncThunk("/user/api/update/user/data", async ({ data, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await UPDATEUSERDATA(data, header);
         const result: any = response?.data;
@@ -21,7 +21,7 @@ export const updateUser = createAsyncThunk("/user/api/update/user/data", async (
 });
 
 // addAddress thunk
-export const addAddress = createAsyncThunk("/user/api/add/user/address", async ({ data, resetForm, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const addAddress = createAsyncThunk("/user/api/add/user/address", async ({ data, resetForm, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await ADDADDRESS(data, header);
         const result: any = response?.data;
@@ -39,7 +39,7 @@ export const addAddress = createAsyncThunk("/user/api/add/user/address", async (
 });
 
 // getUserDetails thunk
-export const getUserDetails = createAsyncThunk("/user/api/get/user/details", async ({ header }: FormValues_Props, { rejectWithValue }): Promise<any> => {
+export const getUserDetails = createAsyncThunk("/user/api/get/user/details", async ({ header }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await GETUSERDETAILS(header);
         const result: any = response?.data;
@@ -51,7 +51,7 @@ export const getUserDetails = createAsyncThunk("/user/api/get/user/details", asy
 });
 
 // getAddress thunk
-export const getAddress = createAsyncThunk("/user/api/get/address/", async ({ address_id, header }: FormValues_Props, { rejectWithValue }): Promise<any> => {
+export const getAddress = createAsyncThunk("/user/api/get/address/", async ({ address_id, header }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await GETADDRESS(address_id, header);
         const result: any = response?.data;
@@ -66,7 +66,7 @@ export const getAddress = createAsyncThunk("/user/api/get/address/", async ({ ad
 });
 
 // updateAddress thunk
-export const updateAddress = createAsyncThunk("/user/api/update/user/address/", async ({ address_id, data, resetForm, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const updateAddress = createAsyncThunk("/user/api/update/user/address/", async ({ address_id, data, resetForm, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await UPDATEADDRESS(address_id, data, header);
         const result: any = response?.data;
@@ -84,7 +84,7 @@ export const updateAddress = createAsyncThunk("/user/api/update/user/address/", 
 });
 
 // deleteAddress thunk
-export const deleteAddress = createAsyncThunk("/user/api/delete/address/", async ({ address_id, header }: FormValues_Props, { rejectWithValue, dispatch }): Promise<any> => {
+export const deleteAddress = createAsyncThunk("/user/api/delete/address/", async ({ address_id, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
     try {
         const response = await DELETEADDRESS(address_id, header);
         const result: any = response?.data;
