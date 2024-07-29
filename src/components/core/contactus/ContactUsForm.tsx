@@ -6,9 +6,13 @@ import { REACT_APP_RECAPTCHA_SITE_KEY } from "../../../config/App.config";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { contactUs } from "../../../services/slices/UtilitySlice";
+import { CustomHeaders } from "../../../types/common.";
 
+type ContactUs_props = {
+    header: CustomHeaders | undefined
+}
 
-const ContactUsForm = (): JSX.Element => {
+const ContactUsForm = ({ header }: ContactUs_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
     const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
     const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm, isValid } = useFormik({
@@ -22,7 +26,7 @@ const ContactUsForm = (): JSX.Element => {
         validationSchema: contactUsValidationSchema,
         onSubmit: (values) => {
             if (recaptchaToken) {
-                dispatch(contactUs({ data: values, resetForm }));
+                dispatch(contactUs({ data: values, resetForm, header }));
             };
         }
     });

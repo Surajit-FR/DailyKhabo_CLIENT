@@ -62,7 +62,7 @@ export const GETALLREVIEWS = (params = {}) => {
     return API.get(`/user/api/get/all/reviews?${queryParams}`);
 };
 // Contact us
-export const CONTACTUS = (data) => API.post('/user/api/feedback', data);
+export const CONTACTUS = (data, header) => API.post('/user/api/feedback', data, header);
 // Get user details
 export const GETUSERDETAILS = (header) => API.get('/user/api/get/user/details', header);
 // Add address

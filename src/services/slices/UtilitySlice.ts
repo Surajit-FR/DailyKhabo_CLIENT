@@ -81,9 +81,9 @@ export const createReview = createAsyncThunk("/user/api/create/review", async ({
 });
 
 // contactUs thunk
-export const contactUs = createAsyncThunk("/user/api/feedback", async ({ data, resetForm }: FormValuesProps, { rejectWithValue }): Promise<any> => {
+export const contactUs = createAsyncThunk("/user/api/feedback", async ({ data, resetForm, header }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
-        const response = await CONTACTUS(data);
+        const response = await CONTACTUS(data, header);
         const result: any = response?.data;
         if (result?.success) {
             resetForm && resetForm();
