@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS } from "../api/Api";
+import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS, GETTESTIMONIALS } from "../api/Api";
 import { showToast } from "../../helpers/Toast";
 import { FetchAllCategoryResponse } from "../../types/category";
 import { FetchAllProductResponse } from "../../types/product";
@@ -81,13 +81,38 @@ export const createReview = createAsyncThunk("/user/api/create/review", async ({
 });
 
 // contactUs thunk
-export const contactUs = createAsyncThunk("/user/api/create/review", async ({ data, resetForm }: FormValuesProps, { rejectWithValue }): Promise<any> => {
+export const contactUs = createAsyncThunk("/user/api/feedback", async ({ data, resetForm }: FormValuesProps, { rejectWithValue }): Promise<any> => {
     try {
         const response = await CONTACTUS(data);
         const result: any = response?.data;
         if (result?.success) {
             resetForm && resetForm();
-            showToast({ message: result?.message || 'Feedback submitted!', type: 'success', durationTime: 3500, position: "top-center" });
+            showToast({
+                message: result?.message || 'Feedback submitted!',
+                type: 'success',
+                durationTime: 3500,
+                position: "top-center"
+            });
+            return result;
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        showToast({
+            message: err?.payload?.message,
+            type: 'error',
+            durationTime: 3500,
+            position: "top-center"
+        });
+        return err;
+    }
+});
+
+// getTestimonials thunk
+export const getTestimonials = createAsyncThunk("/user/api/get/testimonials", async (payload, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await GETTESTIMONIALS();
+        const result: any = response?.data;
+        if (result?.success) {
             return result;
         };
     } catch (exc: any) {
@@ -108,6 +133,9 @@ const UtilitySlice = createSlice({
 
         // Review States
         review_data: [],
+
+        // Testimonials State
+        testimonials_data: [],
 
         // Common States
         utility_loading: false,
@@ -196,6 +224,19 @@ const UtilitySlice = createSlice({
             state.utility_loading = false;
         })
         builder.addCase(contactUs.rejected, (state, { payload }) => {
+            state.utility_loading = false;
+        })
+
+        // getTestimonials states
+        builder.addCase(getTestimonials.pending, (state) => {
+            state.utility_loading = true;
+        })
+        builder.addCase(getTestimonials.fulfilled, (state, { payload }) => {
+            state.utility_loading = false;
+            const testimonials_data: any = payload?.data;
+            state.testimonials_data = testimonials_data;
+        })
+        builder.addCase(getTestimonials.rejected, (state, { payload }) => {
             state.utility_loading = false;
         })
     }

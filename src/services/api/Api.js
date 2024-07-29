@@ -62,7 +62,7 @@ export const GETALLREVIEWS = (params = {}) => {
     return API.get(`/user/api/get/all/reviews?${queryParams}`);
 };
 // Contact us
-export const CONTACTUS = (data) => API.post('/user/api/contact/us', data);
+export const CONTACTUS = (data) => API.post('/user/api/feedback', data);
 // Get user details
 export const GETUSERDETAILS = (header) => API.get('/user/api/get/user/details', header);
 // Add address
@@ -75,3 +75,5 @@ export const UPDATEUSERDATA = (data, header) => API.post("/user/api/update/user/
 export const UPDATEADDRESS = (address_id, data, header) => API.post(`/user/api/update/user/address/${address_id}`, data, header);
 // Delete address
 export const DELETEADDRESS = (address_id, header) => API.delete(`/user/api/delete/address/${address_id}`, header);
+// Get testimonials
+export const GETTESTIMONIALS = () => API.get('/user/api/get/testimonials');

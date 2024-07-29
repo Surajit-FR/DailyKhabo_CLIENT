@@ -68,9 +68,9 @@ export const ratingValidationSchema = Yup.object({
 // order validation
 export const contactUsValidationSchema = Yup.object({
     full_name: Yup.string().required('Full name is required'),
+    designation: Yup.string(),
     email: Yup.string().email('Invalid email address').required('Email ID is required'),
-    phone: Yup.string().required('Phone number is required'),
-    subject: Yup.string().required('Subject is required'),
+    phone: Yup.string().matches(/^\d{10}$/, 'Phone number must be exactly 10 digits').notRequired(),
     message: Yup.string().required('One message is required'),
 });
 

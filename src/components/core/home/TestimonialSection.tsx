@@ -1,11 +1,23 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Dispatch } from 'redux';
+import { getTestimonials } from '../../../services/slices/UtilitySlice';
+import { UserMessage } from '../../../types/review';
 
 // Use SwiperCore
 SwiperCore.use([Navigation, Autoplay]);
 
 const TestimonialSection = (): JSX.Element => {
+    const { testimonials_data } = useSelector((state: any) => state.utilitySlice);
+    const dispatch: Dispatch<any> = useDispatch();
+
+    useEffect(() => {
+        dispatch(getTestimonials())
+    }, [dispatch]);
+
     return (
         <>
             <section className="testimonial style-2 pt-70">
@@ -39,56 +51,29 @@ const TestimonialSection = (): JSX.Element => {
                                     },
                                 }}
                             >
-                                <SwiperSlide>
-                                    <div className="swiper-slide">
-                                        <div className="testi-item">
-                                            <div className="testi-content">
-                                                <img src="assets/images/testimonial/icon/03.png" alt="testimonial" />
-                                                <p>Conveniently innovate user-centric benefits with installed base testing procedures. Authoritatively unleas before progressive architectures rapidiously build clicks-and-mortar testing procedures without installed manufactured products distinctively. </p>
-                                                <div className="testimonial-author">
-                                                    <div className="author-name-des">
-                                                        <h4>Sahjahan Sagor</h4>
-                                                        <p>Founder & Ceo</p>
+                                {
+                                    testimonials_data?.length > 0 &&
+                                    testimonials_data?.map((item: UserMessage) =>
+                                        item?.is_highlighted && (
+                                            <SwiperSlide key={item?._id}>
+                                                <div className="swiper-slide">
+                                                    <div className="testi-item">
+                                                        <div className="testi-content">
+                                                            <img src="assets/images/testimonial/icon/03.png" alt="testimonial" />
+                                                            <p>{item?.message}</p>
+                                                            <div className="testimonial-author">
+                                                                <div className="author-name-des">
+                                                                    <h4>{item?.full_name}</h4>
+                                                                    <p>{item?.designation}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className="swiper-slide">
-                                        <div className="testi-item">
-                                            <div className="testi-content">
-                                                <img src="assets/images/testimonial/icon/03.png" alt="testimonial" />
-                                                <p>Conveniently innovate user-centric benefits with installed base testing procedures. Authoritatively unleas before progressive architectures rapidiously build clicks-and-mortar testing procedures without installed manufactured products distinctively. </p>
-                                                <div className="testimonial-author">
-                                                    <div className="author-name-des">
-                                                        <h4>Rajib Ahmed</h4>
-                                                        <p>Founder & Ceo</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className="swiper-slide">
-                                        <div className="testi-item">
-                                            <div className="testi-content">
-                                                <img src="assets/images/testimonial/icon/03.png" alt="testimonial" />
-                                                <p>Conveniently innovate user-centric benefits with installed base testing procedures. Authoritatively unleas before progressive architectures rapidiously build clicks-and-mortar testing procedures without installed manufactured products distinctively. </p>
-                                                <div className="testimonial-author">
-                                                    <div className="author-name-des">
-                                                        <h4>Marjana Sorna</h4>
-                                                        <p>Founder & Ceo</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
+                                            </SwiperSlide>
+                                        )
+                                    )
+                                }
                             </Swiper>
                             <div className="testimonial-button-prev"><i className="fas fa-chevron-left"></i></div>
                             <div className="testimonial-button-next"><i className="fas fa-chevron-right"></i></div>

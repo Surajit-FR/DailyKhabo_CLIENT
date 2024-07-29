@@ -14,9 +14,9 @@ const ContactUsForm = (): JSX.Element => {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit, resetForm, isValid } = useFormik({
         initialValues: {
             full_name: "",
+            designation: "",
             email: "",
             phone: "",
-            subject: "",
             message: ""
         },
         validationSchema: contactUsValidationSchema,
@@ -41,84 +41,95 @@ const ContactUsForm = (): JSX.Element => {
                                 <div className="contact-title">
                                     <h4>Send Message us</h4>
                                 </div>
-                                <form className="contact-form d-flex flex-wrap justify-content-between" onSubmit={handleSubmit}>
-                                    <input
-                                        className="email_text"
-                                        type="text"
-                                        placeholder="Full name"
-                                        name="full_name"
-                                        value={values?.full_name || ""}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        style={{ border: touched?.full_name && errors?.full_name ? "1px solid red" : "" }}
-                                    />
-                                    {touched.full_name && errors.full_name && (
-                                        <p className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.full_name}</p>
-                                    )}
-
-                                    <input
-                                        className="email_text"
-                                        type="text"
-                                        placeholder="Email address"
-                                        name="email"
-                                        value={values?.email || ""}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        style={{ border: touched?.email && errors?.email ? "1px solid red" : "" }}
-                                    />
-                                    {touched.email && errors.email && (
-                                        <p className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.email}</p>
-                                    )}
-
-                                    <input
-                                        className="email_text"
-                                        type="text"
-                                        placeholder="Phone number"
-                                        name="phone"
-                                        value={values?.phone || ""}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        maxLength={10}
-                                        style={{ border: touched?.phone && errors?.phone ? "1px solid red" : "" }}
-                                    />
-                                    {touched.phone && errors.phone && (
-                                        <p className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.phone}</p>
-                                    )}
-
-                                    <input
-                                        className="email_text"
-                                        type="text"
-                                        placeholder="Enter Subject"
-                                        name="subject"
-                                        value={values?.subject || ""}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        style={{ border: touched?.subject && errors?.subject ? "1px solid red" : "" }}
-                                    />
-                                    {touched.subject && errors.subject && (
-                                        <p className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.subject}</p>
-                                    )}
-
-                                    <textarea
-                                        rows={7}
-                                        placeholder="Enter Your Message"
-                                        name="message"
-                                        value={values?.message || ""}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        style={{ border: touched?.message && errors?.message ? "1px solid red" : "" }}
-                                    ></textarea>
-                                    {touched.message && errors.message && (
-                                        <p className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.message}</p>
-                                    )}
-
-                                    <div className="mb-5">
-                                        <ReCAPTCHA
-                                            sitekey={REACT_APP_RECAPTCHA_SITE_KEY}
-                                            onChange={onRecaptchaChange}
+                                <form className="row" onSubmit={handleSubmit}>
+                                    <div className="col-lg-6 col-md-6">
+                                        {touched?.full_name && errors?.full_name && (
+                                            <div className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.full_name}</div>
+                                        )}
+                                        <input
+                                            className="email_text"
+                                            type="text"
+                                            placeholder="Full name"
+                                            name="full_name"
+                                            value={values?.full_name || ""}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            style={{ border: touched?.full_name && errors?.full_name ? "1px solid red" : "" }}
                                         />
                                     </div>
-                                    <input className="btn" type="submit" value="Submit Now" disabled={!isValid || !recaptchaToken} />
+
+                                    <div className="col-lg-6 col-md-6">
+                                        {touched?.email && errors?.email && (
+                                            <div className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.email}</div>
+                                        )}
+                                        <input
+                                            className="email_text"
+                                            type="text"
+                                            placeholder="Email address"
+                                            name="email"
+                                            value={values?.email || ""}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            style={{ border: touched?.email && errors?.email ? "1px solid red" : "" }}
+                                        />
+                                    </div>
+
+                                    <div className="col-lg-6 col-md-6">
+                                        {touched?.phone && errors?.phone && (
+                                            <div className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors?.phone}</div>
+                                        )}
+                                        <input
+                                            className="email_text"
+                                            type="text"
+                                            placeholder="Phone number"
+                                            name="phone"
+                                            value={values?.phone || ""}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            maxLength={10}
+                                            style={{ border: touched?.phone && errors?.phone ? "1px solid red" : "" }}
+                                        />
+                                    </div>
+
+                                    <div className="col-lg-6 col-md-6">
+                                        <input
+                                            className="email_text"
+                                            type="text"
+                                            placeholder="Yor Designation (If any)"
+                                            name="designation"
+                                            value={values?.designation || ""}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        />
+                                    </div>
+
+                                    <div className="col-lg-12 col-md-12">
+                                        {touched?.message && errors?.message && (
+                                            <div className="text-danger" style={{ fontSize: "13px", fontWeight: "400" }}>*{errors.message}</div>
+                                        )}
+                                        <textarea
+                                            rows={7}
+                                            placeholder="Enter Your Message"
+                                            name="message"
+                                            value={values?.message || ""}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            style={{ border: touched?.message && errors?.message ? "1px solid red" : "" }}
+                                        ></textarea>
+                                    </div>
+
+                                    <div className="col-lg-12 col-md-12">
+                                        <div className="mb-5">
+                                            <ReCAPTCHA
+                                                sitekey={REACT_APP_RECAPTCHA_SITE_KEY}
+                                                onChange={onRecaptchaChange}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-12 col-md-12">
+                                        <button className="btn" type="submit" disabled={!isValid || !recaptchaToken}>Submit Now</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
