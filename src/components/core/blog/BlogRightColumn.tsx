@@ -55,7 +55,7 @@ const BlogRightColumn = (): JSX.Element => {
                         </ul>
                     </div>
 
-                    <div className="widget-instagram">
+                    {/* <div className="widget-instagram">
                         <h4> Instagram</h4>
                         <ul>
                             <li><Link to="#"><img src="/assets/images/blog/ins/01.jpg" alt="instragram" /></Link></li>
@@ -68,7 +68,7 @@ const BlogRightColumn = (): JSX.Element => {
                             <li><Link to="#"><img src="/assets/images/blog/ins/08.jpg" alt="instragram" /></Link></li>
                             <li><Link to="#"><img src="/assets/images/blog/ins/09.jpg" alt="instragram" /></Link></li>
                         </ul>
-                    </div>
+                    </div> */}
 
                 </div>
             </div>
