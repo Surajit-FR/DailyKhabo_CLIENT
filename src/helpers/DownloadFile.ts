@@ -9,7 +9,6 @@ interface DownloadPdfParams {
     _TOKEN: string;
 };
 
-
 // handleDownloadPdf helper func.
 export const handleDownloadPdf = async ({ setLoading, orderData, _TOKEN }: DownloadPdfParams) => {
     setLoading(true);
@@ -56,4 +55,38 @@ export const handleDownloadPdf = async ({ setLoading, orderData, _TOKEN }: Downl
     } finally {
         setLoading(false);
     }
+};
+
+// handlePrintPdf helper func.
+export const handlePrintPdf = async (invoiceDetails: any, _TOKEN: string) => {
+    try {
+        const requestData = {
+            invoiceDetails
+        };
+
+        // Make a POST request to your backend API
+        const response = await axios.post(`${REACT_APP_BASE_URL}/admin/api/generate/invoice-pdf`, requestData, {
+            headers: { Authorization: `Bearer ${_TOKEN}` },
+            responseType: 'blob'
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const newWindow = window.open(url, '_blank');
+
+        if (newWindow) {
+            newWindow.onload = () => {
+                setTimeout(() => {
+                    newWindow.print();
+                }, 1000);
+            };
+        } else {
+            alert('Please allow popups for this site to print the PDF.');
+        }
+
+        // Clean up: revoke the URL
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        showToast({ message: "Failed to print the PDF. Please try again.", type: 'error', durationTime: 3000, position: "top-center" });
+    };
 };

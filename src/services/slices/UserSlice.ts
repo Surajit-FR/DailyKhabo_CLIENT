@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDADDRESS, DELETEADDRESS, GETADDRESS, GETUSERDETAILS, UPDATEADDRESS, UPDATEUSERDATA } from "../api/Api";
+import { ADDADDRESS, DELETEADDRESS, GETADDRESS, GETALLORDERS, GETINVOICEDETAILS, GETUSERDETAILS, UPDATEADDRESS, UPDATEUSERDATA } from "../api/Api";
 import { showToast } from "../../helpers/Toast";
 import { FormValuesProps } from "../../types/formValues";
 
@@ -100,12 +100,44 @@ export const deleteAddress = createAsyncThunk("/user/api/delete/address/", async
     }
 });
 
+// getAllOrders thunk
+export const getAllOrders = createAsyncThunk("/admin/api/get/all/orders", async (params: FormValuesProps, { rejectWithValue }): Promise<any> => {
+    try {
+        const { page, pageSize, searchQuery, header } = params;
+        const response = await GETALLORDERS({ page, pageSize, searchQuery }, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
+// getInvoiceDetails thunk
+export const getInvoiceDetails = createAsyncThunk("/admin/api/get/invoice/details/", async ({ order_id, header }: FormValuesProps, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await GETINVOICEDETAILS(order_id, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
 
 const UserSlice = createSlice({
     name: "userSlice",
     initialState: {
         user_data: [],
         address_data: [],
+        orders_data: [],
+        // Invoice details data
+        invoice_details_data: {},
         user_loading: false,
         error: null
     },
@@ -183,6 +215,36 @@ const UserSlice = createSlice({
         })
         builder.addCase(deleteAddress.rejected, (state, { payload }) => {
             state.user_loading = false;
+        })
+
+        // getAllOrders states
+        builder.addCase(getAllOrders.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(getAllOrders.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+            const orders_data: any = payload;
+            state.orders_data = orders_data?.data;
+        })
+        builder.addCase(getAllOrders.rejected, (state, { payload }) => {
+            state.user_loading = false;
+            const err: any | null = payload;
+            state.error = err;
+        })
+
+        // getInvoiceDetails states
+        builder.addCase(getInvoiceDetails.pending, (state) => {
+            state.user_loading = true;
+        })
+        builder.addCase(getInvoiceDetails.fulfilled, (state, { payload }) => {
+            state.user_loading = false;
+            const invoice_details_data: any = payload;
+            state.invoice_details_data = invoice_details_data?.data;
+        })
+        builder.addCase(getInvoiceDetails.rejected, (state, { payload }) => {
+            state.user_loading = false;
+            const err: any | null = payload;
+            state.error = err;
         })
     }
 })

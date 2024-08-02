@@ -4,6 +4,7 @@ import { formatPrimaryAddress } from "../../../helpers/Formatter";
 import { updateUser } from "../../../services/slices/UserSlice";
 import { Dispatch } from "redux";
 import { CustomHeaders } from "../../../types/common.";
+import { Link } from "react-router-dom";
 
 type UserInfo_props = {
     header: CustomHeaders | undefined
@@ -57,6 +58,7 @@ const UserInfo = ({ header }: UserInfo_props): JSX.Element => {
                         <h3>{user_data?.full_name}</h3>
                         <h5>{user_data?.email}</h5>
                         <h5>{formattedAddress}</h5>
+                        <Link className="btn btn-success mb-2" to="/order-history">Orders</Link>
                     </div>
                     <h4 style={{ cursor: "pointer" }}>
                         Edit information

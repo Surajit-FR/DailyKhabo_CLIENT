@@ -77,3 +77,10 @@ export const UPDATEADDRESS = (address_id, data, header) => API.post(`/user/api/u
 export const DELETEADDRESS = (address_id, header) => API.delete(`/user/api/delete/address/${address_id}`, header);
 // Get testimonials
 export const GETTESTIMONIALS = () => API.get('/user/api/get/testimonials');
+// Get all orders
+export const GETALLORDERS = (params = {}, header) => {
+    const queryParams = new URLSearchParams(params).toString();
+    return API.get(`/user/api/get/all/orders?${queryParams}`, header);
+};
+// Get Invoice details
+export const GETINVOICEDETAILS = (order_id, header) => API.get(`/admin/api/get/invoice/details/${order_id}`, header);

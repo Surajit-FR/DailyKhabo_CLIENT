@@ -60,6 +60,7 @@ export interface FormValuesProps {
     minPrice?: number;
     maxPrice?: number;
     navigate?: any;
+    order_id?: string | undefined;
     category_id?: string | undefined;
     product_id?: string | undefined;
     address_id?: string | undefined;
