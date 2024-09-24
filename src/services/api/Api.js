@@ -84,3 +84,5 @@ export const GETALLORDERS = (params = {}, header) => {
 };
 // Get Invoice details
 export const GETINVOICEDETAILS = (order_id, header) => API.get(`/admin/api/get/invoice/details/${order_id}`, header);
+// Get Policies
+export const GETPOLICIES = (policyName) => API.get(`/user/api/get/policy/${policyName}`);

@@ -9,6 +9,9 @@ import { Provider } from 'react-redux';
 import { Store } from './services/store/Store';
 import { Toaster } from 'react-hot-toast';
 import ThankYou from './pages/others/ThankYou';
+import PrivacyPolicyPage from './pages/others/PrivacyPolicyPage';
+import ReturnPolicyPage from './pages/others/ReturnPolicyPage';
+import ShippingPolicyPage from './pages/others/ShippingPolicyPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,6 +23,9 @@ root.render(
         <Route path='*' element={<App />} />
         <Route path='/' element={<Index />} />
         <Route path='/thank-you' element={<ThankYou />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
+        <Route path='/return-policy' element={<ReturnPolicyPage />} />
+        <Route path='/shipping-policy' element={<ShippingPolicyPage />} />
       </Routes>
     </Router>
     <Toaster

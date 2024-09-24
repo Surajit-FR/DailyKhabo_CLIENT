@@ -8,8 +8,8 @@ const HeaderTop = (): JSX.Element => {
                     <div className="htop-area row">
                         <div className="htop-left">
                             <ul className="htop-information">
-                                <li><i className="far fa-envelope"></i> email@gmail.com</li>
-                                <li><i className="fas fa-phone-volume"></i> +88 130 589 745 6987</li>
+                                <li><i className="far fa-envelope mr-2"></i>info@dailykhaoghee.com</li>
+                                <li><i className="fas fa-phone-volume mr-2"></i>+917980645565</li>
                             </ul>
                         </div>
                         <div className="htop-right">

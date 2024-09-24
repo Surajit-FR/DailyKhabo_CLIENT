@@ -64,6 +64,7 @@ export interface FormValuesProps {
     category_id?: string | undefined;
     product_id?: string | undefined;
     address_id?: string | undefined;
+    policyName?: string | undefined;
     product?: string | undefined;
     cart_quantity?: number | undefined;
     couponCode?: string | undefined;

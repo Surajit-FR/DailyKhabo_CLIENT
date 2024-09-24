@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPRODUCTDETAILS, GETTESTIMONIALS } from "../api/Api";
+import { CONTACTUS, CREATEREVIEW, GETALLCATEGORIES, GETALLPRODUCTS, GETALLREVIEWS, GETPOLICIES, GETPRODUCTDETAILS, GETTESTIMONIALS } from "../api/Api";
 import { showToast } from "../../helpers/Toast";
 import { FetchAllCategoryResponse } from "../../types/category";
 import { FetchAllProductResponse } from "../../types/product";
@@ -121,6 +121,20 @@ export const getTestimonials = createAsyncThunk("/user/api/get/testimonials", as
     }
 });
 
+// getPolicy thunk
+export const getPolicy = createAsyncThunk("/user/api/get/policy/", async ({ policyName }: FormValuesProps, { rejectWithValue }): Promise<any> => {
+    try {
+        const response = await GETPOLICIES(policyName);
+        const result: any = response?.data;
+        if (result?.success) {
+            return result
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
+        return err;
+    }
+});
+
 const UtilitySlice = createSlice({
     name: "utilitySlice",
     initialState: {
@@ -136,6 +150,9 @@ const UtilitySlice = createSlice({
 
         // Testimonials State
         testimonials_data: [],
+
+        // Policy State
+        policy_data: [],
 
         // Common States
         utility_loading: false,
@@ -237,6 +254,19 @@ const UtilitySlice = createSlice({
             state.testimonials_data = testimonials_data;
         })
         builder.addCase(getTestimonials.rejected, (state, { payload }) => {
+            state.utility_loading = false;
+        })
+
+        // getPolicy states
+        builder.addCase(getPolicy.pending, (state) => {
+            state.utility_loading = true;
+        })
+        builder.addCase(getPolicy.fulfilled, (state, { payload }) => {
+            state.utility_loading = false;
+            const policy_data: any = payload?.data;
+            state.policy_data = policy_data;
+        })
+        builder.addCase(getPolicy.rejected, (state, { payload }) => {
             state.utility_loading = false;
         })
     }

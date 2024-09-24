@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Category } from "../../../types/category";
 
 const FooterTop = (): JSX.Element => {
+    const { category_data } = useSelector((state: any) => state.utilitySlice);
+
     return (
         <>
             <div className="footer-top padding-tb">
@@ -21,9 +25,9 @@ const FooterTop = (): JSX.Element => {
                                     <h3>Quick Link</h3>
                                 </div>
                                 <ul className="footer-location">
-                                    <li>Return Policy</li>
-                                    <li>Shipping Policy</li>
-                                    <li>Privacy Policy</li>
+                                    <li style={{ cursor: "pointer" }} onClick={() => window.open('/return-policy', '_blank')}>Return Policy</li>
+                                    <li style={{ cursor: "pointer" }} onClick={() => window.open('/shipping-policy', '_blank')}>Shipping Policy</li>
+                                    <li style={{ cursor: "pointer" }} onClick={() => window.open('/privacy-policy', '_blank')}>Privacy Policy</li>
                                 </ul>
                             </div>
                         </div>
@@ -33,10 +37,13 @@ const FooterTop = (): JSX.Element => {
                                     <h3>Product</h3>
                                 </div>
                                 <ul className="footer-location">
-                                    <li>Desi Ghee</li>
-                                    <li>Premium Ghee</li>
-                                    <li>Cow’s Ghee</li>
-                                    <li>Brown Ghee</li>
+                                    {
+                                        category_data?.data?.map((category: Category, index: number) => {
+                                            return (
+                                                <li key={index}>{category?.category_name}</li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -51,8 +58,7 @@ const FooterTop = (): JSX.Element => {
                                             <i className="fas fa-phone-volume"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>+88130-589-745-6987</p>
-                                            <p>+1655-456-523</p>
+                                            <p>+917980645565</p>
                                         </div>
                                     </li>
                                     <li>
@@ -60,7 +66,15 @@ const FooterTop = (): JSX.Element => {
                                             <i className="fas fa-envelope"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>Email@email.com</p>
+                                            <p>info@dailykhaoghee.com</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="icon-part">
+                                            <i className="fas fa-envelope"></i>
+                                        </div>
+                                        <div className="content-part">
+                                            <p>deba1997sadhukhan@gmail.com</p>
                                         </div>
                                     </li>
                                     <li>
@@ -68,7 +82,7 @@ const FooterTop = (): JSX.Element => {
                                             <i className="fas fa-map-marker-alt"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>25/2 Lane2 Vokte Street Building <br />Melborn City</p>
+                                            <p>192, Ram lal Mukherjee Road, Singhi bagan Monirampur, <br />Barrackpore, North 24 parganas WEST BENGAL - 700120</p>
                                         </div>
                                     </li>
                                 </ul>
