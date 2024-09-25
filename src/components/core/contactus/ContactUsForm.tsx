@@ -147,8 +147,7 @@ const ContactUsForm = ({ header }: ContactUs_props): JSX.Element => {
                                             <i className="fas fa-phone-volume"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>+88130-589-745-6987</p>
-                                            <p>+1655-456-523</p>
+                                            <p>+917980645565</p>
                                         </div>
                                     </li>
                                     <li>
@@ -156,7 +155,15 @@ const ContactUsForm = ({ header }: ContactUs_props): JSX.Element => {
                                             <i className="fas fa-envelope"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>Email@email.com</p>
+                                            <p>info@dailykhaoghee.com</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="icon-part">
+                                            <i className="fas fa-envelope"></i>
+                                        </div>
+                                        <div className="content-part">
+                                            <p>deba1997sadhukhan@gmail.com</p>
                                         </div>
                                     </li>
                                     <li>
@@ -164,7 +171,7 @@ const ContactUsForm = ({ header }: ContactUs_props): JSX.Element => {
                                             <i className="fas fa-map-marker-alt"></i>
                                         </div>
                                         <div className="content-part">
-                                            <p>25/2 Lane2 Vokte Street Building Melborn City</p>
+                                            <p>192, Ram lal Mukherjee Road, Singhi bagan Monirampur, Barrackpore, North 24 parganas WEST BENGAL - 700120</p>
                                         </div>
                                     </li>
                                 </ul>
