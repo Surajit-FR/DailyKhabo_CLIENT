@@ -17,12 +17,13 @@ const DescriptionSection = ({ products_details_data }: ReviewAndDesc_props) => {
                     <div className="post-content">
                         <ul>
                             {
-                                products_details_data?.productKeyPoints?.length &&
-                                products_details_data?.productKeyPoints?.map((item, index) => {
-                                    return (
+                                products_details_data?.productKeyPoints &&
+                                products_details_data?.productKeyPoints?.length > 0 &&
+                                products_details_data?.productKeyPoints
+                                    .filter(item => item)
+                                    .map((item, index) => (
                                         <li key={index}>{item}</li>
-                                    )
-                                })
+                                    ))
                             }
                         </ul>
                     </div>
