@@ -88,6 +88,9 @@ const FooterTop = (): JSX.Element => {
                                 </ul>
                             </div>
                         </div>
+                        <div className="col-12 text-center">
+                            <img src="/assets/images/logo/fssai.jpg" alt="logo" style={{ height: "100px", width: "auto", marginRight: "20px" }} />
+                        </div>
 
                     </div>
                 </div>
