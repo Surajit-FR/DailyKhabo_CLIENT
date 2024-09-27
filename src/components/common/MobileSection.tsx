@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DecryptData } from "../../helpers/EncryptDecrypt";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,11 @@ import { CategoryResponse } from "../../types/category";
 
 const MobileSection = (): JSX.Element => {
     const { category_data } = useSelector((state: any) => state.utilitySlice);
+    const { cart_data } = useSelector((state: any) => state.cartSlice);
 
     const token: string | null = window.localStorage.getItem("token");
     const _TOKEN = JSON.parse(token ?? 'null');
+    const navigate: any = useNavigate();
 
     const header = useMemo(() => ({
         headers: {
@@ -151,7 +153,7 @@ const MobileSection = (): JSX.Element => {
                                                 <i className="fa-regular fa-user fa-fade mr-2"></i>{_USER?.full_name}
                                             </Link>
                                             <ul className="m-submenu">
-                                                <li><Link to="#">Profile</Link></li>
+                                                <li><Link to="/profile">Profile</Link></li>
                                                 <li>
                                                     <Link className="regular1" to="#" onClick={() => dispatch(logoutUser())}>
                                                         <i className="fa-solid fa-power-off fa-bounce"></i> Logout
@@ -160,6 +162,11 @@ const MobileSection = (): JSX.Element => {
                                             </ul>
                                         </li>
                                 }
+
+                                <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "", textAlign: "start" }} onClick={() => navigate("/cartproducts")}>
+                                    <i className="flaticon-shopping-bag"></i>
+                                    <span className="text-success ml-1" style={{ display: _TOKEN && cart_data?.data?.length > 0 ? "" : "none" }}>{cart_data?.data?.length}</span>
+                                </li>
                             </ul>
                             <ul className="social-link-list d-flex flex-wrap">
                                 <li><Link to="#" className="facebook"><i className=" fab fa-facebook-f"></i></Link></li>
