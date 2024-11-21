@@ -19,7 +19,6 @@ type CartProducts_props = {
 
 const Products = ({ _TOKEN, cartData, SubTotalAmount, DiscountAmount, header, ShippingCharge, TotalAmountWithShipping }: CartProducts_props): JSX.Element => {
     const dispatch: Dispatch<any> = useDispatch();
-    console.log(cartData);
 
     return (
         <>
