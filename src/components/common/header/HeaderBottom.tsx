@@ -6,7 +6,7 @@ import { DecryptData } from '../../../helpers/EncryptDecrypt';
 import { getAllCartData } from '../../../services/slices/CartSlice';
 import { getImagUrl } from '../../../helpers/getImage';
 import { getAllCategory } from '../../../services/slices/UtilitySlice';
-import { deleteItem } from '../../../helpers/CartFunctions';
+import { calculateTotalAmountWithShipping, deleteItem } from '../../../helpers/CartFunctions';
 import { Dispatch } from 'redux';
 import { jwtDecode } from 'jwt-decode';
 import { showToast } from '../../../helpers/Toast';
@@ -19,6 +19,7 @@ const HeaderBottom = (): JSX.Element => {
 
     const token: string | null = window.localStorage.getItem("token");
     const _TOKEN = JSON.parse(token ?? 'null');
+    const localStorageCartData = useMemo(() => JSON.parse(localStorage.getItem('CartDataInfo') || '[]'), []);
 
     const header = useMemo(() => ({
         headers: {
@@ -32,7 +33,10 @@ const HeaderBottom = (): JSX.Element => {
     const [isMenuFixed, setIsMenuFixed] = useState<boolean>(false);
     const [activeLink, setActiveLink] = useState<string>('/home');
     const [cartData, setCartData] = useState<CartItem[]>([]);
+    const [guestCartData, setGuestCartData] = useState<CartItem[]>([]);
     const [categoryData, setCategoryData] = useState<CategoryResponse[]>([]);
+
+    const totalPaybleAmount = calculateTotalAmountWithShipping(guestCartData);
 
     const dispatch: Dispatch<any> = useDispatch();
     const navigate: any = useNavigate();
@@ -75,6 +79,10 @@ const HeaderBottom = (): JSX.Element => {
         setCartData(cart_data?.data);
         setCategoryData(category_data?.data);
     }, [cart_data, category_data]);
+
+    useEffect(() => {
+        setGuestCartData(localStorageCartData);
+    }, [localStorageCartData]);
 
 
     useEffect(() => {
@@ -141,64 +149,125 @@ const HeaderBottom = (): JSX.Element => {
                                                 <li className="search" style={{ marginTop: _TOKEN ? "12px" : "" }}>
                                                     <i className="flaticon-magnifying-glass"></i>
                                                 </li>
-                                                <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "" }}>
-                                                    <i className="flaticon-shopping-bag"></i>
-                                                    <span style={{ display: _TOKEN && cartData?.length > 0 ? "block" : "none" }}>{cartData?.length}</span>
-                                                    <div className="cart-content" style={{ display: _TOKEN ? "block" : "none" }}>
-                                                        {
-                                                            _TOKEN && cartData && cartData?.map((item, index) => {
-                                                                return (
-                                                                    <div className="cart-item" key={index}>
-                                                                        <div className="cart-img">
-                                                                            <Link to="#">
-                                                                                <img src={getImagUrl(item?.product?.productImages[0])} alt="" height={50} width={50} />
-                                                                            </Link>
-                                                                        </div>
-                                                                        <div className="cart-des">
-                                                                            <Link to={`/product/details/${item?.product?._id}`} style={{
-                                                                                width: "140px",
-                                                                                whiteSpace: "nowrap",
-                                                                                overflow: "hidden",
-                                                                                textOverflow: "ellipsis"
-                                                                            }}>{item?.product?.productTitle}</Link>
-                                                                            <p>₹{item?.product?.totalPrice}</p>
-                                                                        </div>
-                                                                        <div className="cart-btn">
-                                                                            <Link
-                                                                                to="#"
-                                                                                onClick={() => deleteItem({ product_id: item?.product?._id, dispatch, header })}
-                                                                            ><i className="flaticon-close"></i></Link>
-                                                                        </div>
-                                                                    </div>
-                                                                )
-                                                            })
-                                                        }
 
-                                                        <div className="cart-bottom">
-                                                            <div className="cart-subtotal">
+                                                {
+                                                    _TOKEN ?
+                                                        <li className="cart" style={{ marginTop: _TOKEN ? "12px" : "" }}>
+                                                            <i className="flaticon-shopping-bag"></i>
+                                                            <span style={{ display: _TOKEN && cartData?.length > 0 ? "block" : "none" }}>{cartData?.length}</span>
+                                                            <div className="cart-content" style={{ display: _TOKEN ? "block" : "none" }}>
                                                                 {
-                                                                    cart_data?.data?.length > 0 && <p>Total: <b className="float-right">₹{cart_data?.totalAmountWithShipping}</b></p>
+                                                                    _TOKEN && cartData && cartData?.map((item, index) => {
+                                                                        return (
+                                                                            <div className="cart-item" key={index}>
+                                                                                <div className="cart-img">
+                                                                                    <Link to="#">
+                                                                                        <img src={getImagUrl(item?.product?.productImages[0])} alt="" height={50} width={50} />
+                                                                                    </Link>
+                                                                                </div>
+                                                                                <div className="cart-des">
+                                                                                    <Link to={`/product/details/${item?.product?._id}`} style={{
+                                                                                        width: "140px",
+                                                                                        whiteSpace: "nowrap",
+                                                                                        overflow: "hidden",
+                                                                                        textOverflow: "ellipsis"
+                                                                                    }}>{item?.product?.productTitle}</Link>
+                                                                                    <p>₹{item?.product?.totalPrice}</p>
+                                                                                </div>
+                                                                                <div className="cart-btn">
+                                                                                    <Link
+                                                                                        to="#"
+                                                                                        onClick={() => deleteItem({ product_id: item?.product?._id, dispatch, header })}
+                                                                                    ><i className="flaticon-close"></i></Link>
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    })
                                                                 }
+
+                                                                <div className="cart-bottom">
+                                                                    <div className="cart-subtotal">
+                                                                        {
+                                                                            cart_data?.data?.length > 0 && <p>Total: <b className="float-right">₹{cart_data?.totalAmountWithShipping}</b></p>
+                                                                        }
+                                                                    </div>
+                                                                    <div className="cart-action">
+                                                                        <button
+                                                                            type="submit"
+                                                                            className="button d-btn2"
+                                                                            style={{ marginRight: "1.5px" }}
+                                                                            data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                                                                            onClick={() => navigate("/cartproducts")}
+                                                                        >View cart</button>
+                                                                        <button
+                                                                            type="submit"
+                                                                            className="button d-btn2"
+                                                                            style={{ marginLeft: "1.5px" }}
+                                                                            data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                                                                            onClick={() => navigate("/checkout")}
+                                                                        >Checkout</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div className="cart-action">
-                                                                <button
-                                                                    type="submit"
-                                                                    className="button d-btn2"
-                                                                    style={{ marginRight: "1.5px" }}
-                                                                    data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
-                                                                    onClick={() => navigate("/cartproducts")}
-                                                                >View cart</button>
-                                                                <button
-                                                                    type="submit"
-                                                                    className="button d-btn2"
-                                                                    style={{ marginLeft: "1.5px" }}
-                                                                    data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
-                                                                    onClick={() => navigate("/checkout")}
-                                                                >Checkout</button>
+                                                        </li>
+                                                        :
+                                                        <li className="cart">
+                                                            <i className="flaticon-shopping-bag"></i>
+                                                            <span style={{ display: guestCartData?.length > 0 ? "block" : "none" }}>{guestCartData?.length}</span>
+                                                            <div className="cart-content" style={{ display: "block" }}>
+                                                                {
+                                                                    guestCartData && guestCartData?.map((item, index) => {
+                                                                        return (
+                                                                            <div className="cart-item" key={index}>
+                                                                                <div className="cart-img">
+                                                                                    <Link to="#">
+                                                                                        <img src={getImagUrl(item?.product?.productImages[0])} alt="" height={50} width={50} />
+                                                                                    </Link>
+                                                                                </div>
+                                                                                <div className="cart-des">
+                                                                                    <Link to={`/product/details/${item?.product?._id}`} style={{
+                                                                                        width: "140px",
+                                                                                        whiteSpace: "nowrap",
+                                                                                        overflow: "hidden",
+                                                                                        textOverflow: "ellipsis"
+                                                                                    }}>{item?.product?.productTitle}</Link>
+                                                                                    <p>₹{item?.product?.totalPrice}</p>
+                                                                                </div>
+                                                                                <div className="cart-btn">
+                                                                                    <Link
+                                                                                        to="#"
+                                                                                        onClick={() => deleteItem({ product_id: item?.product?._id, dispatch })}
+                                                                                    ><i className="flaticon-close"></i></Link>
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+
+                                                                <div className="cart-bottom">
+                                                                    <div className="cart-subtotal">
+                                                                        {
+                                                                            guestCartData?.length > 0 && <p>Total: <b className="float-right">₹{totalPaybleAmount?.totalAmountWithShipping}</b></p>
+                                                                        }
+                                                                    </div>
+                                                                    <div className="cart-action">
+                                                                        <button
+                                                                            type="submit"
+                                                                            className="button d-btn2"
+                                                                            style={{ marginRight: "1.5px" }}
+                                                                            onClick={() => navigate("/cartproducts")}
+                                                                        >View cart</button>
+                                                                        <button
+                                                                            type="submit"
+                                                                            className="button d-btn2"
+                                                                            style={{ marginLeft: "1.5px" }}
+                                                                            data-toggle={_TOKEN ? "" : "modal"} data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                                                                        >Checkout</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                        </li>
+                                                }
                                                 {!_TOKEN ?
                                                     <li className='ml-4'>
                                                         <Link className="regular1" to="#" data-toggle="modal"

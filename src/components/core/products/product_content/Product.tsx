@@ -33,6 +33,8 @@ const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element
         }
     };
 
+    // console.log({ item });
+
     return (
         <div className="col-lg-4 col-md-6 col-12">
             <div className="product-item">
@@ -45,11 +47,13 @@ const Product = ({ item, _TOKEN, header, dispatch }: ProductsProps): JSX.Element
                         </Link>
                         <Link
                             to="#"
-                            data-toggle={_TOKEN ? "" : "modal"}
-                            data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                            // data-toggle={_TOKEN ? "" : "modal"}
+                            // data-target={_TOKEN ? "" : "#exampleAuthModal"}
                             onClick={() => {
                                 if (_TOKEN) {
                                     addToCart({ product: item?._id, cart_quantity: 1, dispatch, header })
+                                } else {
+                                    addToCart({ product: item, cart_quantity: 1, dispatch })
                                 }
                             }}
                         ><i className="fas fa-cart-plus"></i>

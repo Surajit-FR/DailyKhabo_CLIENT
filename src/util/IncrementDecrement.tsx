@@ -9,9 +9,10 @@ interface IncrementDecrementProps {
     dispatch: Dispatch<any>;
     header: CustomHeaders | undefined;
     pageName: string;
+    _TOKEN: any;
 }
 
-const IncrementDecrement = ({ initialValue, product_id, dispatch, header, pageName }: IncrementDecrementProps): JSX.Element => {
+const IncrementDecrement = ({ _TOKEN, initialValue, product_id, dispatch, header, pageName }: IncrementDecrementProps): JSX.Element => {
     const [value, setValue] = useState<number>(initialValue);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isInitialRender = useRef(true); // Track initial render
@@ -24,10 +25,14 @@ const IncrementDecrement = ({ initialValue, product_id, dispatch, header, pageNa
         }
         timeoutRef.current = setTimeout(() => {
             if (product_id) {
-                updateItemQuantity({ product: product_id, cart_quantity: newQuantity, dispatch, header });
+                if (_TOKEN) {
+                    updateItemQuantity({ product: product_id, cart_quantity: newQuantity, dispatch, header });
+                } else {
+                    updateItemQuantity({ product: product_id, cart_quantity: newQuantity, dispatch });
+                }
             }
         }, debounceDelay);
-    }, [dispatch, header, product_id]);
+    }, [dispatch, header, product_id, _TOKEN]);
 
     useEffect(() => {
         if (isInitialRender.current) {

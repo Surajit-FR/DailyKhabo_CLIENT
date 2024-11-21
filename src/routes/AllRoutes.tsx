@@ -31,8 +31,8 @@ const AllRoutes = (): JSX.Element => {
                 <Route path='/blog' element={<Blog />} />
                 <Route path='/contactus' element={<ContactUs header={header} />} />
                 <Route path='/blogsingle/:blog_id' element={<BlogSingle />} />
+                <Route path='/cartproducts' element={<CartProducts _TOKEN={_TOKEN} header={header} />} />
                 <Route element={<ProtectedOne />}>
-                    <Route path='/cartproducts' element={<CartProducts _TOKEN={_TOKEN} header={header} />} />
                     <Route path='/checkout' element={<Checkout header={header} />} />
                     <Route path='/profile' element={<Profile header={header} />} />
                     <Route path='/order-history' element={<OrderHistory header={header} />} />

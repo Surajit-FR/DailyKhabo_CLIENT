@@ -1,6 +1,7 @@
 // types/formValues.d.ts
 
 import { IAddress } from "./address";
+import { IProduct } from "./product";
 
 export interface FormValues {
     category_name?: string;

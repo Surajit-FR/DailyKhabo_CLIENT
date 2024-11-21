@@ -152,11 +152,13 @@ const ProductDetails = ({ _TOKEN, header }: ProductDetailsProps): JSX.Element =>
                                                 </div> */}
                                                 <button
                                                     type="button"
-                                                    data-toggle={_TOKEN ? "" : "modal"}
-                                                    data-target={_TOKEN ? "" : "#exampleAuthModal"}
+                                                    // data-toggle={_TOKEN ? "" : "modal"}
+                                                    // data-target={_TOKEN ? "" : "#exampleAuthModal"}
                                                     onClick={() => {
                                                         if (_TOKEN) {
                                                             addToCart({ product: products_details_data?.data?._id, cart_quantity: value, dispatch, header });
+                                                        } else {
+                                                            addToCart({ product: products_details_data?.data, cart_quantity: value, dispatch });
                                                         }
                                                     }}
                                                 >Add To Cart</button>
