@@ -46,6 +46,8 @@ export const GETPRODUCTDETAILS = (product_id) => API.get(`/user/api/get/product/
 export const ADDCART = (data, header) => API.post('/user/api/add/cart', data, header);
 // Update cart
 export const UPDATEQUANTITY = (data, header) => API.post('/user/api/update/cart/quantity', data, header);
+// Sync cart
+export const SYNCCART = (data, header) => API.post('/user/api/sync/cart', data, header);
 // Get cart data
 export const GETCARTDATA = (header) => API.get('/user/api/get/all/cart/data', header);
 // Delete cart item

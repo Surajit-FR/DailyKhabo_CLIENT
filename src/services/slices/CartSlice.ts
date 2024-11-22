@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, TAKEORDER, UPDATEQUANTITY } from "../api/Api";
+import { ADDCART, APPLYCOUPON, DELETECARTITEM, GETCARTDATA, SYNCCART, TAKEORDER, UPDATEQUANTITY } from "../api/Api";
 import { showToast } from "../../helpers/Toast";
 import { FetchCartResponse } from "../../types/cart";
 import { FormValuesProps } from "../../types/formValues";
@@ -11,13 +11,13 @@ export const addCart = createAsyncThunk("/user/api/add/cart", async ({ data, hea
         const response = await ADDCART(data, header);
         const result: any = response?.data;
         if (result?.success) {
-            showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
+            // showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getAllCartData({ header }));
             return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -28,12 +28,28 @@ export const updateQuantity = createAsyncThunk("/user/api/update/cart/quantity",
         const response = await UPDATEQUANTITY(data, header);
         const result: any = response?.data;
         if (result?.success) {
-            showToast({ message: result?.message || 'Cart quantity updated!', type: 'success', durationTime: 3000, position: "top-center" });
+            // showToast({ message: result?.message || 'Cart quantity updated!', type: 'success', durationTime: 3000, position: "top-center" });
             dispatch(getAllCartData({ header }));
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3000, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3000, position: "top-center" });
+        return err;
+    }
+});
+
+// syncCart thunk
+export const syncCart = createAsyncThunk("/user/api/sync/cart", async ({ data, header }: FormValuesProps, { rejectWithValue, dispatch }): Promise<any> => {
+    try {
+        const response = await SYNCCART(data, header);
+        const result: any = response?.data;
+        if (result?.success) {
+            dispatch(getAllCartData({ header }));
+            localStorage.removeItem('CartDataInfo')
+            return result;
+        };
+    } catch (exc: any) {
+        const err: any = rejectWithValue(exc.response.data);
         return err;
     }
 });
@@ -61,7 +77,7 @@ export const deleteCartItem = createAsyncThunk("/user/api/delete/cart/item/", as
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to add product.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -77,7 +93,7 @@ export const applyCouponCode = createAsyncThunk("/user/api/apply/coupon", async 
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to apply.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to apply.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -96,7 +112,7 @@ export const placeOrder = createAsyncThunk("/user/api/take/order", async ({ data
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to place order.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to place order.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });

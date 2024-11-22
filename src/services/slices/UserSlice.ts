@@ -15,7 +15,7 @@ export const updateUser = createAsyncThunk("/user/api/update/user/data", async (
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -33,7 +33,7 @@ export const addAddress = createAsyncThunk("/user/api/add/user/address", async (
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -78,7 +78,7 @@ export const updateAddress = createAsyncThunk("/user/api/update/user/address/", 
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });
@@ -89,13 +89,13 @@ export const deleteAddress = createAsyncThunk("/user/api/delete/address/", async
         const response = await DELETEADDRESS(address_id, header);
         const result: any = response?.data;
         if (result?.success) {
-            showToast({ message: result?.message || 'Address removed!', type: 'success', durationTime: 3500, position: "top-center" });
+            // showToast({ message: result?.message || 'Address removed!', type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getUserDetails({ header }));
             return result;
         };
     } catch (exc: any) {
         const err: any = rejectWithValue(exc.response.data);
-        showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
+        // showToast({ message: err?.payload?.message || 'Failed to removed address.', type: 'error', durationTime: 3500, position: "top-center" });
         return err;
     }
 });

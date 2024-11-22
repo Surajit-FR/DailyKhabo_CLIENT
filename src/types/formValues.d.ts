@@ -52,7 +52,7 @@ export interface FormValues {
 }
 
 export interface FormValuesProps {
-    data?: FormValues | FormData | undefined | IAddress;
+    data?: FormValues | FormData | undefined | IAddress | any;
     header?: CustomHeaders | undefined;
     page?: number | undefined;
     pageSize?: number | undefined;

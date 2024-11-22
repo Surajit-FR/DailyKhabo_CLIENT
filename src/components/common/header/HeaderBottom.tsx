@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../services/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { DecryptData } from '../../../helpers/EncryptDecrypt';
-import { getAllCartData } from '../../../services/slices/CartSlice';
+import { getAllCartData, syncCart } from '../../../services/slices/CartSlice';
 import { getImagUrl } from '../../../helpers/getImage';
 import { getAllCategory } from '../../../services/slices/UtilitySlice';
 import { calculateTotalAmountWithShipping, deleteItem } from '../../../helpers/CartFunctions';
@@ -56,6 +56,19 @@ const HeaderBottom = (): JSX.Element => {
         setActiveLink(path);
     };
 
+    // handleSyncCart func.
+    const handleSyncCart = useCallback(() => {
+        if (localStorageCartData) {
+            const cartDataToSync = localStorageCartData?.map((item: { product: { _id: string | undefined; }; cart_quantity: number; }) => ({
+                product: item?.product._id,
+                cart_quantity: item?.cart_quantity,
+            }));
+
+            dispatch(syncCart({ data: cartDataToSync, header }));
+        }
+    }, [localStorageCartData, dispatch, header]);
+
+
     useEffect(() => {
         const handleScroll = () => {
             setIsMenuFixed(window.scrollY > 130);
@@ -82,7 +95,8 @@ const HeaderBottom = (): JSX.Element => {
 
     useEffect(() => {
         setGuestCartData(localStorageCartData);
-    }, [localStorageCartData]);
+        handleSyncCart();
+    }, [localStorageCartData, handleSyncCart]);
 
 
     useEffect(() => {

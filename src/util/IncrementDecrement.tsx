@@ -49,7 +49,7 @@ const IncrementDecrement = ({ _TOKEN, initialValue, product_id, dispatch, header
     }, [value, debouncedUpdate]); // Trigger effect only when value changes
 
     const decrement = () => {
-        if (value > 0) {
+        if (value > 1) { // Minimum value should be 1
             setValue(value - 1);
         }
     };

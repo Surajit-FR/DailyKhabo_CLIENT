@@ -70,7 +70,7 @@ export const createReview = createAsyncThunk("/user/api/create/review", async ({
         if (result?.success) {
             resetForm && resetForm();
             setRating && setRating(0);
-            showToast({ message: result?.message || 'Product added to the cart!', type: 'success', durationTime: 3500, position: "top-center" });
+            showToast({ message: result?.message, type: 'success', durationTime: 3500, position: "top-center" });
             dispatch(getAllReviews({ product_id }));
             return result
         };
