@@ -58,7 +58,7 @@ const HeaderBottom = (): JSX.Element => {
 
     // handleSyncCart func.
     const handleSyncCart = useCallback(() => {
-        if (localStorageCartData) {
+        if (_TOKEN) {
             const cartDataToSync = localStorageCartData?.map((item: { product: { _id: string | undefined; }; cart_quantity: number; }) => ({
                 product: item?.product._id,
                 cart_quantity: item?.cart_quantity,
@@ -66,7 +66,7 @@ const HeaderBottom = (): JSX.Element => {
 
             dispatch(syncCart({ data: cartDataToSync, header }));
         }
-    }, [localStorageCartData, dispatch, header]);
+    }, [_TOKEN, localStorageCartData, dispatch, header]);
 
 
     useEffect(() => {
