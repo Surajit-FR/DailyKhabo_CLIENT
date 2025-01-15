@@ -44,7 +44,7 @@ const HeaderBottom = (): JSX.Element => {
     const menuItems = [
         { name: 'Home', path: '/home', submenu: [] },
         { name: 'About Us', path: '/aboutus', submenu: [] },
-        { name: 'Our Products', path: '#', submenu: categoryData },
+        { name: 'Our Products', path: '/product', submenu: categoryData },
         { name: 'Blog', path: '/blog', submenu: [] },
         { name: 'Contact us', path: '/contactus', submenu: [] },
     ];
